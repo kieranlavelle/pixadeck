@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://bnvcwdtj1qnd2"]
+
+[ext_resource type="Script" uid="uid://irsp731ikps6" path="res://src/scenes/tooltip.gd" id="1_jowuh"]
+
+[sub_resource type="Theme" id="Theme_jowuh"]
+resource_local_to_scene = true
+default_font_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvpbe"]
+bg_color = Color(0.22352941, 0.22352941, 0.22352941, 0.7294118)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.16386127, 0.1638613, 0.16386116, 1)
+
+[node name="Tooltip" type="PanelContainer" unique_id=745840467]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 100.0
+offset_bottom = 12.0
+mouse_filter = 2
+theme = SubResource("Theme_jowuh")
+theme_override_styles/panel = SubResource("StyleBoxFlat_cvpbe")
+script = ExtResource("1_jowuh")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=777662842]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=879514470]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1644479313]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/Header" unique_id=157038097]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Dome"
+
+[node name="spacer" type="Control" parent="MarginContainer/VBoxContainer/Header" unique_id=361271647]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Cost" type="Label" parent="MarginContainer/VBoxContainer/Header" unique_id=1392576780]
+unique_name_in_owner = true
+layout_mode = 2
+text = "2"
+horizontal_alignment = 2
+
+[node name="Divider" type="ColorRect" parent="MarginContainer/VBoxContainer" unique_id=2086065146]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Description" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=843392155]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "asdasd"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1

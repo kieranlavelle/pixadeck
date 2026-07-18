@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://bmk4te5ggnitg"]
+
+[ext_resource type="Texture2D" uid="uid://c4n2mquf7bfv3" path="res://assets/dome.png" id="1_x1rkf"]
+[ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="1_y4b67"]
+[ext_resource type="Script" uid="uid://c4otee18fs8or" path="res://src/card/resource/effect_data.gd" id="2_qrqmc"]
+[ext_resource type="Resource" uid="uid://b1tbkycno3xvw" path="res://src/card/_effects/stagger.tres" id="3_qrqmc"]
+
+[resource]
+script = ExtResource("1_y4b67")
+id = "dome"
+card_asset = ExtResource("1_x1rkf")
+card_name = "Dome"
+card_cost = 2
+description = "[i]Stagger[/i] all enemies for 1 turn"
+damage = 0
+heal = 0
+effects = Array[ExtResource("2_qrqmc")]([ExtResource("3_qrqmc")])
+metadata/_custom_type_script = "uid://by78ddj4qp3w6"

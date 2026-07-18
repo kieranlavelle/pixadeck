@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://c7v1d3h1uu2ae"]
+
+[ext_resource type="Texture2D" uid="uid://dqhhj1qoucchl" path="res://assets/strike.png" id="1_yys3o"]
+[ext_resource type="Script" uid="uid://dnli00vjsfb5o" path="res://src/card/card.gd" id="2_of7fp"]
+[ext_resource type="Script" uid="uid://con0brufyypro" path="res://src/card/card_state_machine.gd" id="3_mxmy7"]
+[ext_resource type="Script" uid="uid://c3elebiwodt1y" path="res://src/card/idle.gd" id="4_js1fh"]
+[ext_resource type="Script" uid="uid://ck8qs2fdhffu6" path="res://src/card/hover.gd" id="5_feltw"]
+[ext_resource type="Script" uid="uid://ddoyle1baxtn2" path="res://src/card/clicked.gd" id="6_cxcvc"]
+[ext_resource type="Script" uid="uid://jqmisgewg815" path="res://src/card/dragging.gd" id="7_yys3o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7tox"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.7529412)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yys3o"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 1, 1, 0.7529412)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2xflc"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.901037, 0.40588507, 0.98626345, 0.7529412)
+border_blend = true
+
+[node name="Card" type="TextureRect" unique_id=1380816860]
+custom_minimum_size = Vector2(26, 33)
+offset_right = 26.0
+offset_bottom = 33.0
+texture = ExtResource("1_yys3o")
+script = ExtResource("2_of7fp")
+
+[node name="CardStateMachine" type="Node" parent="." unique_id=2115224984]
+script = ExtResource("3_mxmy7")
+
+[node name="Idle" type="Node" parent="CardStateMachine" unique_id=746089874]
+script = ExtResource("4_js1fh")
+
+[node name="Hover" type="Node" parent="CardStateMachine" unique_id=1584380465]
+script = ExtResource("5_feltw")
+
+[node name="Clicked" type="Node" parent="CardStateMachine" unique_id=1743256001]
+script = ExtResource("6_cxcvc")
+
+[node name="Dragging" type="Node" parent="CardStateMachine" unique_id=1812542510]
+script = ExtResource("7_yys3o")
+
+[node name="HoverPanel" type="Panel" parent="." unique_id=1506111102]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_r7tox")
+
+[node name="ClickedPanel" type="Panel" parent="." unique_id=1563426818]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_yys3o")
+
+[node name="DraggingPanel" type="Panel" parent="." unique_id=559601406]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_2xflc")
+
+[node name="TooltipStack" type="VBoxContainer" parent="." unique_id=1499768357]
+top_level = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="mouse_entered" from="." to="CardStateMachine" method="on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="CardStateMachine" method="on_mouse_exited"]

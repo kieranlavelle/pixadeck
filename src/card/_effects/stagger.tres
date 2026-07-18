@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EffectData" format=3 uid="uid://b1tbkycno3xvw"]
+
+[ext_resource type="Script" uid="uid://c4otee18fs8or" path="res://src/card/resource/effect_data.gd" id="1_be2y6"]
+
+[resource]
+script = ExtResource("1_be2y6")
+name = "Stagger"
+description = "Enemy card effects will not resolve on your opponents next x turn'(s)."
+metadata/_custom_type_script = "uid://c4otee18fs8or"

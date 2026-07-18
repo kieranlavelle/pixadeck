@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cryj3mghpm68i"]
+
+[ext_resource type="Script" uid="uid://b2j4vp2h5rws6" path="res://src/deck/deck.gd" id="1_8j11x"]
+[ext_resource type="Texture2D" uid="uid://bv20h3ulx2nk7" path="res://assets/card-back.png" id="1_od22o"]
+[ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="2_vfoc7"]
+[ext_resource type="Resource" uid="uid://c7ib0x1vjkvrj" path="res://src/card/_cards/strike.tres" id="3_od22o"]
+
+[node name="Deck" type="TextureRect" unique_id=465602771]
+texture = ExtResource("1_od22o")
+script = ExtResource("1_8j11x")
+starting_deck = Array[ExtResource("2_vfoc7")]([ExtResource("3_od22o"), ExtResource("3_od22o")])
+
+[node name="EmptyTexture" type="ColorRect" parent="." unique_id=1467042316]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.37413925, 0.37413928, 0.37413922, 1)
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
