@@ -1,18 +1,32 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://bmk4te5ggnitg"]
 
-[ext_resource type="Texture2D" uid="uid://c4n2mquf7bfv3" path="res://assets/dome.png" id="1_x1rkf"]
+[ext_resource type="Texture2D" uid="uid://b2bnc63uiqfje" path="res://assets/card_components/stone-flat-background.png" id="1_xokv4"]
 [ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="1_y4b67"]
 [ext_resource type="Script" uid="uid://c4otee18fs8or" path="res://src/card/resource/effect_data.gd" id="2_qrqmc"]
+[ext_resource type="Texture2D" uid="uid://bavkmf87xe3ju" path="res://assets/card_components/bronze-border.png" id="2_xokv4"]
 [ext_resource type="Resource" uid="uid://b1tbkycno3xvw" path="res://src/card/_effects/stagger.tres" id="3_qrqmc"]
+[ext_resource type="Texture2D" uid="uid://cltbtcbyb8wbp" path="res://assets/card_components/blue-flag.png" id="5_168ob"]
+[ext_resource type="Texture2D" uid="uid://cd846f0otmkxm" path="res://assets/card_components/Icon34.png" id="6_168ob"]
+[ext_resource type="Texture2D" uid="uid://bq8g60i21s8uq" path="res://assets/card_components/silver-inner-border.png" id="6_uxj7r"]
+[ext_resource type="Texture2D" uid="uid://bwywd485wc3s2" path="res://assets/card_components/2-mana.png" id="7_aey3h"]
+[ext_resource type="Texture2D" uid="uid://clak0olg4ou31" path="res://assets/card_components/silver-medium-title.png" id="9_68eo7"]
+[ext_resource type="Texture2D" uid="uid://bp5q53wt4k3vm" path="res://assets/card_components/spell-type.png" id="10_0cmd3"]
 
 [resource]
 script = ExtResource("1_y4b67")
 id = "dome"
-card_asset = ExtResource("1_x1rkf")
 card_name = "Dome"
 card_cost = 2
 description = "[i]Stagger[/i] all enemies for 1 turn"
 damage = 0
 heal = 0
 effects = Array[ExtResource("2_qrqmc")]([ExtResource("3_qrqmc")])
+border_asset = ExtResource("2_xokv4")
+inner_border_asset = ExtResource("6_uxj7r")
+mana_asset = ExtResource("7_aey3h")
+flag_asset = ExtResource("5_168ob")
+background_asset = ExtResource("1_xokv4")
+title_asset = ExtResource("9_68eo7")
+type_asset = ExtResource("10_0cmd3")
+image_asset = ExtResource("6_168ob")
 metadata/_custom_type_script = "uid://by78ddj4qp3w6"

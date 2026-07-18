@@ -9,12 +9,29 @@ extends TextureRect
 @onready var dragging_panel: Panel = $DraggingPanel
 @onready var tooltip_stack: VBoxContainer = $TooltipStack
 
+@onready var description: RichTextLabel = $Assets/Description
+@onready var image_asset: TextureRect = $Assets/ImageAsset
+@onready var inner_border: TextureRect = $Assets/InnerBorder
+@onready var card_type: TextureRect = $Assets/Type
+@onready var outer_border: TextureRect = $Assets/OuterBorder
+@onready var card_flag: TextureRect = $Assets/Flag
+@onready var card_mana_cost: TextureRect = $Assets/Mana
+@onready var background: TextureRect = $Assets/Background
+
 var TOOLTIP_SCENE = preload("res://src/scenes/tooltip.tscn")
 
 func _ready():
 	if card_data == null:
 		print("Error: card data was null")
-	texture = card_data.card_asset
+	
+	description.text = card_data.description
+	inner_border.texture = card_data.inner_border_asset
+	outer_border.texture = card_data.border_asset
+	card_type.texture = card_data.type_asset
+	card_flag.texture = card_data.flag_asset
+	card_mana_cost.texture = card_data.mana_asset
+	background.texture = card_data.background_asset
+	image_asset.texture = card_data.image_asset
 
 
 # proxy inputs to current state handler

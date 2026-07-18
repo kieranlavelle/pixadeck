@@ -1,18 +1,32 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://c7ib0x1vjkvrj"]
 
+[ext_resource type="Texture2D" uid="uid://dr2xuam6pmiab" path="res://assets/card_components/fire-texture-background.png" id="1_7cykr"]
 [ext_resource type="Script" uid="uid://c4otee18fs8or" path="res://src/card/resource/effect_data.gd" id="1_befcr"]
 [ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="1_qcscg"]
-[ext_resource type="Texture2D" uid="uid://dqhhj1qoucchl" path="res://assets/strike.png" id="1_ygnho"]
+[ext_resource type="Texture2D" uid="uid://bavkmf87xe3ju" path="res://assets/card_components/bronze-border.png" id="2_raic2"]
 [ext_resource type="Resource" uid="uid://4ywjyqbe23yi" path="res://src/card/_effects/persistent.tres" id="2_ygnho"]
+[ext_resource type="Texture2D" uid="uid://buf7epf87y72v" path="res://assets/card_components/bronze-flag.png" id="6_5uutn"]
+[ext_resource type="Texture2D" uid="uid://dtkwemx52jh7g" path="res://assets/card_components/Icon25.png" id="6_raic2"]
+[ext_resource type="Texture2D" uid="uid://bq8g60i21s8uq" path="res://assets/card_components/silver-inner-border.png" id="7_gyt0l"]
+[ext_resource type="Texture2D" uid="uid://cw5ql15j0rfag" path="res://assets/card_components/1-mana.png" id="8_d6gd4"]
+[ext_resource type="Texture2D" uid="uid://clak0olg4ou31" path="res://assets/card_components/silver-medium-title.png" id="10_8835c"]
+[ext_resource type="Texture2D" uid="uid://bdlvgujlinu8n" path="res://assets/card_components/sword-type.png" id="11_42kfe"]
 
 [resource]
 script = ExtResource("1_qcscg")
 id = "strike"
-card_asset = ExtResource("1_ygnho")
 card_name = "Strike"
 description = "Deal 1 [b]physical[/b] damage to a single random target enemy each turn. [i]persistent.[/i]
 "
 damage = 1
 heal = 0
 effects = Array[ExtResource("1_befcr")]([ExtResource("2_ygnho")])
+border_asset = ExtResource("2_raic2")
+inner_border_asset = ExtResource("7_gyt0l")
+mana_asset = ExtResource("8_d6gd4")
+flag_asset = ExtResource("6_5uutn")
+background_asset = ExtResource("1_7cykr")
+title_asset = ExtResource("10_8835c")
+type_asset = ExtResource("11_42kfe")
+image_asset = ExtResource("6_raic2")
 metadata/_custom_type_script = "uid://by78ddj4qp3w6"

@@ -1,12 +1,18 @@
 [gd_scene format=3 uid="uid://c7v1d3h1uu2ae"]
 
-[ext_resource type="Texture2D" uid="uid://dqhhj1qoucchl" path="res://assets/strike.png" id="1_yys3o"]
 [ext_resource type="Script" uid="uid://dnli00vjsfb5o" path="res://src/card/card.gd" id="2_of7fp"]
 [ext_resource type="Script" uid="uid://con0brufyypro" path="res://src/card/card_state_machine.gd" id="3_mxmy7"]
 [ext_resource type="Script" uid="uid://c3elebiwodt1y" path="res://src/card/idle.gd" id="4_js1fh"]
 [ext_resource type="Script" uid="uid://ck8qs2fdhffu6" path="res://src/card/hover.gd" id="5_feltw"]
 [ext_resource type="Script" uid="uid://ddoyle1baxtn2" path="res://src/card/clicked.gd" id="6_cxcvc"]
+[ext_resource type="Texture2D" uid="uid://dtkwemx52jh7g" path="res://assets/card_components/Icon25.png" id="7_4lqy4"]
+[ext_resource type="Texture2D" uid="uid://dr2xuam6pmiab" path="res://assets/card_components/fire-texture-background.png" id="7_akld1"]
 [ext_resource type="Script" uid="uid://jqmisgewg815" path="res://src/card/dragging.gd" id="7_yys3o"]
+[ext_resource type="Texture2D" uid="uid://ckthpa3k8pv5u" path="res://assets/card_components/gold-inner-border.png" id="8_4lqy4"]
+[ext_resource type="Texture2D" uid="uid://bdlvgujlinu8n" path="res://assets/card_components/sword-type.png" id="9_aklfy"]
+[ext_resource type="Texture2D" uid="uid://bj458tuuoy3op" path="res://assets/card_components/gold-border.png" id="10_bbrup"]
+[ext_resource type="Texture2D" uid="uid://buf7epf87y72v" path="res://assets/card_components/bronze-flag.png" id="11_tylge"]
+[ext_resource type="Texture2D" uid="uid://cw5ql15j0rfag" path="res://assets/card_components/1-mana.png" id="12_hh8mp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7tox"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -36,10 +42,9 @@ border_color = Color(0.901037, 0.40588507, 0.98626345, 0.7529412)
 border_blend = true
 
 [node name="Card" type="TextureRect" unique_id=1380816860]
-custom_minimum_size = Vector2(26, 33)
+custom_minimum_size = Vector2(76, 103)
 offset_right = 26.0
 offset_bottom = 33.0
-texture = ExtResource("1_yys3o")
 script = ExtResource("2_of7fp")
 
 [node name="CardStateMachine" type="Node" parent="." unique_id=2115224984]
@@ -56,6 +61,116 @@ script = ExtResource("6_cxcvc")
 
 [node name="Dragging" type="Node" parent="CardStateMachine" unique_id=1812542510]
 script = ExtResource("7_yys3o")
+
+[node name="TooltipStack" type="VBoxContainer" parent="." unique_id=1499768357]
+top_level = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Assets" type="Control" parent="." unique_id=492647309]
+anchors_preset = 0
+offset_right = 76.0
+offset_bottom = 103.0
+mouse_filter = 2
+
+[node name="ImageAsset" type="TextureRect" parent="Assets" unique_id=64453858]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -42.5
+offset_right = 29.0
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_4lqy4")
+
+[node name="Background" type="TextureRect" parent="Assets" unique_id=2129931396]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -47.5
+offset_right = 34.0
+offset_bottom = 47.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_akld1")
+
+[node name="InnerBorder" type="TextureRect" parent="Assets" unique_id=432543547]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -45.5
+offset_right = 32.0
+offset_bottom = 45.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_4lqy4")
+
+[node name="Type" type="TextureRect" parent="Assets" unique_id=1191249578]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -19.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 19.0
+grow_horizontal = 0
+texture = ExtResource("9_aklfy")
+
+[node name="OuterBorder" type="TextureRect" parent="Assets" unique_id=1934394332]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_bbrup")
+
+[node name="Flag" type="TextureRect" parent="Assets" unique_id=500296525]
+layout_mode = 0
+offset_right = 15.0
+offset_bottom = 20.0
+texture = ExtResource("11_tylge")
+
+[node name="Mana" type="TextureRect" parent="Assets" unique_id=2128818405]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 11.0
+offset_bottom = 13.0
+texture = ExtResource("12_hh8mp")
+
+[node name="Description" type="RichTextLabel" parent="Assets" unique_id=1667999293]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 65.0
+offset_right = 65.0
+offset_bottom = 93.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 4
+theme_override_font_sizes/bold_font_size = 4
+theme_override_font_sizes/bold_italics_font_size = 4
+theme_override_font_sizes/italics_font_size = 4
+theme_override_font_sizes/mono_font_size = 4
+bbcode_enabled = true
+text = "Deal 1 damage to a random target enemy. [i]Persistent.[/i]"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HoverPanel" type="Panel" parent="." unique_id=1506111102]
 visible = false
@@ -89,12 +204,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_behavior_recursive = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_2xflc")
-
-[node name="TooltipStack" type="VBoxContainer" parent="." unique_id=1499768357]
-top_level = true
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="mouse_entered" from="." to="CardStateMachine" method="on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="CardStateMachine" method="on_mouse_exited"]
