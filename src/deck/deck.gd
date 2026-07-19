@@ -31,5 +31,5 @@ func _on_mouse_exited():
 
 
 func _input(event):
-	if event.is_action_pressed("left_mouse_button"):
+	if event.is_action_pressed("left_mouse_button") and hovered:
 		draw_card()

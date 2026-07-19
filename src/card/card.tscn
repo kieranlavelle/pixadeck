@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ddoyle1baxtn2" path="res://src/card/clicked.gd" id="6_cxcvc"]
 [ext_resource type="Texture2D" uid="uid://dtkwemx52jh7g" path="res://assets/card_components/Icon25.png" id="7_4lqy4"]
 [ext_resource type="Texture2D" uid="uid://dr2xuam6pmiab" path="res://assets/card_components/fire-texture-background.png" id="7_akld1"]
+[ext_resource type="Script" uid="uid://b6k1mgosq7ifl" path="res://src/card/played.gd" id="7_aklfy"]
 [ext_resource type="Script" uid="uid://jqmisgewg815" path="res://src/card/dragging.gd" id="7_yys3o"]
 [ext_resource type="Texture2D" uid="uid://ckthpa3k8pv5u" path="res://assets/card_components/gold-inner-border.png" id="8_4lqy4"]
 [ext_resource type="Texture2D" uid="uid://bdlvgujlinu8n" path="res://assets/card_components/sword-type.png" id="9_aklfy"]
@@ -41,6 +42,15 @@ border_width_bottom = 3
 border_color = Color(0.901037, 0.40588507, 0.98626345, 0.7529412)
 border_blend = true
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aklfy"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.27058825, 0.7764706, 0, 0.80784315)
+border_blend = true
+
 [node name="Card" type="TextureRect" unique_id=1380816860]
 custom_minimum_size = Vector2(76, 103)
 offset_right = 26.0
@@ -61,6 +71,9 @@ script = ExtResource("6_cxcvc")
 
 [node name="Dragging" type="Node" parent="CardStateMachine" unique_id=1812542510]
 script = ExtResource("7_yys3o")
+
+[node name="Played" type="Node" parent="CardStateMachine" unique_id=1130823200]
+script = ExtResource("7_aklfy")
 
 [node name="TooltipStack" type="VBoxContainer" parent="." unique_id=1499768357]
 top_level = true
@@ -206,6 +219,17 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_behavior_recursive = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_2xflc")
+
+[node name="PlayablePanel" type="Panel" parent="Assets" unique_id=1826405811]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_behavior_recursive = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_aklfy")
 
 [connection signal="mouse_entered" from="." to="CardStateMachine" method="on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="CardStateMachine" method="on_mouse_exited"]

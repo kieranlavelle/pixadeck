@@ -8,6 +8,7 @@ extends TextureRect
 @onready var hover_panel: Panel = $Assets/HoverPanel
 @onready var clicked_panel: Panel = $Assets/ClickedPanel
 @onready var dragging_panel: Panel = $Assets/DraggingPanel
+@onready var playable_panel: Panel = $Assets/PlayablePanel
 @onready var tooltip_stack: VBoxContainer = $TooltipStack
 
 @onready var assets: Control = $Assets

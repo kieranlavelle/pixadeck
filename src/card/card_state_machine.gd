@@ -7,8 +7,6 @@ var initial_state: String = "IDLE"
 var states: Dictionary[String, Node] = {}
 var current_state: Node
 
-signal state_entered(state: String)
-
 
 func _ready():
 	var card = self.get_parent()
@@ -33,9 +31,6 @@ func transition_to(state: String) -> void:
 	# enter new state
 	current_state = new_state
 	new_state.enter()
-	
-	# emit state entered event
-	state_entered.emit(state)
 
 
 func handle_input(event: InputEvent) -> void:
