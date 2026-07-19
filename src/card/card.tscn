@@ -64,6 +64,7 @@ script = ExtResource("7_yys3o")
 
 [node name="TooltipStack" type="VBoxContainer" parent="." unique_id=1499768357]
 top_level = true
+z_index = 2
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -72,6 +73,7 @@ offset_bottom = 40.0
 anchors_preset = 0
 offset_right = 76.0
 offset_bottom = 103.0
+pivot_offset = Vector2(38, 103)
 mouse_filter = 2
 
 [node name="ImageAsset" type="TextureRect" parent="Assets" unique_id=64453858]
@@ -172,7 +174,7 @@ text = "Deal 1 damage to a random target enemy. [i]Persistent.[/i]"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HoverPanel" type="Panel" parent="." unique_id=1506111102]
+[node name="HoverPanel" type="Panel" parent="Assets" unique_id=1506111102]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -183,7 +185,7 @@ grow_vertical = 2
 mouse_behavior_recursive = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_r7tox")
 
-[node name="ClickedPanel" type="Panel" parent="." unique_id=1563426818]
+[node name="ClickedPanel" type="Panel" parent="Assets" unique_id=1563426818]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -194,7 +196,7 @@ grow_vertical = 2
 mouse_behavior_recursive = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_yys3o")
 
-[node name="DraggingPanel" type="Panel" parent="." unique_id=559601406]
+[node name="DraggingPanel" type="Panel" parent="Assets" unique_id=559601406]
 visible = false
 layout_mode = 1
 anchors_preset = 15

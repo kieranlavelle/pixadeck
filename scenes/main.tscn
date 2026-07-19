@@ -5,21 +5,22 @@
 [ext_resource type="Resource" uid="uid://bmk4te5ggnitg" path="res://src/card/_cards/dome.tres" id="4_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://cm7rcu252yg0r" path="res://src/hand/hand.tscn" id="4_tbgi4"]
 [ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="4_tefeu"]
+[ext_resource type="Script" uid="uid://ddw12klinnuwf" path="res://src/hand/hand.gd" id="6_tefeu"]
 
 [node name="main" type="Node2D" unique_id=2129418468]
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1215587593]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1143265905]
 
 [node name="Deck" parent="CanvasLayer" unique_id=1124259219 instance=ExtResource("3_jyhfs")]
-offset_left = 11.0
-offset_top = 317.0
-offset_right = 37.0
-offset_bottom = 350.0
+offset_left = 25.0
+offset_top = 427.0
+offset_right = 101.0
+offset_bottom = 530.0
 starting_deck = Array[ExtResource("4_tefeu")]([ExtResource("2_0wfyh"), ExtResource("4_o6xl0")])
 
 [node name="Hand" parent="CanvasLayer" unique_id=475158690 instance=ExtResource("4_tbgi4")]
 unique_name_in_owner = true
 offset_top = -10.0
 offset_bottom = -10.0
+theme_override_constants/separation = -30
+script = ExtResource("6_tefeu")

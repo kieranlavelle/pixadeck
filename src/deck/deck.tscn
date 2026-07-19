@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cryj3mghpm68i"]
 
 [ext_resource type="Script" uid="uid://b2j4vp2h5rws6" path="res://src/deck/deck.gd" id="1_8j11x"]
-[ext_resource type="Texture2D" uid="uid://bv20h3ulx2nk7" path="res://assets/card-back.png" id="1_od22o"]
+[ext_resource type="Texture2D" uid="uid://rtu88bsus4ly" path="res://assets/placeholder-card-back.png" id="1_od22o"]
 [ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="2_vfoc7"]
 [ext_resource type="Resource" uid="uid://c7ib0x1vjkvrj" path="res://src/card/_cards/strike.tres" id="3_od22o"]
 
