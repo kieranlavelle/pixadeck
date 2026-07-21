@@ -2,6 +2,8 @@ class_name Card
 extends TextureRect
 
 
+signal played_card(card: Card, parent: CardDropZone)
+
 @export var card_data: CardData
 
 @onready var card_state: CardStateMachine = $CardStateMachine
@@ -24,6 +26,9 @@ extends TextureRect
 var TOOLTIP_SCENE = preload("res://src/scenes/tooltip.tscn")
 var tooltip_offset_y: float = 0.0
 
+# used to block certain state transitions during the other players turn
+var opponents_turn: bool = true
+var is_locally_owned: bool = false
 
 func _ready():
 	if card_data == null:
@@ -113,3 +118,7 @@ func _update_tooltip_position() -> void:
 	
 	# Apply the position + the offset animated by the tween
 	tooltip_stack.global_position = Vector2(x, y + tooltip_offset_y)
+
+
+func play(zone: CardDropZone) -> void:
+	played_card.emit(self, zone)

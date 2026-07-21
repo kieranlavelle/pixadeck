@@ -1,30 +1,47 @@
 [gd_scene format=3 uid="uid://6ets8s8yauur"]
 
-[ext_resource type="Resource" uid="uid://c7ib0x1vjkvrj" path="res://src/card/_cards/strike.tres" id="2_0wfyh"]
-[ext_resource type="PackedScene" uid="uid://cryj3mghpm68i" path="res://src/deck/deck.tscn" id="3_jyhfs"]
-[ext_resource type="Resource" uid="uid://bmk4te5ggnitg" path="res://src/card/_cards/dome.tres" id="4_o6xl0"]
-[ext_resource type="PackedScene" uid="uid://cm7rcu252yg0r" path="res://src/hand/hand.tscn" id="4_tbgi4"]
-[ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="4_tefeu"]
-[ext_resource type="Script" uid="uid://ddw12klinnuwf" path="res://src/hand/hand.gd" id="6_tefeu"]
+[ext_resource type="Script" uid="uid://cgtpe2hl42evt" path="res://src/battle/battle_manager.gd" id="1_eb6dy"]
+[ext_resource type="PackedScene" uid="uid://dvvyp02wvklra" path="res://src/player/player.tscn" id="2_o6xl0"]
+[ext_resource type="FontFile" uid="uid://00clkfd0cxp2" path="res://assets/fonts/gomarice_no_continue.ttf" id="7_85g3d"]
+[ext_resource type="Script" uid="uid://dkkq2wtrajg0i" path="res://src/scenes/battle_overlay/battle_overlay.gd" id="7_choun"]
 [ext_resource type="PackedScene" uid="uid://dqsspfenvktrp" path="res://src/scenes/card_drop_zone.tscn" id="7_o6xl0"]
+[ext_resource type="Script" uid="uid://c7vod8twahxdi" path="res://src/scenes/turn_manager/turn_manager.gd" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://5btx4itv08sa" path="res://src/enemy/enemy.tscn" id="9_trceg"]
 
-[node name="Main" type="Node2D" unique_id=2129418468]
+[node name="BattleManager" type="Node2D" unique_id=2129418468]
+script = ExtResource("1_eb6dy")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1143265905]
+[node name="Player" parent="." unique_id=572737044 groups=["Player"] instance=ExtResource("2_o6xl0")]
+is_local_player = true
 
-[node name="Deck" parent="CanvasLayer" unique_id=1124259219 instance=ExtResource("3_jyhfs")]
-offset_left = 25.0
-offset_top = 427.0
-offset_right = 101.0
-offset_bottom = 530.0
-starting_deck = Array[ExtResource("4_tefeu")]([ExtResource("2_0wfyh"), ExtResource("4_o6xl0")])
+[node name="Enemy" parent="." unique_id=1288679930 groups=["Player"] instance=ExtResource("9_trceg")]
 
-[node name="Hand" parent="CanvasLayer" unique_id=475158690 instance=ExtResource("4_tbgi4")]
-unique_name_in_owner = true
-offset_top = -10.0
-offset_bottom = -10.0
-mouse_filter = 2
-theme_override_constants/separation = -30
-script = ExtResource("6_tefeu")
+[node name="BattleOverlay" type="CanvasLayer" parent="." unique_id=1143265905]
+layer = 100
+script = ExtResource("7_choun")
 
-[node name="CardDropZone" parent="." unique_id=1935065409 instance=ExtResource("7_o6xl0")]
+[node name="TextDisplay" type="Label" parent="BattleOverlay" unique_id=257496747]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_85g3d")
+theme_override_font_sizes/font_size = 35
+text = "Your turn!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CardDropZone" parent="." unique_id=1935065409 groups=["CardDropZone"] instance=ExtResource("7_o6xl0")]
+
+[node name="TurnManager" type="Node" parent="." unique_id=1402197015]
+script = ExtResource("8_tipki")
+
+[editable path="Player"]
+[editable path="Enemy"]

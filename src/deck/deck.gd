@@ -15,11 +15,13 @@ func _ready():
 	
 
 func draw_card():
-	if draw_pile.is_empty():
-		empty_texture.show()
-	else:
+	if !draw_pile.is_empty():
 		var drawn_card = draw_pile.pop_back()
 		hand.add_to_hand(drawn_card)
+		
+		if draw_pile.is_empty():
+			empty_texture.show()
+		
 
 
 func _on_mouse_entered():
@@ -28,8 +30,3 @@ func _on_mouse_entered():
 
 func _on_mouse_exited():
 	hovered = false
-
-
-func _input(event):
-	if event.is_action_pressed("left_mouse_button") and hovered:
-		draw_card()

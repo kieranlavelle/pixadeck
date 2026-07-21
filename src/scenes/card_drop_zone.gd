@@ -9,5 +9,8 @@ extends Control
 
 
 # currently there is no notion of an owner, and there is only a player
-func play_card(card: Card, _owner: Node):
-	card.reparent(PlayerZone)
+func play_card(card: Card, owner: int):
+	if owner == 0:
+		card.reparent(PlayerZone)
+	else:
+		card.reparent(OpponentZone)

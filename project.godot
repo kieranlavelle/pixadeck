@@ -15,12 +15,20 @@ run/main_scene="uid://6ets8s8yauur"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Enum="*uid://c7o1j4ad664gv"
+
 [display]
 
 window/size/viewport_width=960
 window/size/viewport_height=540
 window/size/mode=3
 window/stretch/mode="canvas_items"
+
+[global_group]
+
+CardDropZone=""
 
 [input]
 

@@ -1,13 +1,13 @@
 extends BaseCardState
 
 func enter() -> void:
-	card.hover_panel.visible = true
-	
-	card.z_index = 1
-	var tween := card.create_tween().set_parallel(true)
-	tween.tween_property(card.assets, "position:y", -20, 0.15)
-	
 	card.show_tooltip()
+	if card.is_locally_owned and not card.opponents_turn:
+		card.hover_panel.visible = true
+		card.z_index = 1
+		var tween := card.create_tween().set_parallel(true)
+		tween.tween_property(card.assets, "position:y", -20, 0.15)
+
 
 
 func exit() -> void:

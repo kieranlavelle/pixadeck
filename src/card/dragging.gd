@@ -17,12 +17,12 @@ func exit() -> void:
 
 func handle_input(event: InputEvent) -> void:
 	if event.is_action_released("left_mouse_button"):
-		var dropzone = card.get_node("/root/Main/CardDropZone")
+		var dropzone = get_tree().get_first_node_in_group("CardDropZone")
 		var rect = dropzone.get_global_rect()
 		var drop_vector = card.get_global_mouse_position()
 		
 		if rect.has_point(drop_vector):
-			dropzone.play_card(card, self)
+			card.play(dropzone)
 			transition_to("PLAYED")
 		else:
 			card.global_position = original_position
@@ -30,7 +30,7 @@ func handle_input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseMotion:
 		card.global_position = card.get_global_mouse_position() - drag_offset
-		var dropzone = card.get_node("/root/Main/CardDropZone")
+		var dropzone = get_tree().get_first_node_in_group("CardDropZone")
 		var rect = dropzone.get_global_rect()
 		var drop_vector = card.get_global_mouse_position()
 		

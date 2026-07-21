@@ -20,7 +20,7 @@ func update() -> void:
 	pass
 
 
-func handle_input(event: InputEvent) -> void:
+func handle_input(_event: InputEvent) -> void:
 	pass
 
 
