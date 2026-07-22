@@ -3,6 +3,8 @@ extends TextureRect
 
 
 signal played_card(card: Card, parent: CardDropZone)
+signal request_transition(card: Card, from: String, to: String, callback: Callable)
+
 
 @export var card_data: CardData
 

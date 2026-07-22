@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://dh6psppxa7mcx"]
+
+[ext_resource type="Script" uid="uid://lupgrw1j4xa" path="res://src/scenes/mana_crystals/mana_crystal.gd" id="1_4hsii"]
+[ext_resource type="Texture2D" uid="uid://dn2n4l4noadh4" path="res://assets/mana/gem_baguette_8x16_12f_0d_normal.png" id="2_4hsii"]
+
+[sub_resource type="Shader" id="Shader_ypdci"]
+code = "shader_type canvas_item;
+
+// This creates a slider in the Inspector from 0 (full color) to 1 (fully gray)
+uniform float desaturation : hint_range(0.0, 1.0) = 0.0;
+
+void fragment() {
+    vec4 tex_color = texture(TEXTURE, UV);
+    
+    // Calculate the gray value based on human eye light sensitivity
+    float gray = dot(tex_color.rgb, vec3(0.299, 0.587, 0.114));
+    
+    // Mix the original color with the gray color based on our slider
+    COLOR.rgb = mix(tex_color.rgb, vec3(gray), desaturation);
+    COLOR.a = tex_color.a; // Keep the original transparency
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4hsii"]
+resource_local_to_scene = true
+shader = SubResource("Shader_ypdci")
+shader_parameter/desaturation = 0.0
+
+[sub_resource type="Animation" id="Animation_hpqgu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:material:shader_parameter/desaturation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_i650f"]
+resource_name = "spin"
+length = 1.5
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25, 1.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yojcp"]
+_data = {
+&"RESET": SubResource("Animation_hpqgu"),
+&"spin": SubResource("Animation_i650f")
+}
+
+[node name="ManaCrystal" type="Control" unique_id=1853425976]
+custom_minimum_size = Vector2(8, 16)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 8.0
+offset_bottom = 16.0
+size_flags_vertical = 4
+script = ExtResource("1_4hsii")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1357698729]
+material = SubResource("ShaderMaterial_4hsii")
+position = Vector2(4, 8)
+texture = ExtResource("2_4hsii")
+hframes = 12
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1571822647]
+libraries/ = SubResource("AnimationLibrary_yojcp")
+autoplay = &"spin"

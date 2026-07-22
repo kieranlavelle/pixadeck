@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://bmk4te5ggnitg" path="res://src/card/_cards/dome.tres" id="5_ylhto"]
 [ext_resource type="PackedScene" uid="uid://cm7rcu252yg0r" path="res://src/hand/hand.tscn" id="6_cwolq"]
 [ext_resource type="Script" uid="uid://ddw12klinnuwf" path="res://src/hand/hand.gd" id="7_2smqc"]
+[ext_resource type="PackedScene" uid="uid://cmhi8vns8xt7s" path="res://src/player/mana.tscn" id="8_x42xx"]
 
 [node name="Player" type="Node" unique_id=572737044]
 script = ExtResource("1_o822w")
@@ -25,3 +26,5 @@ offset_bottom = -10.0
 mouse_filter = 2
 theme_override_constants/separation = -30
 script = ExtResource("7_2smqc")
+
+[node name="Mana" parent="." unique_id=998965938 instance=ExtResource("8_x42xx")]

@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://bmk4te5ggnitg" path="res://src/card/_cards/dome.tres" id="5_cju2l"]
 [ext_resource type="PackedScene" uid="uid://cm7rcu252yg0r" path="res://src/hand/hand.tscn" id="6_e2x2n"]
 [ext_resource type="Script" uid="uid://ddw12klinnuwf" path="res://src/hand/hand.gd" id="7_3tv5q"]
+[ext_resource type="PackedScene" uid="uid://cmhi8vns8xt7s" path="res://src/player/mana.tscn" id="8_pql7r"]
 
 [node name="Enemy" type="Node" unique_id=1288679930]
 script = ExtResource("1_ll8s5")
@@ -27,3 +28,8 @@ grow_vertical = 1
 mouse_filter = 2
 theme_override_constants/separation = -30
 script = ExtResource("7_3tv5q")
+
+[node name="Mana" parent="." unique_id=998965938 instance=ExtResource("8_pql7r")]
+offset_top = 0.0
+offset_right = 843.0
+offset_bottom = 40.0

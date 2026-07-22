@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cmhi8vns8xt7s"]
+
+[ext_resource type="Script" uid="uid://b0jtrb1aw7ykf" path="res://src/player/mana.gd" id="1_n50ek"]
+[ext_resource type="FontFile" uid="uid://00clkfd0cxp2" path="res://assets/fonts/gomarice_no_continue.ttf" id="2_62vfg"]
+
+[node name="Mana" type="HBoxContainer" unique_id=998965938]
+offset_left = 820.0
+offset_top = 500.0
+offset_right = 953.0
+offset_bottom = 540.0
+script = ExtResource("1_n50ek")
+
+[node name="ManaLabel" type="Label" parent="." unique_id=215264000]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_62vfg")
+text = "0/9"

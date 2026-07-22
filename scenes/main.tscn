@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cgtpe2hl42evt" path="res://src/battle/battle_manager.gd" id="1_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://dvvyp02wvklra" path="res://src/player/player.tscn" id="2_o6xl0"]
+[ext_resource type="Script" uid="uid://bw6ifcuinuiw5" path="res://src/scenes/battle_overlay/text_display.gd" id="6_85g3d"]
+[ext_resource type="Script" uid="uid://bvwxb4osm86ok" path="res://src/scenes/battle_overlay/skip_turn_button.gd" id="6_tipki"]
 [ext_resource type="FontFile" uid="uid://00clkfd0cxp2" path="res://assets/fonts/gomarice_no_continue.ttf" id="7_85g3d"]
 [ext_resource type="Script" uid="uid://dkkq2wtrajg0i" path="res://src/scenes/battle_overlay/battle_overlay.gd" id="7_choun"]
 [ext_resource type="PackedScene" uid="uid://dqsspfenvktrp" path="res://src/scenes/card_drop_zone.tscn" id="7_o6xl0"]
@@ -37,11 +39,25 @@ theme_override_font_sizes/font_size = 35
 text = "Your turn!"
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("6_85g3d")
+
+[node name="EndTurnButton" type="Button" parent="BattleOverlay" unique_id=1616301139]
+offset_left = 889.0
+offset_top = 484.0
+offset_right = 950.0
+offset_bottom = 507.0
+theme_override_fonts/font = ExtResource("7_85g3d")
+theme_override_font_sizes/font_size = 14
+text = "End Turn"
+script = ExtResource("6_tipki")
 
 [node name="CardDropZone" parent="." unique_id=1935065409 groups=["CardDropZone"] instance=ExtResource("7_o6xl0")]
 
 [node name="TurnManager" type="Node" parent="." unique_id=1402197015]
 script = ExtResource("8_tipki")
+
+[connection signal="pressed" from="BattleOverlay/EndTurnButton" to="BattleOverlay/EndTurnButton" method="_on_pressed"]
+[connection signal="turn_finished" from="TurnManager" to="TurnManager" method="_on_turn_ended"]
 
 [editable path="Player"]
 [editable path="Enemy"]
