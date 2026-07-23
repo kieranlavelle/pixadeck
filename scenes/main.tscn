@@ -86,10 +86,10 @@ vertical_alignment = 1
 script = ExtResource("6_85g3d")
 
 [node name="EndTurnButton" type="Button" parent="BattleOverlay" unique_id=1616301139]
-offset_left = 889.0
-offset_top = 484.0
-offset_right = 950.0
-offset_bottom = 507.0
+offset_left = 880.0
+offset_top = 461.0
+offset_right = 941.0
+offset_bottom = 484.0
 theme_override_fonts/font = ExtResource("7_85g3d")
 theme_override_font_sizes/font_size = 14
 text = "End Turn"
