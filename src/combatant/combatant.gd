@@ -44,7 +44,7 @@ func _on_turn_start(combatant: Combatant) -> void:
 		await get_tree().create_timer(1).timeout
 		
 		# behaviours agnostic to real vs ai player.
-		deck.draw_card()
+		await deck.draw_card()
 		enable_player()
 		mana.on_new_turn()
 		

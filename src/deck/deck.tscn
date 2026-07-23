@@ -20,5 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.37413925, 0.37413928, 0.37413922, 1)
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=756521156]
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

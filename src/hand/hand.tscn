@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://cm7rcu252yg0r"]
 
+[ext_resource type="Script" uid="uid://ddw12klinnuwf" path="res://src/hand/hand.gd" id="1_3dq68"]
+[ext_resource type="AudioStream" uid="uid://c2yk0vittu7mg" path="res://assets/sounds/card_play.mp3" id="2_2y21x"]
+
 [node name="Hand" type="HBoxContainer" unique_id=475158690]
 anchors_preset = 12
 anchor_top = 1.0
@@ -8,3 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
+script = ExtResource("1_3dq68")
+card_played_sound = ExtResource("2_2y21x")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2136707275]
