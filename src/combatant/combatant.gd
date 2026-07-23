@@ -6,7 +6,7 @@ extends Control
 
 @onready var deck = $Layout/Deck
 @onready var hand = $Layout/Hand
-@onready var mana = $Layout/Mana
+@onready var stats = $Layout/Stats
 @onready var layout = $Layout
 @onready var ai_controller = $AIController
 
@@ -46,7 +46,7 @@ func _on_turn_start(combatant: Combatant) -> void:
 		# behaviours agnostic to real vs ai player.
 		await deck.draw_card()
 		enable_player()
-		mana.on_new_turn()
+		stats.on_new_turn()
 		
 		# If it's an AI hand control to the controller.
 		if not is_local_player:
@@ -67,8 +67,8 @@ func enable_player() -> void:
 
 func _request_to_play_card(card: Card, zone: CardDropZone) -> bool:
 	var mana_required: int = card.card_data.card_cost
-	if mana_required <= mana.current_mana:
-		mana.use_mana(mana_required)
+	if mana_required <= stats.current_mana:
+		stats.use_mana(mana_required)
 		hand.play_card(card, zone)
 		
 		return true
@@ -82,7 +82,7 @@ func _handle_card_transition_request(card: Card, from: String, to: String, callb
 	# in the future if more cases come up I will make a matrix, but not right now.
 	if from == "DRAGGING" and to == "PLAYED":
 		var mana_required: int = card.card_data.card_cost
-		if mana_required <= mana.current_mana:
+		if mana_required <= stats.current_mana:
 			callback.call(true)
 		else:
 			callback.call(false)
@@ -95,10 +95,10 @@ func apply_layout() -> void:
 	# In future if we want to mirror layouts we can move the index
 	# of Layout to changer their ordering
 	if seat == Seat.BOTTOM:
-		mana.size_flags_vertical = Control.SIZE_SHRINK_END
+		stats.size_flags_vertical = Control.SIZE_SHRINK_END
 		deck.size_flags_vertical = Control.SIZE_SHRINK_END
 		hand.size_flags_vertical = Control.SIZE_SHRINK_END
 	else:
-		mana.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		stats.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 		deck.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 		hand.size_flags_vertical = Control.SIZE_SHRINK_BEGIN

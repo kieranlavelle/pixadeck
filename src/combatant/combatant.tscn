@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://dp7kbtrj1byjo" path="res://assets/sounds/card_draw.mp3" id="4_681m7"]
 [ext_resource type="Resource" uid="uid://bmk4te5ggnitg" path="res://src/card/_cards/dome.tres" id="5_ylhto"]
 [ext_resource type="PackedScene" uid="uid://cm7rcu252yg0r" path="res://src/hand/hand.tscn" id="6_cwolq"]
-[ext_resource type="PackedScene" uid="uid://cmhi8vns8xt7s" path="res://src/combatant/mana/mana.tscn" id="8_x42xx"]
+[ext_resource type="PackedScene" uid="uid://cmhi8vns8xt7s" path="res://src/combatant/stats/stats.tscn" id="8_x42xx"]
 [ext_resource type="Script" uid="uid://b8gfm8g1lt6ug" path="res://src/combatant/controllers/ai_controller.gd" id="9_l271a"]
 
 [node name="Combatant" type="Control" unique_id=756094817]
@@ -47,6 +47,6 @@ size_flags_vertical = 8
 mouse_filter = 2
 theme_override_constants/separation = -30
 
-[node name="Mana" parent="Layout" unique_id=998965938 instance=ExtResource("8_x42xx")]
+[node name="Stats" parent="Layout" unique_id=998965938 instance=ExtResource("8_x42xx")]
 layout_mode = 2
 size_flags_vertical = 8

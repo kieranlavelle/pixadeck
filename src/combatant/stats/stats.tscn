@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmhi8vns8xt7s"]
+
+[ext_resource type="Script" uid="uid://cu627kau8vfcl" path="res://src/combatant/stats/stats.gd" id="1_n50ek"]
+[ext_resource type="FontFile" uid="uid://00clkfd0cxp2" path="res://assets/fonts/gomarice_no_continue.ttf" id="2_62vfg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_background"]
+bg_color = Color(0.09019608, 0.078431375, 0.09803922, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.99215686, 0.27058825, 0.23921569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mana_fill"]
+bg_color = Color(0.16078432, 0.47843137, 0.98039216, 1)
+
+[node name="Stats" type="VBoxContainer" unique_id=998965938]
+custom_minimum_size = Vector2(120, 40)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+script = ExtResource("1_n50ek")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=927643666]
+custom_minimum_size = Vector2(120, 18)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_health_background")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+max_value = 40.0
+step = 1.0
+value = 40.0
+show_percentage = false
+
+[node name="HealthValue" type="Label" parent="HealthBar" unique_id=215264000]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_62vfg")
+text = "Health 40/40"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="." unique_id=371098086]
+custom_minimum_size = Vector2(120, 18)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_health_background")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mana_fill")
+max_value = 9.0
+step = 1.0
+show_percentage = false
+
+[node name="ManaValue" type="Label" parent="ManaBar" unique_id=446552274]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_62vfg")
+text = "Mana 0/9"
+horizontal_alignment = 1
+vertical_alignment = 1
