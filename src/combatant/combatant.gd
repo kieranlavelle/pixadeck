@@ -1,36 +1,57 @@
-class_name BasePlayer
-extends Node
+class_name Combatant
+extends Control
 
 @export var is_local_player: bool
+@export var seat: Seat
 
-@onready var deck = $Deck
-@onready var hand = $Hand
-@onready var mana = $Mana
+@onready var deck = $Layout/Deck
+@onready var hand = $Layout/Hand
+@onready var mana = $Layout/Mana
+@onready var layout = $Layout
+@onready var ai_controller = $AIController
 
 signal player_turn_ended
 
+enum Seat { TOP, BOTTOM }
+
 # set by the battle manager at battle start.
 # used to infer if it is the players turn
-var player_id: int
+var combatant_id: int
 
 func _ready() -> void:
 	hand.request_play_card.connect(_request_to_play_card)
 	hand.request_transition.connect(_handle_card_transition_request)
+	hand.owner_combatant = self
+	
+	
+	# disable the AI controller if this is a player
+	if is_local_player:
+		ai_controller.set_process(false)
+	else:
+		ai_controller.setup(self)
 
 
 func _player_turn_ended() -> void:
 	player_turn_ended.emit()
 
 
-func _on_turn_start(player: BasePlayer) -> void:
+func _on_turn_start(combatant: Combatant) -> void:
 	# if it's the players turn, draw a card from their hand	
-	if player.player_id == player_id:
-		# this just feels a bit better, so we can see the card appear
+	if combatant.combatant_id == combatant_id:
+		
+		# Wait so we can see the cards appear.
+		# TODO: This will be replaced with animation await
 		await get_tree().create_timer(1).timeout
+		
+		# behaviours agnostic to real vs ai player.
 		deck.draw_card()
 		enable_player()
-		
 		mana.on_new_turn()
+		
+		# If it's an AI hand control to the controller.
+		if not is_local_player:
+			ai_controller.play_turn()
+		
 	else:
 		disable_player()
 
@@ -67,3 +88,17 @@ func _handle_card_transition_request(card: Card, from: String, to: String, callb
 			callback.call(false)
 	else:
 		callback.call(true)
+
+
+
+func apply_layout() -> void:
+	# In future if we want to mirror layouts we can move the index
+	# of Layout to changer their ordering
+	if seat == Seat.BOTTOM:
+		mana.size_flags_vertical = Control.SIZE_SHRINK_END
+		deck.size_flags_vertical = Control.SIZE_SHRINK_END
+		hand.size_flags_vertical = Control.SIZE_SHRINK_END
+	else:
+		mana.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		deck.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		hand.size_flags_vertical = Control.SIZE_SHRINK_BEGIN

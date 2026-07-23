@@ -2,27 +2,27 @@ class_name TurnManager
 extends Node
 
 
-signal turn_started(player: BasePlayer)
+signal turn_started(combatant: Combatant)
 signal turn_finished
 
 
-var current_player: BasePlayer
+var current_combatant: Combatant
 var turn_count: int = 1
-var players: Array[BasePlayer] = []
+var combatants: Array[Combatant] = []
 
-func start(all_players: Array[BasePlayer]) -> void:
+func start(all_combatants: Array[Combatant]) -> void:
 	# flip a coin and decide who goes first.
-	players = all_players
-	current_player = all_players.pick_random()
-	turn_started.emit(current_player)
+	combatants = all_combatants
+	current_combatant = all_combatants.pick_random()
+	turn_started.emit(current_combatant)
 
 # flip to the other player
 func _on_turn_ended() -> void:
-	var index := players.find(current_player)
+	var index := combatants.find(current_combatant)
 	index += 1
 	
-	if index >= players.size():
+	if index >= combatants.size():
 		index = 0
 		
-	current_player = players[index]
-	turn_started.emit(current_player)
+	current_combatant = combatants[index]
+	turn_started.emit(current_combatant)

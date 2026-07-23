@@ -5,25 +5,25 @@
 [node name="CardDropZone" type="Control" unique_id=1935065409]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 10.0
-offset_top = 105.0
-offset_right = 950.0
-offset_bottom = 435.0
 mouse_filter = 2
 script = ExtResource("1_giaq4")
 
-[node name="OpponentGrid" type="GridContainer" parent="." unique_id=729958016]
-layout_mode = 0
-offset_top = 52.0
-offset_right = 940.0
-offset_bottom = 155.0
+[node name="Layout" type="VBoxContainer" parent="." unique_id=1968807753]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopZone" type="GridContainer" parent="Layout" unique_id=729958016]
+layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 2
 columns = 12
 
-[node name="PlayerGrid" type="GridContainer" parent="." unique_id=77884986]
-layout_mode = 0
-offset_top = 175.0
-offset_right = 940.0
-offset_bottom = 340.0
+[node name="BottomZone" type="GridContainer" parent="Layout" unique_id=77884986]
+layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 2
 columns = 12

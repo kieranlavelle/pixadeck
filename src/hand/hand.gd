@@ -8,6 +8,7 @@ signal request_play_card(card: Card, zone: CardDropZone)
 signal request_transition(card: Card, from: String, to: String, callback: Callable)
 
 var cards: Array[Card] = []
+var owner_combatant: Combatant
 
 func add_to_hand(card_data: CardData) -> void:
 	if cards.size() < DEFAULT_MAX_HAND_SIZE:
@@ -25,11 +26,14 @@ func add_to_hand(card_data: CardData) -> void:
 func update_cards_for_turn(is_opponents_turn: bool) -> void:
 	for card in get_children():
 		card.opponents_turn = is_opponents_turn
-		card.is_locally_owned = get_parent().is_local_player
+		card.is_locally_owned = owner_combatant.is_local_player
 	
 
 
 func play_card(card: Card, new_parent: CardDropZone) -> void:
-	new_parent.play_card(card, get_parent())
+	new_parent.play_card(card, owner_combatant)
 	var index = cards.find(card)
-	cards.remove_at(index)
+	
+	# find() can return -1
+	if index != -1:
+		cards.remove_at(index)

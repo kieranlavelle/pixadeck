@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://dvvyp02wvklra"]
+
+[ext_resource type="Script" uid="uid://dtgwn70lplb04" path="res://src/combatant/combatant.gd" id="1_o822w"]
+[ext_resource type="PackedScene" uid="uid://cryj3mghpm68i" path="res://src/deck/deck.tscn" id="2_x42xx"]
+[ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="3_l271a"]
+[ext_resource type="Resource" uid="uid://c7ib0x1vjkvrj" path="res://src/card/_cards/strike.tres" id="4_8ydov"]
+[ext_resource type="Resource" uid="uid://bmk4te5ggnitg" path="res://src/card/_cards/dome.tres" id="5_ylhto"]
+[ext_resource type="PackedScene" uid="uid://cm7rcu252yg0r" path="res://src/hand/hand.tscn" id="6_cwolq"]
+[ext_resource type="Script" uid="uid://ddw12klinnuwf" path="res://src/hand/hand.gd" id="7_2smqc"]
+[ext_resource type="PackedScene" uid="uid://cmhi8vns8xt7s" path="res://src/combatant/mana/mana.tscn" id="8_x42xx"]
+[ext_resource type="Script" uid="uid://b8gfm8g1lt6ug" path="res://src/combatant/controllers/ai_controller.gd" id="9_l271a"]
+
+[node name="Combatant" type="Control" unique_id=756094817]
+custom_minimum_size = Vector2(920, 140)
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_o822w")
+
+[node name="AIController" type="Node" parent="." unique_id=1915990741]
+script = ExtResource("9_l271a")
+
+[node name="Layout" type="HBoxContainer" parent="." unique_id=1848351654]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Deck" parent="Layout" unique_id=465602771 instance=ExtResource("2_x42xx")]
+custom_minimum_size = Vector2(76, 103)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 8
+starting_deck = Array[ExtResource("3_l271a")]([ExtResource("4_8ydov"), ExtResource("5_ylhto")])
+
+[node name="Hand" parent="Layout" unique_id=475158690 instance=ExtResource("6_cwolq")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 103)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_constants/separation = -30
+script = ExtResource("7_2smqc")
+
+[node name="Mana" parent="Layout" unique_id=998965938 instance=ExtResource("8_x42xx")]
+layout_mode = 2
+size_flags_vertical = 8

@@ -24,7 +24,7 @@ func _ready():
 		add_child(instance)
 
 
-# called from the BasePlayer when a new turn starts
+# called from the Combatant when a new turn starts
 func on_new_turn() -> void:
 	if current_max_mana < MAX_MANA:
 		current_max_mana += 1

@@ -52,8 +52,8 @@ func _process(_delta: float) -> void:
 		_update_tooltip_position()
 
 
-# proxy inputs to current state handler
-func _unhandled_input(event) -> void:
+
+func _gui_input(event: InputEvent) -> void:
 	if card_state.current_state:
 		card_state.current_state.handle_input(event)
 

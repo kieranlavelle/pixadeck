@@ -1,22 +1,66 @@
 [gd_scene format=3 uid="uid://6ets8s8yauur"]
 
 [ext_resource type="Script" uid="uid://cgtpe2hl42evt" path="res://src/battle/battle_manager.gd" id="1_eb6dy"]
-[ext_resource type="PackedScene" uid="uid://dvvyp02wvklra" path="res://src/player/player.tscn" id="2_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://dvvyp02wvklra" path="res://src/combatant/combatant.tscn" id="2_o6xl0"]
 [ext_resource type="Script" uid="uid://bw6ifcuinuiw5" path="res://src/scenes/battle_overlay/text_display.gd" id="6_85g3d"]
 [ext_resource type="Script" uid="uid://bvwxb4osm86ok" path="res://src/scenes/battle_overlay/skip_turn_button.gd" id="6_tipki"]
 [ext_resource type="FontFile" uid="uid://00clkfd0cxp2" path="res://assets/fonts/gomarice_no_continue.ttf" id="7_85g3d"]
 [ext_resource type="Script" uid="uid://dkkq2wtrajg0i" path="res://src/scenes/battle_overlay/battle_overlay.gd" id="7_choun"]
 [ext_resource type="PackedScene" uid="uid://dqsspfenvktrp" path="res://src/scenes/card_drop_zone.tscn" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://c7vod8twahxdi" path="res://src/scenes/turn_manager/turn_manager.gd" id="8_tipki"]
-[ext_resource type="PackedScene" uid="uid://5btx4itv08sa" path="res://src/enemy/enemy.tscn" id="9_trceg"]
 
-[node name="BattleManager" type="Node2D" unique_id=2129418468]
+[node name="BattleManager" type="Control" unique_id=982758747]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_eb6dy")
 
-[node name="Player" parent="." unique_id=572737044 groups=["Player"] instance=ExtResource("2_o6xl0")]
-is_local_player = true
+[node name="BattleLayout" type="VBoxContainer" parent="." unique_id=1298152651]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="Enemy" parent="." unique_id=1288679930 groups=["Player"] instance=ExtResource("9_trceg")]
+[node name="TopSeat" type="MarginContainer" parent="BattleLayout" unique_id=1916993025]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
+
+[node name="Enemy" parent="BattleLayout/TopSeat" unique_id=135601075 groups=["Combatants"] instance=ExtResource("2_o6xl0")]
+layout_mode = 2
+
+[node name="Battlefield" type="MarginContainer" parent="BattleLayout" unique_id=1907019429]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
+
+[node name="CardDropZone" parent="BattleLayout/Battlefield" unique_id=1935065409 groups=["CardDropZone"] instance=ExtResource("7_o6xl0")]
+layout_mode = 2
+
+[node name="BottomSeat" type="MarginContainer" parent="BattleLayout" unique_id=497628844]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
+
+[node name="Player" parent="BattleLayout/BottomSeat" unique_id=1676522694 groups=["Combatants"] instance=ExtResource("2_o6xl0")]
+layout_mode = 2
+is_local_player = true
+seat = 1
 
 [node name="BattleOverlay" type="CanvasLayer" parent="." unique_id=1143265905]
 layer = 100
@@ -51,13 +95,8 @@ theme_override_font_sizes/font_size = 14
 text = "End Turn"
 script = ExtResource("6_tipki")
 
-[node name="CardDropZone" parent="." unique_id=1935065409 groups=["CardDropZone"] instance=ExtResource("7_o6xl0")]
-
 [node name="TurnManager" type="Node" parent="." unique_id=1402197015]
 script = ExtResource("8_tipki")
 
 [connection signal="pressed" from="BattleOverlay/EndTurnButton" to="BattleOverlay/EndTurnButton" method="_on_pressed"]
 [connection signal="turn_finished" from="TurnManager" to="TurnManager" method="_on_turn_ended"]
-
-[editable path="Player"]
-[editable path="Enemy"]

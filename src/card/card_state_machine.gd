@@ -21,8 +21,7 @@ func _ready():
 	current_state = states[INITIAL_STATE]
 
 
-func transition_to(state: String) -> void:
-	
+func transition_to(state: String) -> void:	
 	# we can never move another players cards to these states
 	if not card.is_locally_owned and PLAYER_TURN_ONLY_STATES.has(state):
 		return
@@ -30,8 +29,6 @@ func transition_to(state: String) -> void:
 	# cant move your card into these states on your opponents turn
 	if card.opponents_turn and PLAYER_TURN_ONLY_STATES.has(state):
 		return
-	
-	print("moved from state: ", current_state.name, " to: ", state)
 	
 	var new_state = states[state]
 	

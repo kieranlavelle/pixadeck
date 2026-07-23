@@ -11,7 +11,7 @@ func _ready():
 	# re-emit childs signal
 	EndTurnButton.request_end_turn.connect(request_end_turn.emit)
 
-func _on_turn_start(player: BasePlayer):
+func _on_turn_start(player: Combatant):
 	# for now, the actul player will always be player 0 as they're first in the tree
 	if player.is_local_player:
 		TextDisplayNode.display_text("Your turn!")
