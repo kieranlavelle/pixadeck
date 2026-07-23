@@ -24,6 +24,13 @@ func handle_input(_event: InputEvent) -> void:
 	pass
 
 
+# States return true here when they have captured an interaction that must keep
+# receiving mouse events after the cursor leaves the card. Most states return
+# false and only handle card-local _gui_input events.
+func wants_captured_input(_event: InputEvent) -> bool:
+	return false
+
+
 func on_mouse_entered() -> void:
 	pass
 

@@ -52,10 +52,21 @@ func _process(_delta: float) -> void:
 		_update_tooltip_position()
 
 
+func _input(event: InputEvent) -> void:
+	# _input sees mouse events anywhere in the viewport. We only use it after a
+	# state has captured the interaction, so dragging still receives motion and
+	# button-release events once the cursor leaves the card's Control rect.
+	if card_state.wants_captured_input(event):
+		card_state.handle_input(event)
+		get_viewport().set_input_as_handled()
+
 
 func _gui_input(event: InputEvent) -> void:
+	# _gui_input is for starting card-local interactions: hover-to-click begins
+	# only when Godot delivered the mouse event to this specific card Control.
+	# Ongoing click/drag handling moves to _input through wants_captured_input().
 	if card_state.current_state:
-		card_state.current_state.handle_input(event)
+		card_state.handle_input(event)
 
 
 func show_tooltip() -> void:

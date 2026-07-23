@@ -47,3 +47,12 @@ func _on_played_transition(success: bool):
 	else:
 		card.global_position = original_position
 		transition_to("IDLE")
+
+
+func wants_captured_input(event: InputEvent) -> bool:
+	# Dragging must keep receiving motion/release outside the card; otherwise the
+	# highlight panels and original-position rollback can be left in stale states.
+	return (
+		event is InputEventMouseMotion
+		or event.is_action_released("left_mouse_button")
+	)
