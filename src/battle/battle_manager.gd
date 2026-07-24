@@ -31,6 +31,8 @@ func _ready():
 	
 	# setup battle context
 	battle_context = BattleContext.new(event_queue, combatants, self)
+	for combatant in combatants:
+		combatant.battle_context = battle_context
 
 
 	TurnManagerNode.start(combatants)

@@ -27,5 +27,6 @@ func enqueue(event: BattleEvent) -> void:
 	_queue.append(event)
 
 
-func _resolve_event(_event: BattleEvent) -> void:
+func _resolve_event(event: BattleEvent) -> void:
+	print("Resolving event: ", event.type)
 	await get_tree().process_frame

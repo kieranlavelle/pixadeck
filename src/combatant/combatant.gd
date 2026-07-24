@@ -17,6 +17,7 @@ enum Seat { TOP, BOTTOM }
 # set by the battle manager at battle start.
 # used to infer if it is the players turn
 var combatant_id: int
+var battle_context: BattleContext
 
 func _ready() -> void:
 	hand.request_play_card.connect(_request_to_play_card)
@@ -66,23 +67,14 @@ func enable_player() -> void:
 
 
 func _request_to_play_card(card: Card, zone: CardDropZone) -> bool:
-	var mana_required: int = card.card_data.card_cost
-	if mana_required <= stats.current_mana:
-		stats.use_mana(mana_required)
-		hand.play_card(card, zone)
-		
-		return true
-	else:
-		return false
-
+	return await battle_context.request_play_card(self, card, zone)
 
 # There are now two ways to achive a similar result. We could probably remove request play card
 # and just treat certain transition requests to play cards instead
 func _handle_card_transition_request(card: Card, from: String, to: String, callback: Callable):
 	# in the future if more cases come up I will make a matrix, but not right now.
 	if from == "DRAGGING" and to == "PLAYED":
-		var mana_required: int = card.card_data.card_cost
-		if mana_required <= stats.current_mana:
+		if battle_context.can_play_card(self, card):
 			callback.call(true)
 		else:
 			callback.call(false)

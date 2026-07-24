@@ -27,3 +27,40 @@ func deal_damage(target: Combatant, amount: int) -> void:
 	if target == null:
 		return
 	target.stats.refresh_health(target.stats.current_health - amount)
+
+
+# This function only checks mana requrements. Not turns, or anything else.
+func can_play_card(combatant: Combatant, card: Card) -> bool:
+	if combatant.stats.current_mana >= card.card_data.card_cost:
+		return true
+	return false
+
+
+func request_play_card(combatant: Combatant, card: Card, zone: CardDropZone) -> bool:
+	var request_event := BattleEvent.new(
+		BattleEventType.CARD_PLAY_REQUESTED,
+		combatant,
+		combatant,
+		zone,
+		card
+	)
+	await event_queue.dispatch(request_event)
+
+	if request_event.cancelled:
+		return false
+
+	if not spend_mana(combatant, card.card_data.card_cost):
+		return false
+
+	combatant.hand.play_card(card, zone)
+
+	var played_card_event := BattleEvent.new(
+		BattleEventType.CARD_PLAYED,
+		combatant,
+		combatant,
+		zone,
+		card
+	)
+	await event_queue.dispatch(played_card_event)
+
+	return true
