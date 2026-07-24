@@ -17,26 +17,28 @@ func _ready():
 	draw_pile.shuffle()
 	
 
-func draw_card():
-	if !draw_pile.is_empty():
+func draw_card() -> Card:
+	if draw_pile.is_empty():
+		return null
 		
-		# check there is room in hand:
-		if hand.is_hand_full():
-			print("Hand is full, handle this event later")
-			return
+	# check there is room in hand:
+	if hand.is_hand_full():
+		return null
 		
-		if audio.stream:
-			audio.play()
-		
-		var drawn_card = draw_pile.pop_back()
-		
-		# start this card as invisible, seems like it should
-		# be a hand or card responsibility
-		var card_in_hand := hand.add_to_hand(drawn_card)
-		await animate_card_to_hand(card_in_hand)
-		
-		if draw_pile.is_empty():
-			empty_texture.show()
+	if audio.stream:
+		audio.play()
+	
+	var drawn_card = draw_pile.pop_back()
+	
+	# start this card as invisible, seems like it should
+	# be a hand or card responsibility
+	var card_in_hand := hand.add_to_hand(drawn_card)
+	await animate_card_to_hand(card_in_hand)
+	
+	if draw_pile.is_empty():
+		empty_texture.show()
+	
+	return card_in_hand
 
 
 func animate_card_to_hand(card_in_hand: Card) -> void:

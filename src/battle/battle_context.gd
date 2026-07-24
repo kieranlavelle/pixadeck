@@ -64,3 +64,23 @@ func request_play_card(combatant: Combatant, card: Card, zone: CardDropZone) -> 
 	await event_queue.dispatch(played_card_event)
 
 	return true
+
+
+func draw_card(combatant: Combatant) -> Card:
+	var draw_card_event := BattleEvent.new(
+		BattleEventType.CARD_DRAW_REQUESTED,
+		combatant,
+		combatant.deck,
+	)
+	await event_queue.dispatch(draw_card_event)
+
+	if draw_card_event.cancelled:
+		return null
+	
+	var card: Card = await combatant.deck.draw_card()
+	if card != null:
+		var draw_event := BattleEvent.new(BattleEventType.CARD_DRAWN, combatant, combatant.deck, combatant.hand, card)
+		await event_queue.dispatch(draw_event)
+		return card
+
+	return null
