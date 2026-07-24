@@ -6,6 +6,7 @@ extends Control
 
 var combatants: Array[Combatant] = []
 var event_queue: BattleEventQueue
+var battle_context: BattleContext
 
 func _ready():
 
@@ -25,13 +26,11 @@ func _ready():
 	
 	# If A player skips their turn emit turn finished
 	BattleOverlay.request_end_turn.connect(TurnManagerNode.turn_finished.emit)
-	
-	
-	# UI Updates
 	TurnManagerNode.turn_started.connect(_ui_on_turn_start)
-		
-	# What to do when a turn starts?
 	TurnManagerNode.turn_started.connect(BattleOverlay._on_turn_start)
+	
+	# setup battle context
+	battle_context = BattleContext.new(event_queue, combatants, self)
 
 
 	TurnManagerNode.start(combatants)
