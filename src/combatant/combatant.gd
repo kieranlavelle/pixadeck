@@ -6,7 +6,7 @@ extends Control
 
 @onready var deck = $Layout/Deck
 @onready var hand = $Layout/Hand
-@onready var stats = $Layout/Stats
+@onready var stats: Stats = $Layout/Stats as Stats
 @onready var layout = $Layout
 @onready var ai_controller = $AIController
 

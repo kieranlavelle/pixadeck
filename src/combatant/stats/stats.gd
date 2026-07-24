@@ -1,3 +1,4 @@
+class_name Stats
 extends VBoxContainer
 
 @onready var health_bar: ProgressBar = $HealthBar
