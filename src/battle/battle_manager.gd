@@ -5,8 +5,13 @@ extends Control
 @onready var BattleOverlay = $BattleOverlay
 
 var combatants: Array[Combatant] = []
+var event_queue: BattleEventQueue
 
 func _ready():
+
+	# setup the event queue for the battle.
+	event_queue = BattleEventQueue.new()
+	add_child(event_queue)
 	
 	# discover combatants in this battle
 	combatants.assign(get_tree().get_nodes_in_group("Combatants"))
@@ -27,7 +32,7 @@ func _ready():
 		
 	# What to do when a turn starts?
 	TurnManagerNode.turn_started.connect(BattleOverlay._on_turn_start)
-	
+
 
 	TurnManagerNode.start(combatants)
 
