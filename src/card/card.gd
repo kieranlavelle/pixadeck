@@ -25,7 +25,7 @@ signal request_transition(card: Card, from: String, to: String, callback: Callab
 @onready var card_mana_cost: TextureRect = $Assets/Mana
 @onready var background: TextureRect = $Assets/Background
 
-var TOOLTIP_SCENE = preload("res://src/scenes/tooltip.tscn")
+var TOOLTIP_SCENE = preload("res://src/ui/tooltip/tooltip.tscn")
 var tooltip_offset_y: float = 0.0
 
 # used to block certain state transitions during the other players turn

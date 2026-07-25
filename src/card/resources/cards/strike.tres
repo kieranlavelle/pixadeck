@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://c7ib0x1vjkvrj"]
+
+[ext_resource type="Texture2D" uid="uid://dr2xuam6pmiab" path="res://assets/card_components/fire-texture-background.png" id="1_7cykr"]
+[ext_resource type="Script" uid="uid://c4otee18fs8or" path="res://src/card/resources/effect_data.gd" id="1_befcr"]
+[ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="1_qcscg"]
+[ext_resource type="Texture2D" uid="uid://bavkmf87xe3ju" path="res://assets/card_components/bronze-border.png" id="2_raic2"]
+[ext_resource type="Script" uid="uid://bslnyll8l7ne1" path="res://src/card/resources/types/selector_action_pair.gd" id="4_42kfe"]
+[ext_resource type="Script" uid="uid://boodsla6rwx02" path="res://src/card/resources/targeting/random_enemy_selector.gd" id="5_65w8k"]
+[ext_resource type="Texture2D" uid="uid://buf7epf87y72v" path="res://assets/card_components/bronze-flag.png" id="6_5uutn"]
+[ext_resource type="Script" uid="uid://dnmqqedo4u5ol" path="res://src/card/resources/keywords/keyword_data.gd" id="6_102ov"]
+[ext_resource type="Texture2D" uid="uid://dtkwemx52jh7g" path="res://assets/card_components/Icon25.png" id="6_raic2"]
+[ext_resource type="Resource" uid="uid://foqmfbuhhu3q" path="res://src/card/resources/keywords/persistent.tres" id="7_3c1pv"]
+[ext_resource type="Texture2D" uid="uid://bq8g60i21s8uq" path="res://assets/card_components/silver-inner-border.png" id="7_gyt0l"]
+[ext_resource type="Texture2D" uid="uid://cw5ql15j0rfag" path="res://assets/card_components/1-mana.png" id="8_d6gd4"]
+[ext_resource type="Resource" uid="uid://cwdfydpfiujmo" path="res://src/card/resources/keywords/physical_damage.tres" id="8_nd6yx"]
+[ext_resource type="Script" uid="uid://ct7d5s6hb5d40" path="res://src/card/resources/trigger_filters/trigger_filter.gd" id="9_bkahc"]
+[ext_resource type="Script" uid="uid://cyfy7740gqrhi" path="res://src/card/resources/trigger_filters/not_own_source_card.gd" id="10_42kfe"]
+[ext_resource type="Texture2D" uid="uid://clak0olg4ou31" path="res://assets/card_components/silver-medium-title.png" id="10_8835c"]
+[ext_resource type="Texture2D" uid="uid://bdlvgujlinu8n" path="res://assets/card_components/sword-type.png" id="11_42kfe"]
+[ext_resource type="Script" uid="uid://2wp824qm8k6b" path="res://src/card/resources/actions/deal_damage_action.gd" id="12_65w8k"]
+
+[sub_resource type="Resource" id="Resource_damage_action"]
+script = ExtResource("12_65w8k")
+metadata/_custom_type_script = "uid://2wp824qm8k6b"
+
+[sub_resource type="Resource" id="Resource_7j0ai"]
+script = ExtResource("5_65w8k")
+metadata/_custom_type_script = "uid://boodsla6rwx02"
+
+[sub_resource type="Resource" id="Resource_selector_action"]
+script = ExtResource("4_42kfe")
+selector = SubResource("Resource_7j0ai")
+action = SubResource("Resource_damage_action")
+metadata/_custom_type_script = "uid://bslnyll8l7ne1"
+
+[sub_resource type="Resource" id="Resource_aota0"]
+script = ExtResource("10_42kfe")
+metadata/_custom_type_script = "uid://cyfy7740gqrhi"
+
+[sub_resource type="Resource" id="Resource_gonej"]
+script = ExtResource("1_befcr")
+name = "damage_turn_start"
+description = "deals damage to a random target enemy at enemy turn start"
+trigger_events = Array[StringName]([&"turn_started"])
+trigger_filters = Array[ExtResource("9_bkahc")]([SubResource("Resource_aota0")])
+effect_actions = Array[ExtResource("4_42kfe")]([SubResource("Resource_selector_action")])
+tooltip_keywords = Array[ExtResource("6_102ov")]([ExtResource("7_3c1pv"), ExtResource("8_nd6yx")])
+metadata/_custom_type_script = "uid://c4otee18fs8or"
+
+[resource]
+script = ExtResource("1_qcscg")
+id = "strike"
+card_name = "Strike"
+description = "Deal 1 [b]physical[/b] damage to a single random target enemy each turn. [i]persistent.[/i]"
+effects = Array[ExtResource("1_befcr")]([SubResource("Resource_gonej")])
+border_asset = ExtResource("2_raic2")
+inner_border_asset = ExtResource("7_gyt0l")
+mana_asset = ExtResource("8_d6gd4")
+flag_asset = ExtResource("6_5uutn")
+background_asset = ExtResource("1_7cykr")
+title_asset = ExtResource("10_8835c")
+type_asset = ExtResource("11_42kfe")
+image_asset = ExtResource("6_raic2")
+metadata/_custom_type_script = "uid://by78ddj4qp3w6"
