@@ -27,6 +27,7 @@ func add_to_hand(card_data: CardData) -> Card:
 	if cards.size() < DEFAULT_MAX_HAND_SIZE:
 		var card_instance = CARD_SCENE.instantiate()
 		card_instance.card_data = card_data
+		card_instance.owner_combatant = owner_combatant
 		
 		# connect signals
 		card_instance.played_card.connect(request_play_card.emit)

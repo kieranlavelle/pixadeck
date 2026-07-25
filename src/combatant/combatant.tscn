@@ -36,7 +36,7 @@ layout_mode = 2
 size_flags_horizontal = 5
 size_flags_vertical = 8
 draw_sound = ExtResource("4_681m7")
-starting_deck = Array[ExtResource("3_l271a")]([ExtResource("4_8ydov"), ExtResource("5_ylhto")])
+starting_deck = Array[ExtResource("3_l271a")]([ExtResource("4_8ydov"), ExtResource("5_ylhto"), ExtResource("4_8ydov")])
 
 [node name="Hand" parent="Layout" unique_id=475158690 instance=ExtResource("6_cwolq")]
 unique_name_in_owner = true

@@ -7,10 +7,6 @@ extends Resource
 
 @export_multiline var description: String = "card effect description"
 
-@export_category("Stats")
-@export var damage: int = -1
-@export var heal: int = -1
-
 @export var effects: Array[EffectData] = []
 
 @export_category("assets")

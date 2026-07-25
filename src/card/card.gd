@@ -31,6 +31,7 @@ var tooltip_offset_y: float = 0.0
 # used to block certain state transitions during the other players turn
 var opponents_turn: bool = true
 var is_locally_owned: bool = false
+var owner_combatant: Combatant
 
 func _ready():
 	if card_data == null:
@@ -79,10 +80,23 @@ func show_tooltip() -> void:
 	tooltip_stack.add_child(main_tooltip)
 	main_tooltip.setup(card_data.card_name, card_data.description, card_data.card_cost)
 	
+	# gather all the keywords
+	var keywords: Array[KeywordData] = []
+	
 	for effect in card_data.effects:
+		for keyword in effect.get_tooltip_keywords():
+			if not keywords.has(keyword):
+				keywords.append(keyword)
+	
+	for keyword in keywords:
 		var effect_tooltip = TOOLTIP_SCENE.instantiate()
 		tooltip_stack.add_child(effect_tooltip)
-		effect_tooltip.setup(effect.name, effect.description)
+		effect_tooltip.setup(keyword.display_name, keyword.description)
+		
+	#for effect in card_data.effects:
+		#var effect_tooltip = TOOLTIP_SCENE.instantiate()
+		#tooltip_stack.add_child(effect_tooltip)
+		#effect_tooltip.setup(effect.name, effect.description)
 	
 	# 3. Start invisible (opacity = 0)
 	tooltip_stack.modulate.a = 0.0

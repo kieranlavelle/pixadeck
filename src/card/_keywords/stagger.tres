@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="KeywordData" format=3 uid="uid://d2u8l6xfmjghi"]
+
+[ext_resource type="Script" uid="uid://dnmqqedo4u5ol" path="res://src/card/resource/keyword_data.gd" id="1_vdnah"]
+
+[resource]
+script = ExtResource("1_vdnah")
+id = &"stagger"
+display_name = "Stagger"
+description = "Prevents enemy card effects from resolving on their next turn."
+metadata/_custom_type_script = "uid://dnmqqedo4u5ol"

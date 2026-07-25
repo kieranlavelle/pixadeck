@@ -84,3 +84,16 @@ func draw_card(combatant: Combatant) -> Card:
 		return card
 
 	return null
+
+
+func get_active_cards(event: BattleEvent) -> Array[Card]:
+	var drop_zone = event.owner.get_tree().get_first_node_in_group("CardDropZone")
+	return drop_zone.get_all_cards()
+
+
+# This returns an array of all targets, which is all cards + combatants
+func get_all_targets(event: BattleEvent) -> Array[Variant]:
+	var targets = []
+	targets.append_array(get_active_cards(event))
+	targets.append_array(combatants)
+	return targets
