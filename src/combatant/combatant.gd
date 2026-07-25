@@ -10,8 +10,6 @@ extends Control
 @onready var layout = $Layout
 @onready var ai_controller = $AIController
 
-signal player_turn_ended
-
 enum Seat { TOP, BOTTOM }
 
 # set by the battle manager at battle start.
@@ -30,10 +28,6 @@ func _ready() -> void:
 		ai_controller.set_process(false)
 	else:
 		ai_controller.setup(self)
-
-
-func _player_turn_ended() -> void:
-	player_turn_ended.emit()
 
 
 func _on_turn_start(combatant: Combatant) -> void:

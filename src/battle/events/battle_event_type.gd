@@ -7,6 +7,13 @@ extends RefCounted
 
 # Turn based events
 const TURN_STARTED := &"turn_started"
+
+# emit just before this users turn ends, querying the current user could
+# give you the wrong info.
+const TURN_ENDING := &"turn_ending"
+
+# emited after game logic for who's turn it is has been incremented and this
+# users turn has ended.
 const TURN_ENDED := &"turn_ended"
 
 # Card based events

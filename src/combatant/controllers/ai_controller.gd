@@ -1,6 +1,9 @@
 class_name AIController
 extends Node
 
+signal ai_turn_ended
+
+
 var combatant: Combatant
 
 
@@ -20,4 +23,4 @@ func play_turn() -> void:
 			combatant._request_to_play_card(card, dropzone)
 			
 	# if we got here, the AI has tried to play every card in hand
-	combatant.player_turn_ended.emit()
+	ai_turn_ended.emit()

@@ -32,10 +32,14 @@ var tooltip_offset_y: float = 0.0
 var opponents_turn: bool = true
 var is_locally_owned: bool = false
 var owner_combatant: Combatant
+var card_status_holder: CardStatusHolder = CardStatusHolder.new()
 
 func _ready():
 	if card_data == null:
 		print("Error: card data was null")
+	
+	# for this holder, this card is the "host"
+	card_status_holder.host = self
 	
 	description.text = card_data.description
 	inner_border.texture = card_data.inner_border_asset
@@ -149,3 +153,11 @@ func _update_tooltip_position() -> void:
 
 func play(zone: CardDropZone) -> void:
 	played_card.emit(self, zone)
+
+
+func add_status(status: CardStatusInstance) -> void:
+	card_status_holder.add_status(status)
+
+
+func remove_status(status: CardStatusInstance) -> void:
+	card_status_holder.remove_status(status)

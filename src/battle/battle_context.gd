@@ -97,3 +97,15 @@ func get_all_targets(event: BattleEvent) -> Array[Variant]:
 	targets.append_array(get_active_cards(event))
 	targets.append_array(combatants)
 	return targets
+
+
+func expire_card_statuses_for_owner(event: BattleEvent) -> void:
+	var cards: Array[Card] = get_active_cards(event).filter(
+		func(card: Card):
+			return card.owner_combatant == event.owner
+	)
+	
+	# find all cards with a status and remove them or decrement
+	# their duration.
+	for card in cards:
+		card.card_status_holder.decrement_statuses()

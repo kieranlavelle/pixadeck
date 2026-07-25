@@ -3,11 +3,10 @@ extends Node
 
 
 signal turn_started(combatant: Combatant)
-signal turn_finished
+signal turn_finished(conbatant: Combatant)
 
 
 var current_combatant: Combatant
-var turn_count: int = 1
 var combatants: Array[Combatant] = []
 
 func start(all_combatants: Array[Combatant]) -> void:
@@ -16,13 +15,11 @@ func start(all_combatants: Array[Combatant]) -> void:
 	current_combatant = all_combatants.pick_random()
 	turn_started.emit(current_combatant)
 
-# flip to the other player
-func _on_turn_ended() -> void:
-	var index := combatants.find(current_combatant)
-	index += 1
-	
+
+func advance_turn() -> void:
+	var index := combatants.find(current_combatant) + 1
 	if index >= combatants.size():
 		index = 0
-		
+	
 	current_combatant = combatants[index]
 	turn_started.emit(current_combatant)
