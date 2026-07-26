@@ -19,6 +19,10 @@ func _init(
 	battlefield = _battlefield
 
 
+func execute(command: Command) -> Command:
+	return await command.execute(self)
+
+
 func spend_mana(combatant: Combatant, amount: int) -> bool:
 	if combatant.stats.current_mana < amount:
 		return false

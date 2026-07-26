@@ -31,7 +31,7 @@ func play_turn() -> void:
 				break
 
 			var command = PlayCardCommand.new(dropzone, combatant, card)
-			await _manager._on_play_card_request(command, _command_callback)
+			await _manager._on_command(command, _command_callback)
 			
 	# if we got here, the AI has tried to play every card in hand
 	ai_turn_ended.emit()

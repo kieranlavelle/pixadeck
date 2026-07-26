@@ -25,7 +25,7 @@ func handle_input(event: InputEvent) -> void:
 			var command: PlayCardCommand = PlayCardCommand.new(
 				dropzone, card.owner_combatant, card
 			)
-			play_card_request.emit(command, _on_played_transition)
+			play_card_request.emit(command, _on_command_processed)
 		else:
 			card.global_position = original_position
 			transition_to("IDLE")
@@ -42,7 +42,7 @@ func handle_input(event: InputEvent) -> void:
 			card.playable_panel.visible = false
 	
 
-func _on_played_transition(command: PlayCardCommand):
+func _on_command_processed(command: PlayCardCommand):
 	if command.success():
 		transition_to("PLAYED")
 	else:

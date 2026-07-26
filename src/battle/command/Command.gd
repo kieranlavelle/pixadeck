@@ -7,3 +7,6 @@ var reason: String = ""
 func success() -> bool:
 	return is_success
 
+
+func execute(context: BattleContext) -> Command:
+	return self
