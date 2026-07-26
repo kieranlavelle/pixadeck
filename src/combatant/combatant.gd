@@ -39,7 +39,7 @@ func _on_turn_start(combatant: Combatant) -> void:
 		await get_tree().create_timer(1).timeout
 		
 		# behaviours agnostic to real vs ai player.
-		await battle_context.event_queue.dispatch(
+		await battle_context.event_queue.enqueue(
 			BattleEvent.new(BattleEventType.TURN_STARTED, self, self)
 		)
 		await battle_context.draw_card(self)

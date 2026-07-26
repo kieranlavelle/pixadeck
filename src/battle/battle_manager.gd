@@ -66,7 +66,7 @@ func _end_current_turn() -> void:
 	if combatant == null:
 		return
 
-	await event_queue.dispatch(
+	await event_queue.enqueue(
 		BattleEvent.new(
 			BattleEventType.TURN_ENDING, combatant, combatant
 		)
@@ -74,8 +74,14 @@ func _end_current_turn() -> void:
 	
 	TurnManagerNode.advance_turn()
 	
-	await event_queue.dispatch(
+	await event_queue.enqueue(
 		BattleEvent.new(
-			BattleEventType.TURN_ENDED, combatant, combatant
+			BattleEventType.TURN_ENDED,
+			combatant,
+			combatant,
+			null,
+			null,
+			{},
+			battle_context.expire_card_statuses_for_owner
 		)
 	)

@@ -44,7 +44,7 @@ func request_play_card(combatant: Combatant, card: Card, zone: CardDropZone) -> 
 		zone,
 		card
 	)
-	await event_queue.dispatch(request_event)
+	await event_queue.enqueue(request_event)
 
 	if request_event.cancelled:
 		return false
@@ -61,7 +61,7 @@ func request_play_card(combatant: Combatant, card: Card, zone: CardDropZone) -> 
 		zone,
 		card
 	)
-	await event_queue.dispatch(played_card_event)
+	await event_queue.enqueue(played_card_event)
 
 	return true
 
@@ -72,7 +72,7 @@ func draw_card(combatant: Combatant) -> Card:
 		combatant,
 		combatant.deck,
 	)
-	await event_queue.dispatch(draw_card_event)
+	await event_queue.enqueue(draw_card_event)
 
 	if draw_card_event.cancelled:
 		return null
@@ -80,7 +80,7 @@ func draw_card(combatant: Combatant) -> Card:
 	var card: Card = await combatant.deck.draw_card()
 	if card != null:
 		var draw_event := BattleEvent.new(BattleEventType.CARD_DRAWN, combatant, combatant.deck, combatant.hand, card)
-		await event_queue.dispatch(draw_event)
+		await event_queue.enqueue(draw_event)
 		return card
 
 	return null
