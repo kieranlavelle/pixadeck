@@ -10,6 +10,8 @@ extends Control
 @onready var layout = $Layout
 @onready var ai_controller = $AIController
 
+signal request_play_card(command: PlayCardCommand, callback: Callable)
+
 enum Seat { TOP, BOTTOM }
 
 # set by the battle manager at battle start.
@@ -18,8 +20,7 @@ var combatant_id: int
 var battle_context: BattleContext
 
 func _ready() -> void:
-	hand.request_play_card.connect(_request_to_play_card)
-	hand.request_transition.connect(_handle_card_transition_request)
+	hand.request_play_card.connect(request_play_card.emit)
 	hand.owner_combatant = self
 	
 	
@@ -61,23 +62,6 @@ func disable_player() -> void:
 
 func enable_player() -> void:
 	hand.update_cards_for_turn(false)
-
-
-func _request_to_play_card(card: Card, zone: CardDropZone) -> bool:
-	return await battle_context.request_play_card(self, card, zone)
-
-# There are now two ways to achive a similar result. We could probably remove request play card
-# and just treat certain transition requests to play cards instead
-func _handle_card_transition_request(card: Card, from: String, to: String, callback: Callable):
-	# in the future if more cases come up I will make a matrix, but not right now.
-	if from == "DRAGGING" and to == "PLAYED":
-		if battle_context.can_play_card(self, card):
-			callback.call(true)
-		else:
-			callback.call(false)
-	else:
-		callback.call(true)
-
 
 
 func apply_layout() -> void:

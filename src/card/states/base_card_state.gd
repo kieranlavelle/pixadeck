@@ -1,6 +1,8 @@
 class_name BaseCardState
 extends Node
 
+signal play_card_request(command: PlayCardCommand, callback: Callable)
+
 var card: TextureRect
 var state_machine: CardStateMachine
 

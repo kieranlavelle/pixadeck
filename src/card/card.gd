@@ -1,10 +1,7 @@
 class_name Card
 extends TextureRect
 
-
-signal played_card(card: Card, parent: CardDropZone)
-signal request_transition(card: Card, from: String, to: String, callback: Callable)
-
+signal play_card_request(command: PlayCardCommand, callback: Callable)
 
 @export var card_data: CardData
 
@@ -37,6 +34,10 @@ var card_status_holder: CardStatusHolder = CardStatusHolder.new()
 func _ready():
 	if card_data == null:
 		print("Error: card data was null")
+	
+	# hookup the signal from the state machine so requests can flow up
+	# to card
+	card_state.play_card_request.connect(play_card_request.emit)
 	
 	# for this holder, this card is the "host"
 	card_status_holder.host = self
@@ -149,10 +150,6 @@ func _update_tooltip_position() -> void:
 	
 	# Apply the position + the offset animated by the tween
 	tooltip_stack.global_position = Vector2(x, y + tooltip_offset_y)
-
-
-func play(zone: CardDropZone) -> void:
-	played_card.emit(self, zone)
 
 
 func add_status(status: CardStatusInstance) -> void:

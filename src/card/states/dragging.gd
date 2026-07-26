@@ -22,7 +22,10 @@ func handle_input(event: InputEvent) -> void:
 		var drop_vector = card.get_global_mouse_position()
 		
 		if rect.has_point(drop_vector):
-			card.request_transition.emit(card, "DRAGGING", "PLAYED", _on_played_transition)
+			var command: PlayCardCommand = PlayCardCommand.new(
+				dropzone, card.owner_combatant, card
+			)
+			play_card_request.emit(command, _on_played_transition)
 		else:
 			card.global_position = original_position
 			transition_to("IDLE")
@@ -39,11 +42,9 @@ func handle_input(event: InputEvent) -> void:
 			card.playable_panel.visible = false
 	
 
-func _on_played_transition(success: bool):
-	if success:
-		var dropzone = get_tree().get_first_node_in_group("CardDropZone")
+func _on_played_transition(command: PlayCardCommand):
+	if command.success():
 		transition_to("PLAYED")
-		card.play(dropzone)
 	else:
 		card.global_position = original_position
 		transition_to("IDLE")

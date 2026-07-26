@@ -5,15 +5,18 @@ extends RefCounted
 var event_queue: BattleEventQueue
 var combatants: Array[Combatant] = []
 var battle_manager: BattleManager
+var battlefield: CardDropZone
 
 func _init(
 	_event_queue: BattleEventQueue,
 	_combatants: Array[Combatant],
-	_battle_manager: BattleManager
+	_battle_manager: BattleManager,
+	_battlefield: CardDropZone
 ) -> void:
 	event_queue = _event_queue
 	combatants = _combatants
 	battle_manager = _battle_manager
+	battlefield = _battlefield
 
 
 func spend_mana(combatant: Combatant, amount: int) -> bool:
@@ -23,6 +26,10 @@ func spend_mana(combatant: Combatant, amount: int) -> bool:
 	return true
 
 
+func play_card(combatant: Combatant, card: Card) -> void:
+	combatant.hand.play_card(card, battlefield)
+
+
 func deal_damage(target: Combatant, amount: int) -> void:
 	if target == null:
 		return
@@ -30,40 +37,10 @@ func deal_damage(target: Combatant, amount: int) -> void:
 
 
 # This function only checks mana requrements. Not turns, or anything else.
-func can_play_card(combatant: Combatant, card: Card) -> bool:
+func has_mana_for_card(combatant: Combatant, card: Card) -> bool:
 	if combatant.stats.current_mana >= card.card_data.card_cost:
 		return true
 	return false
-
-
-func request_play_card(combatant: Combatant, card: Card, zone: CardDropZone) -> bool:
-	var request_event := BattleEvent.new(
-		BattleEventType.CARD_PLAY_REQUESTED,
-		combatant,
-		combatant,
-		zone,
-		card
-	)
-	await event_queue.enqueue(request_event)
-
-	if request_event.cancelled:
-		return false
-
-	if not spend_mana(combatant, card.card_data.card_cost):
-		return false
-
-	combatant.hand.play_card(card, zone)
-
-	var played_card_event := BattleEvent.new(
-		BattleEventType.CARD_PLAYED,
-		combatant,
-		combatant,
-		zone,
-		card
-	)
-	await event_queue.enqueue(played_card_event)
-
-	return true
 
 
 func draw_card(combatant: Combatant) -> Card:
@@ -111,3 +88,7 @@ func expire_card_statuses_for_owner(event: BattleEvent) -> void:
 	# will lower theirs on their turn.
 	for card in cards:
 		card.card_status_holder.decrement_statuses(event)
+
+
+func has_room_on_battlefield(owner: Combatant) -> bool:
+	return battlefield.can_add_card_to_zone(owner)

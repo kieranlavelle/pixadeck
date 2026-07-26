@@ -1,6 +1,8 @@
 class_name CardStateMachine
 extends Node
 
+signal play_card_request(command: PlayCardCommand, callback: Callable)
+
 const INITIAL_STATE: String = "IDLE"
 const PLAYER_TURN_ONLY_STATES: Array[String] = ["DRAGGING", "CLICKED", "PLAYED"]
 
@@ -18,7 +20,9 @@ func _ready():
 			continue
 		state_node.card = card
 		state_node.state_machine = self
+		state_node.play_card_request.connect(play_card_request.emit)
 		states[state_node.name.to_upper()] = state_node
+
 	
 	# set the initial state
 	current_state = states[INITIAL_STATE]

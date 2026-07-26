@@ -9,8 +9,7 @@ extends HBoxContainer
 const DEFAULT_MAX_HAND_SIZE = 5
 const CARD_SCENE = preload("res://src/card/card.tscn")
 
-signal request_play_card(card: Card, zone: CardDropZone)
-signal request_transition(card: Card, from: String, to: String, callback: Callable)
+signal request_play_card(command: PlayCardCommand, callback: Callable)
 
 var cards: Array[Card] = []
 var owner_combatant: Combatant
@@ -30,8 +29,7 @@ func add_to_hand(card_data: CardData) -> Card:
 		card_instance.owner_combatant = owner_combatant
 		
 		# connect signals
-		card_instance.played_card.connect(request_play_card.emit)
-		card_instance.request_transition.connect(request_transition.emit)
+		card_instance.play_card_request.connect(request_play_card.emit)
 		
 		add_child(card_instance)
 		cards.append(card_instance)
@@ -46,7 +44,7 @@ func update_cards_for_turn(is_opponents_turn: bool) -> void:
 		card.is_locally_owned = owner_combatant.is_local_player
 	
 
-
+# Called by the BattleManager during PlayCardCommand orchestration.
 func play_card(card: Card, new_parent: CardDropZone) -> void:
 	
 	if audio.stream:
