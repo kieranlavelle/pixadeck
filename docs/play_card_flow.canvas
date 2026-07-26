@@ -1,0 +1,23 @@
+{
+	"nodes":[
+		{"id":"43dfbd1c66f57c43","type":"group","x":-740,"y":-100,"width":1060,"height":100,"label":"Current Flow"},
+		{"id":"40e740a6835f2692","type":"text","text":"TurnManager.turn_started","x":-720,"y":-240,"width":250,"height":60},
+		{"id":"272ad0d7874e6651","type":"text","text":"Combatant._on_turn_start","x":-360,"y":-240,"width":250,"height":60},
+		{"id":"45a4d65a2a7eb43c","type":"text","text":"Combatant.enable_player","x":0,"y":-240,"width":250,"height":60},
+		{"id":"054696995e4170da","type":"text","text":"hand.request_play_card","x":-720,"y":-80,"width":250,"height":60},
+		{"id":"59a145aa0abb664a","type":"text","text":"Combatant._request_to_play_card","x":-395,"y":-80,"width":320,"height":60},
+		{"id":"5b0b434729e00b4c","type":"text","text":"BattleContext.request_play_card","x":0,"y":-80,"width":300,"height":60},
+		{"id":"06cf380775d72d18","type":"text","text":"```\n-> Send request event to queue (awaited)\n-> Check if it get's cancelled\n-> Spend Mana & Move\n-> CARD_PLAYED event\n-> await Resolve\n-> DamageCommand\n```","x":360,"y":380,"width":420,"height":200},
+		{"id":"b80ebb125a40b1c7","type":"text","text":"hand.request_play_card\n\nPlayCardCommand.new()","x":-740,"y":100,"width":270,"height":120},
+		{"id":"4b457b28ce3c622b","type":"text","text":"Combatant._request_to_play_card\n\n-> Proxy to BattleManager","x":-395,"y":100,"width":320,"height":120},
+		{"id":"c2b22af13bd63380","type":"text","text":"#BattleManager\n_Orchestrate calls to battle event queue_\n\n-> RequestPlayCard\n-> RequestMoveToBattlefield\n-> RequestSpendMana\n-> CardPlayed","x":0,"y":100,"width":320,"height":240}
+	],
+	"edges":[
+		{"id":"04cce9b21a6cbbf4","fromNode":"40e740a6835f2692","fromSide":"right","toNode":"272ad0d7874e6651","toSide":"left"},
+		{"id":"170b900eee78275a","fromNode":"272ad0d7874e6651","fromSide":"right","toNode":"45a4d65a2a7eb43c","toSide":"left"},
+		{"id":"e3463ef055700609","fromNode":"59a145aa0abb664a","fromSide":"right","toNode":"5b0b434729e00b4c","toSide":"left"},
+		{"id":"f371cb2d5dcb595e","fromNode":"054696995e4170da","fromSide":"right","toNode":"59a145aa0abb664a","toSide":"left"},
+		{"id":"9709f4488d590f3e","fromNode":"b80ebb125a40b1c7","fromSide":"right","toNode":"4b457b28ce3c622b","toSide":"left"},
+		{"id":"874662ea5fc761d2","fromNode":"4b457b28ce3c622b","fromSide":"right","toNode":"c2b22af13bd63380","toSide":"left"}
+	]
+}

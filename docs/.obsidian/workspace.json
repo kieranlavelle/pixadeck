@@ -1,0 +1,194 @@
+{
+  "main": {
+    "id": "8dce4c80ea9ec04d",
+    "type": "split",
+    "children": [
+      {
+        "id": "7dcd11399a880bf5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "98cccef34c9185d2",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "play_card_flow.canvas",
+                "viewState": {
+                  "x": 0,
+                  "y": 75.54206542968751,
+                  "zoom": -0.160009765625
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "play_card_flow"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8b069d06d49fa337",
+    "type": "split",
+    "children": [
+      {
+        "id": "84838f5aafba8c54",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a84e29d015cb9b8e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "7ed6b51e46dc64c2",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "3b236b241d6527b5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "7f555706848448b7",
+    "type": "split",
+    "children": [
+      {
+        "id": "c3fd0c2ffcec967e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e067b3e98f3d1a92",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "play_card_flow.canvas",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for play_card_flow"
+            }
+          },
+          {
+            "id": "3c9f1014ba3db69e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "play_card_flow.canvas",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from play_card_flow"
+            }
+          },
+          {
+            "id": "e3083bffbe865032",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "f379ffc61e1fb97e",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "b020e9bf07bfcae7",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "play_card_flow.canvas",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of play_card_flow"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "98cccef34c9185d2",
+  "lastOpenFiles": [
+    "Untitled.md",
+    "play_card_flow.canvas"
+  ]
+}
