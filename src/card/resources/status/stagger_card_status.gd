@@ -10,3 +10,14 @@ func can_resolve_effect(
 	_instance: CardStatusInstance
 ) -> bool:
 	return false
+
+
+func should_tick(event: BattleEvent, instance: CardStatusInstance) -> bool:
+
+	# Only decrement on turn_end
+	if event.type != BattleEventType.TURN_ENDED:
+		return false
+	
+	# Tick after the opponent who does not own the host card
+	# turns end
+	return event.owner == instance.host.owner_combatant

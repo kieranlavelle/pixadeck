@@ -5,7 +5,7 @@ extends Resource
 
 @export var id: String
 @export var display_name: String
-@export var duration: int
+@export var duration: int = 1
 
 # This function basically is a way for a status to intercept ANY card effect
 # the base function allows all card effects to pass.
@@ -15,4 +15,8 @@ func can_resolve_effect(
 	_context: BattleContext,
 	_instance: CardStatusInstance
 ) -> bool:
+	return true
+
+
+func should_tick(_event: BattleEvent, _instance: CardStatusInstance) -> bool:
 	return true

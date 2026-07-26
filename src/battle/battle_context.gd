@@ -106,6 +106,8 @@ func expire_card_statuses_for_owner(event: BattleEvent) -> void:
 	)
 	
 	# find all cards with a status and remove them or decrement
-	# their duration.
+	# their duration for cards owned by the owner. This is important
+	# if you play a card that applies a status to their cards, they
+	# will lower theirs on their turn.
 	for card in cards:
-		card.card_status_holder.decrement_statuses()
+		card.card_status_holder.decrement_statuses(event)

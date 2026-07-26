@@ -29,10 +29,8 @@ func enqueue(event: BattleEvent) -> void:
 
 
 func _resolve_event(event: BattleEvent) -> void:
-	for card in battle_context.get_active_cards(event):
 		
-		if event.type == BattleEventType.TURN_ENDED:
-			battle_context.expire_card_statuses_for_owner(event)
+	for card in battle_context.get_active_cards(event):
 		
 		for effect in card.card_data.effects:
 			# use a closure system here to disallow everything first
@@ -47,6 +45,9 @@ func _resolve_event(event: BattleEvent) -> void:
 			
 			# effect can proceed
 			await effect.resolve(event, battle_context, card)
+	
+	# tick statu's at turn end and after all other effects
+	if event.type == BattleEventType.TURN_ENDED:
+		battle_context.expire_card_statuses_for_owner(event)
 
 	print("Resolving event: ", event.type)
-	await get_tree().process_frame

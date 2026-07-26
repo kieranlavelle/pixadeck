@@ -15,6 +15,6 @@ func apply(_event: BattleEvent, _context: BattleContext, source: Card, targets: 
 		instance.applier = source
 		instance.host = target
 
-		instance.remaining_turns = 1 if status.duration == null else status.duration
+		instance.remaining_turns = status.duration
 
 		target.add_status(instance)
