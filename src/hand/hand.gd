@@ -9,7 +9,7 @@ extends HBoxContainer
 const DEFAULT_MAX_HAND_SIZE = 5
 const CARD_SCENE = preload("res://src/card/card.tscn")
 
-signal request_play_card(command: PlayCardCommand, callback: Callable)
+signal emit_command(command: PlayCardCommand, callback: Variant)
 
 var cards: Array[Card] = []
 var owner_combatant: Combatant
@@ -29,7 +29,7 @@ func add_to_hand(card_data: CardData) -> Card:
 		card_instance.owner_combatant = owner_combatant
 		
 		# connect signals
-		card_instance.play_card_request.connect(request_play_card.emit)
+		card_instance.emit_command.connect(emit_command.emit)
 		
 		add_child(card_instance)
 		cards.append(card_instance)

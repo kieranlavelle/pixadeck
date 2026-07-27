@@ -1,3 +1,4 @@
+class_name Deck
 extends TextureRect
 
 @onready var audio: AudioStreamPlayer = $AudioStreamPlayer
@@ -15,30 +16,25 @@ func _ready():
 	audio.stream = draw_sound
 	draw_pile = starting_deck.duplicate()
 	draw_pile.shuffle()
+
+
+func is_deck_empty() -> bool:
+	return draw_pile.is_empty()
 	
 
-func draw_card() -> Card:
-	if draw_pile.is_empty():
+func draw_card() -> CardData:
+	if is_deck_empty():
 		return null
-		
-	# check there is room in hand:
-	if hand.is_hand_full():
-		return null
-		
+
 	if audio.stream:
 		audio.play()
 	
 	var drawn_card = draw_pile.pop_back()
 	
-	# start this card as invisible, seems like it should
-	# be a hand or card responsibility
-	var card_in_hand := hand.add_to_hand(drawn_card)
-	await animate_card_to_hand(card_in_hand)
-	
 	if draw_pile.is_empty():
 		empty_texture.show()
 	
-	return card_in_hand
+	return drawn_card
 
 
 func animate_card_to_hand(card_in_hand: Card) -> void:

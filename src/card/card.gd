@@ -1,7 +1,7 @@
 class_name Card
 extends TextureRect
 
-signal play_card_request(command: PlayCardCommand, callback: Callable)
+signal emit_command(command: PlayCardCommand, callback: Variant)
 
 @export var card_data: CardData
 
@@ -37,7 +37,7 @@ func _ready():
 	
 	# hookup the signal from the state machine so requests can flow up
 	# to card
-	card_state.play_card_request.connect(play_card_request.emit)
+	card_state.emit_command.connect(emit_command.emit)
 	
 	# for this holder, this card is the "host"
 	card_status_holder.host = self

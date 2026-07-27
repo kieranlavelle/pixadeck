@@ -47,24 +47,12 @@ func has_mana_for_card(combatant: Combatant, card: Card) -> bool:
 	return false
 
 
-func draw_card(combatant: Combatant) -> Card:
-	var draw_card_event := BattleEvent.new(
-		BattleEventType.CARD_DRAW_REQUESTED,
-		combatant,
-		combatant.deck,
-	)
-	await event_queue.enqueue(draw_card_event)
-
-	if draw_card_event.cancelled:
-		return null
-	
-	var card: Card = await combatant.deck.draw_card()
-	if card != null:
-		var draw_event := BattleEvent.new(BattleEventType.CARD_DRAWN, combatant, combatant.deck, combatant.hand, card)
-		await event_queue.enqueue(draw_event)
-		return card
-
-	return null
+# Synchronus, the corutine part is the animation
+func draw_and_move_card(combatant: Combatant) -> Card:
+	var card_drawn := combatant.deck.draw_card()
+	var card_in_hand := combatant.hand.add_to_hand(card_drawn)
+	await combatant.deck.animate_card_to_hand(card_in_hand)
+	return card_in_hand
 
 
 func get_active_cards(event: BattleEvent) -> Array[Card]:

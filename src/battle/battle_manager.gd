@@ -28,7 +28,7 @@ func _ready():
 			)
 			combatant.ai_controller._manager = self
 		TurnManagerNode.turn_started.connect(combatant._on_turn_start)
-		combatant.request_play_card.connect(_on_command)
+		combatant.emit_command.connect(_on_command)
 	
 	# If A player skips their turn emit turn finished
 	BattleOverlay.request_end_turn.connect(_on_request_end_turn)
@@ -91,7 +91,7 @@ func _end_current_turn() -> void:
 
 
 # It might be better to have a generic command handler in future
-func _on_command(command: Command, callback: Callable) -> void:
+func _on_command(command: Command, callback: Variant) -> void:
 	var command_response: Command = await battle_context.execute(command)
 	if callback != null:
 		callback.call(command_response)

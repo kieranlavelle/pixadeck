@@ -25,7 +25,7 @@ func handle_input(event: InputEvent) -> void:
 			var command: PlayCardCommand = PlayCardCommand.new(
 				dropzone, card.owner_combatant, card
 			)
-			play_card_request.emit(command, _on_command_processed)
+			emit_command.emit(command, _on_command_processed)
 		else:
 			card.global_position = original_position
 			transition_to("IDLE")

@@ -11,7 +11,7 @@
 	],
 	"edges":[
 		{"id":"e61dcb73b1423b82","fromNode":"4e5d1eeb35206618","fromSide":"top","toNode":"053b10b2da936098","toSide":"bottom"},
-		{"id":"9b66909e2ef06fa0","fromNode":"053b10b2da936098","fromSide":"right","toNode":"221b166b5e997f77","toSide":"left","label":"play_card_request"},
+		{"id":"9b66909e2ef06fa0","fromNode":"053b10b2da936098","fromSide":"right","toNode":"221b166b5e997f77","toSide":"left","label":"emit_command"},
 		{"id":"3b87bb99aba1a5f7","fromNode":"221b166b5e997f77","fromSide":"bottom","toNode":"85c106f674e35cf8","toSide":"top"},
 		{"id":"6082303791bec57c","fromNode":"85c106f674e35cf8","fromSide":"bottom","toNode":"31209df64ded0d2f","toSide":"top"},
 		{"id":"c8cf4641378748ec","fromNode":"31209df64ded0d2f","fromSide":"bottom","toNode":"1f34131a1dc10929","toSide":"top"},

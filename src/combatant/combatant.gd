@@ -4,13 +4,13 @@ extends Control
 @export var is_local_player: bool
 @export var seat: Seat
 
-@onready var deck = $Layout/Deck
-@onready var hand = $Layout/Hand
+@onready var deck: Deck = $Layout/Deck as Deck
+@onready var hand: Hand = $Layout/Hand as Hand
 @onready var stats: Stats = $Layout/Stats as Stats
 @onready var layout = $Layout
 @onready var ai_controller = $AIController
 
-signal request_play_card(command: PlayCardCommand, callback: Callable)
+signal emit_command(command: PlayCardCommand, callback: Variant)
 
 enum Seat { TOP, BOTTOM }
 
@@ -20,7 +20,7 @@ var combatant_id: int
 var battle_context: BattleContext
 
 func _ready() -> void:
-	hand.request_play_card.connect(request_play_card.emit)
+	hand.emit_command.connect(emit_command.emit)
 	hand.owner_combatant = self
 	
 	
@@ -43,7 +43,11 @@ func _on_turn_start(combatant: Combatant) -> void:
 		await battle_context.event_queue.enqueue(
 			BattleEvent.new(BattleEventType.TURN_STARTED, self, self)
 		)
-		await battle_context.draw_card(self)
+
+
+		var cmd := RequestDrawCardCommand.new(combatant, deck, hand)
+		await battle_context.execute(cmd)
+
 		enable_player()
 		stats.on_new_turn()
 		

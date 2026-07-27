@@ -17,13 +17,13 @@ func execute(context: BattleContext) -> PlayCardCommand:
 	if not context.has_room_on_battlefield(owner):
 		reason = "No room on battlefield"
 		is_success = false
-		return
+		return self
 	
 	#2. Request spend mana
 	if not context.has_mana_for_card(owner, card):
 		reason = "Not enough mana"
 		is_success = false
-		return
+		return self
 	
 	#3. RequestPlayCard BattleEvent
 	var event: BattleEvent = BattleEvent.new(
@@ -40,20 +40,20 @@ func execute(context: BattleContext) -> PlayCardCommand:
 	if event.cancelled:
 		reason = event.cancelled_reason
 		is_success = false
-		return
+		return self
 
 	#4. Spend Mana & Move
 	# second_check: Request battlefield room
 	if not context.has_room_on_battlefield(owner):
 		reason = "No room on battlefield"
 		is_success = false
-		return
+		return self
 	
 	# second_check: Request spend mana
 	if not context.has_mana_for_card(owner, card):
 		reason = "Not enough mana"
 		is_success = false
-		return
+		return self
 
 	# SPEND, SPEND, SPEND!
 	context.spend_mana(owner, card.card_data.card_cost)
