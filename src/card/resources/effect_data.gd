@@ -30,7 +30,7 @@ func is_triggered_by(event: BattleEvent, context: BattleContext, source: Card) -
 func resolve(event: BattleEvent, context: BattleContext, source: Card) -> void:
 	for pair in effect_actions:
 		var targets: Array[Variant] = pair.selector.select_targets(event, context, source)
-		pair.action.apply(event, context, source, targets)
+		await pair.action.apply(event, context, source, targets)
 
 
 func get_tooltip_keywords() -> Array[KeywordData]:

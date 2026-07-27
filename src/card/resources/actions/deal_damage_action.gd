@@ -9,4 +9,5 @@ func apply(_event: BattleEvent, context: BattleContext, _source: Card, targets: 
 	for target in targets:
 		if target is not Combatant:
 			continue
-		context.deal_damage(target, amount)
+		var cmd := DealDamageCommand.new(_source.owner_combatant, target, amount, _source)
+		await context.execute(cmd)
