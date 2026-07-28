@@ -51,7 +51,7 @@ func _drain() -> void:
 func _collect_triggers_snapshot(event: BattleEvent) -> Array[CardTriggerPair]:
 	var _will_trigger: Array[CardTriggerPair] = []
 
-	for card in battle_context.get_active_cards(event):
+	for card in battle_context.get_active_cards():
 		for effect in card.card_data.effects:
 
 			# skip card effects that don't listen to this event

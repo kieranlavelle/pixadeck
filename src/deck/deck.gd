@@ -20,7 +20,7 @@ func _ready():
 
 func is_deck_empty() -> bool:
 	return draw_pile.is_empty()
-	
+
 
 func draw_card() -> CardData:
 	if is_deck_empty():
@@ -28,12 +28,12 @@ func draw_card() -> CardData:
 
 	if audio.stream:
 		audio.play()
-	
+
 	var drawn_card = draw_pile.pop_back()
-	
+
 	if draw_pile.is_empty():
 		empty_texture.show()
-	
+
 	return drawn_card
 
 
@@ -42,11 +42,11 @@ func animate_card_to_hand(card_in_hand: Card) -> void:
 	# be a hand or card responsibility
 	card_in_hand.modulate.a = 0.0
 	card_in_hand.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	
+
 	# wait for the next frame to assure the the card has a layout
 	# so we can use it's global positions.
 	await get_tree().process_frame
-	
+
 	# need to create a temp flyer to move from deck -> hand
 	var flyer := TextureRect.new()
 	flyer.texture = texture
@@ -54,10 +54,10 @@ func animate_card_to_hand(card_in_hand: Card) -> void:
 	flyer.global_position = global_position
 	flyer.top_level = true # this prevents layout disturbing this flyer
 	flyer.z_index = 100
-	
+
 	# in future we could move this to a dedicated overlay for animations
 	get_tree().current_scene.add_child(flyer)
-	
+
 	var tween := create_tween()
 	tween.tween_property(
 		flyer,
@@ -65,12 +65,13 @@ func animate_card_to_hand(card_in_hand: Card) -> void:
 		card_in_hand.global_position,
 		0.4
 	).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	
+
 	await tween.finished
 	flyer.queue_free()
 
 	card_in_hand.modulate.a = 1.0
-	card_in_hand.mouse_filter = Control.MOUSE_FILTER_STOP	
+	card_in_hand.mouse_filter = Control.MOUSE_FILTER_STOP
+
 
 func _on_mouse_entered():
 	hovered = true

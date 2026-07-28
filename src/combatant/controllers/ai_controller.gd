@@ -19,10 +19,6 @@ func play_turn() -> void:
 
 	played_card = false
 
-	
-	# look at the cards in hand, pick one, play it.
-	var dropzone: CardDropZone = get_tree().get_first_node_in_group("CardDropZone")
-	
 	if len(combatant.hand.cards) > 0:
 		# duplicate the array as ..hand.cards may alter while we play
 		var cards: Array[Card] = combatant.hand.cards.duplicate()
@@ -30,9 +26,9 @@ func play_turn() -> void:
 			if played_card:
 				break
 
-			var command = PlayCardCommand.new(dropzone, combatant, card)
+			var command = PlayCardCommand.new(combatant, card)
 			await _manager._on_command(command, _command_callback)
-			
+
 	# if we got here, the AI has tried to play every card in hand
 	ai_turn_ended.emit()
 

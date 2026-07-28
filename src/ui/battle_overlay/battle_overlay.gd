@@ -1,3 +1,4 @@
+class_name Overlay
 extends CanvasLayer
 
 signal request_end_turn
@@ -7,7 +8,7 @@ signal request_end_turn
 
 func _ready():
 	hide_end_turn_button()
-	
+
 	# re-emit childs signal
 	EndTurnButton.request_end_turn.connect(request_end_turn.emit)
 
@@ -18,7 +19,7 @@ func _on_turn_start(player: Combatant):
 	else:
 		TextDisplayNode.display_text("Opponents turn!")
 	TextDisplayNode.set_visible(true)
-	
+
 	# clear the text after 1 second
 	await get_tree().create_timer(1.2).timeout
 	TextDisplayNode.fade_and_hide()

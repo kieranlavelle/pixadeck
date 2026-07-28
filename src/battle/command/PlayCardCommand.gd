@@ -1,54 +1,52 @@
 class_name PlayCardCommand
 extends Command
 
-var battlefield: CardDropZone
 var owner: Combatant
 var card: Card
 
 
-func _init(_battlefield: CardDropZone, _owner: Combatant, _card: Card):
-	battlefield = _battlefield
+func _init(_owner: Combatant, _card: Card):
 	owner = _owner
 	card = _card
 
 
 func execute(context: BattleContext) -> PlayCardCommand:
-	#1. Request battlefield room
-	if not context.has_room_on_battlefield(owner):
-		reason = "No room on battlefield"
+	#1. Request board room
+	if not context.board.can_add_card(owner.seat):
+		reason = "No room on board"
 		is_success = false
 		return self
-	
+
 	#2. Request spend mana
 	if not context.has_mana_for_card(owner, card):
 		reason = "Not enough mana"
 		is_success = false
 		return self
-	
+
 	#3. RequestPlayCard BattleEvent
 	var event: BattleEvent = BattleEvent.new(
 		BattleEventType.CARD_PLAY_REQUESTED,
 		owner,
 		owner,
-		battlefield,
+		context.board,
 		card,
 		{},
 		null
 	)
 	await context.event_queue.enqueue(event)
-	
+
 	if event.cancelled:
 		reason = event.cancelled_reason
 		is_success = false
 		return self
 
 	#4. Spend Mana & Move
-	# second_check: Request battlefield room
-	if not context.has_room_on_battlefield(owner):
-		reason = "No room on battlefield"
+	# second_check: Request board room
+	if not context.board.can_add_card(owner.seat):
+		reason = "No room on board"
 		is_success = false
 		return self
-	
+
 	# second_check: Request spend mana
 	if not context.has_mana_for_card(owner, card):
 		reason = "Not enough mana"
@@ -64,7 +62,7 @@ func execute(context: BattleContext) -> PlayCardCommand:
 		BattleEventType.CARD_PLAYED,
 		owner,
 		owner,
-		battlefield,
+		context.board,
 		card,
 		{},
 		null

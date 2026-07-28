@@ -5,20 +5,20 @@ extends RefCounted
 var event_queue: BattleEventQueue
 var combatants: Array[Combatant] = []
 var battle_manager: BattleManager
-var battlefield: CardDropZone
+var board: Board
 var turn_manager: TurnManager
 
 func _init(
 	_event_queue: BattleEventQueue,
 	_combatants: Array[Combatant],
 	_battle_manager: BattleManager,
-	_battlefield: CardDropZone,
+	_board: Board,
 	_turn_manager: TurnManager
 ) -> void:
 	event_queue = _event_queue
 	combatants = _combatants
 	battle_manager = _battle_manager
-	battlefield = _battlefield
+	board = _board
 	turn_manager = _turn_manager
 
 
@@ -34,7 +34,7 @@ func spend_mana(combatant: Combatant, amount: int) -> bool:
 
 
 func play_card(combatant: Combatant, card: Card) -> void:
-	combatant.hand.play_card(card, battlefield)
+	combatant.hand.play_card(card, board)
 
 
 func start_turn(combatant: Combatant) -> void:
@@ -85,15 +85,14 @@ func draw_and_move_card(combatant: Combatant) -> Card:
 	return card_in_hand
 
 
-func get_active_cards(event: BattleEvent) -> Array[Card]:
-	var drop_zone = event.owner.get_tree().get_first_node_in_group("CardDropZone")
-	return drop_zone.get_all_cards()
+func get_active_cards() -> Array[Card]:
+	return board.get_all_cards()
 
 
 # This returns an array of all targets, which is all cards + combatants
-func get_all_targets(event: BattleEvent) -> Array[Variant]:
+func get_all_targets() -> Array[Variant]:
 	var targets = []
-	targets.append_array(get_active_cards(event))
+	targets.append_array(get_active_cards())
 	targets.append_array(combatants)
 	return targets
 
@@ -108,30 +107,23 @@ func apply_status(target_card: Card, instance: CardStatusInstance) -> void:
 			current_instance = target_card.card_status_holder.statuses[i]
 			index = i
 			break
-	
+
 	# can we just add the new status?
 	if current_instance == null:
 		target_card.add_status(instance)
 		return
-	
+
 	# If there are two instances of a status, combine them
 	var new_instance := current_instance.data.combine_instance(current_instance, instance)
 	target_card.card_status_holder.statuses[index] = new_instance
 
 
 func expire_card_statuses_for_owner(event: BattleEvent) -> void:
-	var cards: Array[Card] = get_active_cards(event).filter(
-		func(card: Card):
-			return card.owner_combatant == event.owner
-	)
-	
+	var cards := board.get_players_cards(event.owner)
+
 	# find all cards with a status and remove them or decrement
 	# their duration for cards owned by the owner. This is important
 	# if you play a card that applies a status to their cards, they
 	# will lower theirs on their turn.
 	for card in cards:
 		card.card_status_holder.decrement_statuses(event)
-
-
-func has_room_on_battlefield(owner: Combatant) -> bool:
-	return battlefield.can_add_card_to_zone(owner)

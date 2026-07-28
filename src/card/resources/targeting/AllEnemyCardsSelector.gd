@@ -2,7 +2,7 @@ class_name AllEnemyCardsSelector
 extends TargetSelector
 
 func select_targets(event: BattleEvent, context: BattleContext, source: Card) -> Array[Variant]:
-	var all_enemy_cards := context.get_active_cards(event).filter(
+	var all_enemy_cards := context.get_active_cards().filter(
 		func(card: Card): 
 			return card.owner_combatant != source.owner_combatant
 	)

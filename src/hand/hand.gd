@@ -11,6 +11,7 @@ const CARD_SCENE = preload("res://src/card/card.tscn")
 
 signal emit_command(command: PlayCardCommand, callback: Variant)
 
+var can_drop_at: Callable
 var cards: Array[Card] = []
 var owner_combatant: Combatant
 
@@ -27,13 +28,14 @@ func add_to_hand(card_data: CardData) -> Card:
 		var card_instance = CARD_SCENE.instantiate()
 		card_instance.card_data = card_data
 		card_instance.owner_combatant = owner_combatant
-		
+		card_instance.can_drop_at = can_drop_at
+
 		# connect signals
 		card_instance.emit_command.connect(emit_command.emit)
-		
+
 		add_child(card_instance)
 		cards.append(card_instance)
-		
+
 		return card_instance
 	return null
 
@@ -42,17 +44,17 @@ func update_cards_for_turn(is_opponents_turn: bool) -> void:
 	for card in cards:
 		card.opponents_turn = is_opponents_turn
 		card.is_locally_owned = owner_combatant.is_local_player
-	
+
 
 # Called by the BattleManager during PlayCardCommand orchestration.
-func play_card(card: Card, new_parent: CardDropZone) -> void:
-	
+func play_card(card: Card, board: Board) -> void:
+
 	if audio.stream:
 		audio.play()
-	
-	new_parent.play_card(card, owner_combatant)
+
+	board.add_card(card, owner_combatant)
 	var index = cards.find(card)
-	
+
 	# find() can return -1
 	if index != -1:
 		cards.remove_at(index)
