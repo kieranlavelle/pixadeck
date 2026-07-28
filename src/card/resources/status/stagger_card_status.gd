@@ -21,3 +21,12 @@ func should_tick(event: BattleEvent, instance: CardStatusInstance) -> bool:
 	# Tick after the opponent who does not own the host card
 	# turns end
 	return event.owner == instance.host.owner_combatant
+
+
+func combine_instance(current: CardStatusInstance, other: CardStatusInstance) -> CardStatusInstance:
+	var new := CardStatusInstance.new()
+	new.data = self
+	new.host = current.host
+	new.applier = other.applier
+	new.remaining_turns = current.remaining_turns + other.remaining_turns
+	return new

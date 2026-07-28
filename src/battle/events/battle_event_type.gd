@@ -25,4 +25,5 @@ const CARD_DRAWN := &"card_drawn"
 const DAMAGE_REQUESTED := &"damage_requested"
 const DAMAGE_DEALT := &"damage_dealt"
 
+const APPLY_STATUS_REQUESTED := &"apply_status_requested"
 const STATUS_APPLIED := &"status_applied"

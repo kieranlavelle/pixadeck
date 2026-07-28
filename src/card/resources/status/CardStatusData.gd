@@ -20,3 +20,11 @@ func can_resolve_effect(
 
 func should_tick(_event: BattleEvent, _instance: CardStatusInstance) -> bool:
 	return true
+
+
+# As CardStatusData does not hold any copies of instance it just has to take
+# in two instances that are created by this type of CardStatusData and combine them,
+# then return a new status
+func combine_instance(_current: CardStatusInstance, other: CardStatusInstance) -> CardStatusInstance:
+	push_error("%s must implement combine_instance()" % display_name)
+	return other

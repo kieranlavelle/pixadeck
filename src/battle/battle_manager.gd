@@ -36,7 +36,7 @@ func _ready():
 	TurnManagerNode.turn_started.connect(BattleOverlay._on_turn_start)
 	
 	# setup battle context
-	battle_context = BattleContext.new(event_queue, combatants, self, Battlefield)
+	battle_context = BattleContext.new(event_queue, combatants, self, Battlefield, TurnManagerNode)
 	for combatant in combatants:
 		combatant.battle_context = battle_context
 	# give the battle event queue context
@@ -55,39 +55,10 @@ func _ui_on_turn_start(combatant: Combatant) -> void:
 		BattleOverlay.hide_end_turn_button()
 
 
-# This is a thin wrapper around _end_current_turn due to signals
-# not awaiting async functions but BattleEvents are async and we
-# need to emit one on turn end
+# Signals do not await connected async methods, so this adapter owns the
+# fire-and-forget boundary for UI and AI end-turn requests.
 func _on_request_end_turn() -> void:
-	await _end_current_turn()
-
-
-# Currently this dispatches the turn ending signal onto the 
-# BattleEventQueue, may move into turu
-func _end_current_turn() -> void:
-	var combatant := TurnManagerNode.current_combatant
-	if combatant == null:
-		return
-
-	await event_queue.enqueue(
-		BattleEvent.new(
-			BattleEventType.TURN_ENDING, combatant, combatant
-		)
-	)
-	
-	TurnManagerNode.advance_turn()
-	
-	await event_queue.enqueue(
-		BattleEvent.new(
-			BattleEventType.TURN_ENDED,
-			combatant,
-			combatant,
-			null,
-			null,
-			{},
-			battle_context.expire_card_statuses_for_owner
-		)
-	)
+	await battle_context.execute(EndTurnCommand.new())
 
 
 # It might be better to have a generic command handler in future

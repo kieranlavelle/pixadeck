@@ -6,17 +6,20 @@ var event_queue: BattleEventQueue
 var combatants: Array[Combatant] = []
 var battle_manager: BattleManager
 var battlefield: CardDropZone
+var turn_manager: TurnManager
 
 func _init(
 	_event_queue: BattleEventQueue,
 	_combatants: Array[Combatant],
 	_battle_manager: BattleManager,
-	_battlefield: CardDropZone
+	_battlefield: CardDropZone,
+	_turn_manager: TurnManager
 ) -> void:
 	event_queue = _event_queue
 	combatants = _combatants
 	battle_manager = _battle_manager
 	battlefield = _battlefield
+	turn_manager = _turn_manager
 
 
 func execute(command: Command) -> Command:
@@ -32,6 +35,12 @@ func spend_mana(combatant: Combatant, amount: int) -> bool:
 
 func play_card(combatant: Combatant, card: Card) -> void:
 	combatant.hand.play_card(card, battlefield)
+
+
+# Advancing the turn emits TurnManager.turn_started. Commands should use this
+# rather than reaching into the manager so turn progression has one gateway.
+func advance_turn() -> void:
+	turn_manager.advance_turn()
 
 
 func deal_damage(target: Combatant, amount: int) -> void:
@@ -66,6 +75,27 @@ func get_all_targets(event: BattleEvent) -> Array[Variant]:
 	targets.append_array(get_active_cards(event))
 	targets.append_array(combatants)
 	return targets
+
+
+func apply_status(target_card: Card, instance: CardStatusInstance) -> void:
+
+	var current_instance: CardStatusInstance
+	var index: int
+	for i in range(len(target_card.card_status_holder.statuses)):
+		if target_card.card_status_holder.statuses[i].data.id == instance.data.id:
+			# these are the same status type
+			current_instance = target_card.card_status_holder.statuses[i]
+			index = i
+			break
+	
+	# can we just add the new status?
+	if current_instance == null:
+		target_card.add_status(instance)
+		return
+	
+	# when combining status' we 
+	var new_instance := current_instance.data.combine_instance(current_instance, instance)
+	target_card.card_status_holder.statuses[index] = new_instance
 
 
 func expire_card_statuses_for_owner(event: BattleEvent) -> void:
