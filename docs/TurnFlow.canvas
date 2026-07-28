@@ -1,0 +1,30 @@
+{
+	"nodes":[
+		{"id":"0ae4323385fcabe7","type":"group","x":-620,"y":240,"width":2080,"height":520,"color":"4","label":"Turn Flow"},
+		{"id":"1bf4d55bb6b746bb","type":"group","x":80,"y":300,"width":290,"height":180,"color":"4","label":"Combatants"},
+		{"id":"a0ce28a27fc05cc7","type":"text","text":"BattleEvent.TurnSetupStarted","x":460,"y":360,"width":300,"height":60,"color":"4"},
+		{"id":"0b500e0da4b7989c","type":"text","text":"Player","x":100,"y":320,"width":250,"height":60,"color":"4"},
+		{"id":"ee8449ffb890df9d","type":"text","text":"AIController","x":100,"y":400,"width":250,"height":60,"color":"4"},
+		{"id":"bcae835d3faa7776","type":"text","text":"TurnManager.Start","x":-600,"y":360,"width":250,"height":60,"color":"4"},
+		{"id":"f1ba0f0904d807a4","type":"text","text":"turn_started.emit(combatant)","x":-280,"y":360,"width":280,"height":60,"color":"4"},
+		{"id":"a91044ac23ff73de","type":"text","text":"Player Ends Turn via Command","x":-600,"y":640,"width":250,"height":60,"color":"4"},
+		{"id":"a67f9b2d79b15540","type":"text","text":"BattleEvent.TurnEnding","x":-280,"y":640,"width":250,"height":60,"color":"4"},
+		{"id":"6ba77db12329b06a","type":"text","text":"TurnManager.advance_turn","x":635,"y":640,"width":250,"height":60,"color":"4"},
+		{"id":"9dacfa4b66c52084","type":"text","text":"BattleEvent.TurnEnded","x":335,"y":640,"width":250,"height":60,"color":"4"},
+		{"id":"224a5a29ddb59e86","type":"text","text":"*optional, doesn't exist currently*\nContext.clean_end_turn","x":35,"y":620,"width":250,"height":100,"color":"4"},
+		{"id":"cc84a124e8a24819","type":"text","text":"\n\t- Draw card\n\t- Setup stats","x":840,"y":335,"width":250,"height":110,"color":"4"},
+		{"id":"eabadff4cceff63a","x":1160,"y":360,"width":250,"height":60,"color":"4","type":"text","text":"BattleEvent.TurnStarted"}
+	],
+	"edges":[
+		{"id":"26050c7127297cb9","fromNode":"1bf4d55bb6b746bb","fromSide":"right","toNode":"a0ce28a27fc05cc7","toSide":"left"},
+		{"id":"550bc7133ffca3e5","fromNode":"f1ba0f0904d807a4","fromSide":"right","toNode":"1bf4d55bb6b746bb","toSide":"left"},
+		{"id":"7cf53dae6daeb827","fromNode":"bcae835d3faa7776","fromSide":"right","toNode":"f1ba0f0904d807a4","toSide":"left"},
+		{"id":"e10afa71d0dc34eb","fromNode":"a0ce28a27fc05cc7","fromSide":"right","toNode":"cc84a124e8a24819","toSide":"left"},
+		{"id":"424f76aa087be93f","fromNode":"a91044ac23ff73de","fromSide":"right","toNode":"a67f9b2d79b15540","toSide":"left"},
+		{"id":"1cd992d1475b0d23","fromNode":"9dacfa4b66c52084","fromSide":"right","toNode":"6ba77db12329b06a","toSide":"left"},
+		{"id":"b9761dd12b538d56","fromNode":"6ba77db12329b06a","fromSide":"top","toNode":"f1ba0f0904d807a4","toSide":"bottom"},
+		{"id":"49b6878c363792cb","fromNode":"a67f9b2d79b15540","fromSide":"right","toNode":"224a5a29ddb59e86","toSide":"left"},
+		{"id":"98106339afad557f","fromNode":"224a5a29ddb59e86","fromSide":"right","toNode":"9dacfa4b66c52084","toSide":"left"},
+		{"id":"59e0b60946c39c0a","fromNode":"cc84a124e8a24819","fromSide":"right","toNode":"eabadff4cceff63a","toSide":"left"}
+	]
+}

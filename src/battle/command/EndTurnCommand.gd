@@ -17,12 +17,7 @@ func execute(context: BattleContext) -> EndTurnCommand:
 	)
 	await context.event_queue.enqueue(turn_ending_event)
 
-	# The existing turn event contract has no cancellation semantics. Effects may
-	# react to the ending, but cannot prevent the turn from advancing.
-	context.advance_turn()
 
-	# TURN_ENDED runs after TurnManager has selected the next owner. Keep the
-	# previous owner on the event so expiry effects tick the correct cards.
 	var turn_ended_event := BattleEvent.new(
 		BattleEventType.TURN_ENDED,
 		owner,
@@ -33,6 +28,10 @@ func execute(context: BattleContext) -> EndTurnCommand:
 		context.expire_card_statuses_for_owner
 	)
 	await context.event_queue.enqueue(turn_ended_event)
+
+	# The existing turn event contract has no cancellation semantics. Effects may
+	# react to the ending, but cannot prevent the turn from advancing.
+	context.advance_turn()
 
 	is_success = true
 	return self

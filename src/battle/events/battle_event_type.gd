@@ -1,11 +1,9 @@
 class_name BattleEventType
 extends RefCounted
 
-# Note on current events
-# For now there are only a small set of battle events. These are events
-# that will be used by the current small set of cards.
 
 # Turn based events
+const TURN_SETUP_STARTED := &"turn_setup_started"
 const TURN_STARTED := &"turn_started"
 
 # emit just before this users turn ends, querying the current user could

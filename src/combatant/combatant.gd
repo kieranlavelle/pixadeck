@@ -23,7 +23,6 @@ func _ready() -> void:
 	hand.emit_command.connect(emit_command.emit)
 	hand.owner_combatant = self
 	
-	
 	# disable the AI controller if this is a player
 	if is_local_player:
 		ai_controller.set_process(false)
@@ -35,21 +34,10 @@ func _on_turn_start(combatant: Combatant) -> void:
 	# if it's the players turn, draw a card from their hand	
 	if combatant.combatant_id == combatant_id:
 		
-		# Wait so we can see the cards appear.
 		# TODO: This will be replaced with animation await
 		await get_tree().create_timer(1).timeout
 		
-		# behaviours agnostic to real vs ai player.
-		await battle_context.event_queue.enqueue(
-			BattleEvent.new(BattleEventType.TURN_STARTED, self, self)
-		)
-
-
-		var cmd := RequestDrawCardCommand.new(combatant, deck, hand)
-		await battle_context.execute(cmd)
-
-		enable_player()
-		stats.on_new_turn()
+		await battle_context.start_turn(combatant)
 		
 		# If it's an AI hand control to the controller.
 		if not is_local_player:
@@ -57,7 +45,6 @@ func _on_turn_start(combatant: Combatant) -> void:
 		
 	else:
 		disable_player()
-
 
 
 func disable_player() -> void:

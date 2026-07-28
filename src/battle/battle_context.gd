@@ -37,6 +37,27 @@ func play_card(combatant: Combatant, card: Card) -> void:
 	combatant.hand.play_card(card, battlefield)
 
 
+func start_turn(combatant: Combatant) -> void:
+
+	# In future we could make a TurnStatedCommand and make it interruptable.
+	# that is not in scope for this code
+	var turn_setup_event := BattleEvent.new(BattleEventType.TURN_SETUP_STARTED, combatant, combatant)
+	await event_queue.enqueue(turn_setup_event)
+
+	# turn setup steps
+	combatant.stats.on_new_turn()
+
+	var cmd := RequestDrawCardCommand.new(combatant, combatant.deck, combatant.hand)
+	await execute(cmd)
+
+	# makes cards interactable
+	combatant.enable_player()
+
+	await event_queue.enqueue(
+		BattleEvent.new(BattleEventType.TURN_STARTED, combatant, combatant)
+	)
+
+
 # Advancing the turn emits TurnManager.turn_started. Commands should use this
 # rather than reaching into the manager so turn progression has one gateway.
 func advance_turn() -> void:
@@ -93,7 +114,7 @@ func apply_status(target_card: Card, instance: CardStatusInstance) -> void:
 		target_card.add_status(instance)
 		return
 	
-	# when combining status' we 
+	# If there are two instances of a status, combine them
 	var new_instance := current_instance.data.combine_instance(current_instance, instance)
 	target_card.card_status_holder.statuses[index] = new_instance
 
