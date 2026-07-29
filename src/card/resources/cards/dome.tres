@@ -2,15 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://b2bnc63uiqfje" path="res://assets/card_components/stone-flat-background.png" id="1_j5cku"]
 [ext_resource type="Texture2D" uid="uid://bavkmf87xe3ju" path="res://assets/card_components/bronze-border.png" id="2_15ssh"]
-[ext_resource type="Script" uid="uid://c4otee18fs8or" path="res://src/card/resources/effect_data.gd" id="3_jo6yt"]
-[ext_resource type="Script" uid="uid://bslnyll8l7ne1" path="res://src/card/resources/types/selector_action_pair.gd" id="4_qs0op"]
-[ext_resource type="Script" uid="uid://n5h2calm3brh" path="res://src/card/resources/actions/apply_status_action.gd" id="5_qs0op"]
+[ext_resource type="Script" path="res://src/card/resources/effects/on_opponent_turn_started_apply_status_effect.gd" id="3_effect"]
 [ext_resource type="Script" uid="uid://dnmqqedo4u5ol" path="res://src/card/resources/keywords/keyword_data.gd" id="5_xey0f"]
 [ext_resource type="Resource" uid="uid://d2u8l6xfmjghi" path="res://src/card/resources/keywords/stagger.tres" id="6_2kxv2"]
 [ext_resource type="Script" uid="uid://byf1l8hddag4e" path="res://src/card/resources/status/stagger_card_status.gd" id="6_xey0f"]
 [ext_resource type="Script" uid="uid://bjav0vfisvfaq" path="res://src/card/resources/targeting/AllEnemyCardsSelector.gd" id="7_2kxv2"]
-[ext_resource type="Script" uid="uid://ct7d5s6hb5d40" path="res://src/card/resources/trigger_filters/trigger_filter.gd" id="7_nssry"]
-[ext_resource type="Script" uid="uid://cyfy7740gqrhi" path="res://src/card/resources/trigger_filters/not_own_source_card.gd" id="8_dt5gu"]
 [ext_resource type="Texture2D" uid="uid://cltbtcbyb8wbp" path="res://assets/card_components/blue-flag.png" id="9_2eexy"]
 [ext_resource type="Texture2D" uid="uid://cd846f0otmkxm" path="res://assets/card_components/Icon34.png" id="10_84df8"]
 [ext_resource type="Texture2D" uid="uid://bq8g60i21s8uq" path="res://assets/card_components/silver-inner-border.png" id="11_7uk37"]
@@ -24,33 +20,16 @@ script = ExtResource("6_xey0f")
 display_name = "stagger"
 metadata/_custom_type_script = "uid://byf1l8hddag4e"
 
-[sub_resource type="Resource" id="Resource_dt5gu"]
-script = ExtResource("5_qs0op")
-status = SubResource("Resource_nssry")
-metadata/_custom_type_script = "uid://n5h2calm3brh"
-
 [sub_resource type="Resource" id="Resource_2eexy"]
 script = ExtResource("7_2kxv2")
 
-[sub_resource type="Resource" id="Resource_84df8"]
-script = ExtResource("4_qs0op")
-selector = SubResource("Resource_2eexy")
-action = SubResource("Resource_dt5gu")
-metadata/_custom_type_script = "uid://bslnyll8l7ne1"
-
-[sub_resource type="Resource" id="Resource_3orvu"]
-script = ExtResource("8_dt5gu")
-metadata/_custom_type_script = "uid://cyfy7740gqrhi"
-
 [sub_resource type="Resource" id="Resource_iwh6q"]
-script = ExtResource("3_jo6yt")
-name = "stagger"
-description = "Stops any cards from the enemy resolving for a fixed number of turns"
-trigger_events = Array[StringName]([&"turn_started"])
-trigger_filters = Array[ExtResource("7_nssry")]([SubResource("Resource_3orvu")])
-effect_actions = Array[ExtResource("4_qs0op")]([SubResource("Resource_84df8")])
+script = ExtResource("3_effect")
+id = &"stagger_on_opponent_turn_started"
+display_text = "Stagger all enemy cards when their turn starts."
+status = SubResource("Resource_nssry")
+target_selector = SubResource("Resource_2eexy")
 tooltip_keywords = Array[ExtResource("5_xey0f")]([ExtResource("6_2kxv2")])
-metadata/_custom_type_script = "uid://c4otee18fs8or"
 
 [resource]
 script = ExtResource("13_t6w2b")
@@ -58,7 +37,7 @@ id = "dome"
 card_name = "Dome"
 card_cost = 2
 description = "[i]Stagger[/i] all enemies for 1 turn"
-effects = Array[ExtResource("3_jo6yt")]([SubResource("Resource_iwh6q")])
+effects = Array[ExtResource("3_effect")]([SubResource("Resource_iwh6q")])
 border_asset = ExtResource("2_15ssh")
 inner_border_asset = ExtResource("11_7uk37")
 mana_asset = ExtResource("12_ohrgd")

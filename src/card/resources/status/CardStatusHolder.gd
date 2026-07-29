@@ -30,7 +30,7 @@ func decrement_statuses(event: BattleEvent) -> void:
 			remove_status(status)
 
 
-func can_resolve_effect(effect: EffectData, event: BattleEvent, context: BattleContext) -> bool:
+func can_resolve_effect(effect: CardEffect, event: BattleEvent, context: BattleContext) -> bool:
 	for status in statuses:
 		if not status.can_resolve_effect(effect, event, context):
 			return false

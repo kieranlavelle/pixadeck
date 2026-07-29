@@ -2,15 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://dr2xuam6pmiab" path="res://assets/card_components/fire-texture-background.png" id="1_1jv8g"]
 [ext_resource type="Texture2D" uid="uid://bavkmf87xe3ju" path="res://assets/card_components/bronze-border.png" id="2_q0lw0"]
-[ext_resource type="Script" uid="uid://c4otee18fs8or" path="res://src/card/resources/effect_data.gd" id="3_e8clm"]
-[ext_resource type="Script" uid="uid://bslnyll8l7ne1" path="res://src/card/resources/types/selector_action_pair.gd" id="4_igsjf"]
-[ext_resource type="Script" uid="uid://2wp824qm8k6b" path="res://src/card/resources/actions/deal_damage_action.gd" id="5_tcge0"]
+[ext_resource type="Script" path="res://src/card/resources/effects/on_opponent_turn_started_deal_damage_effect.gd" id="3_effect"]
 [ext_resource type="Script" uid="uid://boodsla6rwx02" path="res://src/card/resources/targeting/random_enemy_selector.gd" id="6_ys0m8"]
 [ext_resource type="Script" uid="uid://dnmqqedo4u5ol" path="res://src/card/resources/keywords/keyword_data.gd" id="7_sds1f"]
 [ext_resource type="Resource" uid="uid://foqmfbuhhu3q" path="res://src/card/resources/keywords/persistent.tres" id="8_0sslk"]
 [ext_resource type="Resource" uid="uid://cwdfydpfiujmo" path="res://src/card/resources/keywords/physical_damage.tres" id="9_20avx"]
-[ext_resource type="Script" uid="uid://ct7d5s6hb5d40" path="res://src/card/resources/trigger_filters/trigger_filter.gd" id="10_2akky"]
-[ext_resource type="Script" uid="uid://cyfy7740gqrhi" path="res://src/card/resources/trigger_filters/not_own_source_card.gd" id="11_gttbi"]
 [ext_resource type="Texture2D" uid="uid://buf7epf87y72v" path="res://assets/card_components/bronze-flag.png" id="12_jeskh"]
 [ext_resource type="Texture2D" uid="uid://dtkwemx52jh7g" path="res://assets/card_components/Icon25.png" id="13_0bjne"]
 [ext_resource type="Texture2D" uid="uid://bq8g60i21s8uq" path="res://assets/card_components/silver-inner-border.png" id="14_2n0px"]
@@ -19,40 +15,24 @@
 [ext_resource type="Texture2D" uid="uid://clak0olg4ou31" path="res://assets/card_components/silver-medium-title.png" id="17_yl863"]
 [ext_resource type="Texture2D" uid="uid://bdlvgujlinu8n" path="res://assets/card_components/sword-type.png" id="18_2fwrd"]
 
-[sub_resource type="Resource" id="Resource_damage_action"]
-script = ExtResource("5_tcge0")
-metadata/_custom_type_script = "uid://2wp824qm8k6b"
-
 [sub_resource type="Resource" id="Resource_7j0ai"]
 script = ExtResource("6_ys0m8")
 metadata/_custom_type_script = "uid://boodsla6rwx02"
 
-[sub_resource type="Resource" id="Resource_selector_action"]
-script = ExtResource("4_igsjf")
-selector = SubResource("Resource_7j0ai")
-action = SubResource("Resource_damage_action")
-metadata/_custom_type_script = "uid://bslnyll8l7ne1"
-
-[sub_resource type="Resource" id="Resource_aota0"]
-script = ExtResource("11_gttbi")
-metadata/_custom_type_script = "uid://cyfy7740gqrhi"
-
 [sub_resource type="Resource" id="Resource_gonej"]
-script = ExtResource("3_e8clm")
-name = "damage_turn_start"
-description = "deals damage to a random target enemy at enemy turn start"
-trigger_events = Array[StringName]([&"turn_started"])
-trigger_filters = Array[ExtResource("10_2akky")]([SubResource("Resource_aota0")])
-effect_actions = Array[ExtResource("4_igsjf")]([SubResource("Resource_selector_action")])
+script = ExtResource("3_effect")
+id = &"damage_on_opponent_turn_started"
+display_text = "Deal 1 physical damage to a random enemy when their turn starts."
+amount = 1
+target_selector = SubResource("Resource_7j0ai")
 tooltip_keywords = Array[ExtResource("7_sds1f")]([ExtResource("8_0sslk"), ExtResource("9_20avx")])
-metadata/_custom_type_script = "uid://c4otee18fs8or"
 
 [resource]
 script = ExtResource("16_82qmo")
 id = "strike"
 card_name = "Strike"
 description = "Deal 1 [b]physical[/b] damage to a single random target enemy each turn. [i]persistent.[/i]"
-effects = Array[ExtResource("3_e8clm")]([SubResource("Resource_gonej")])
+effects = Array[ExtResource("3_effect")]([SubResource("Resource_gonej")])
 border_asset = ExtResource("2_q0lw0")
 inner_border_asset = ExtResource("14_2n0px")
 mana_asset = ExtResource("15_wx71x")

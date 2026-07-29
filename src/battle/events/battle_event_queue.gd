@@ -11,9 +11,9 @@ var _trace: EventTrace = EventTrace.new()
 
 class CardTriggerPair:
 	var card: Card
-	var trigger: EffectData
+	var trigger: CardEffect
 
-	func _init(_card: Card, _trigger: EffectData):
+	func _init(_card: Card, _trigger: CardEffect):
 		card = _card
 		trigger = _trigger
 
@@ -54,8 +54,8 @@ func _collect_triggers_snapshot(event: BattleEvent) -> Array[CardTriggerPair]:
 	for card in battle_context.get_active_cards():
 		for effect in card.card_data.effects:
 
-			# skip card effects that don't listen to this event
-			if not effect.is_triggered_by(event, battle_context, card):
+			# Effect classes own their event and source-relation rules.
+			if not effect.can_trigger(event, battle_context, card):
 				continue
 			
 			_will_trigger.append(CardTriggerPair.new(card, effect))

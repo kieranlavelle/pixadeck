@@ -7,5 +7,5 @@ var host: Card
 var remaining_turns: int
 
 
-func can_resolve_effect(effect: EffectData, event: BattleEvent, context: BattleContext) -> bool:
+func can_resolve_effect(effect: CardEffect, event: BattleEvent, context: BattleContext) -> bool:
 	return data.can_resolve_effect(effect, event, context, self)

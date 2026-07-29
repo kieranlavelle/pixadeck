@@ -10,7 +10,7 @@ extends Resource
 # This function basically is a way for a status to intercept ANY card effect
 # the base function allows all card effects to pass.
 func can_resolve_effect(
-	_effect: EffectData,
+	_effect: CardEffect,
 	_event: BattleEvent,
 	_context: BattleContext,
 	_instance: CardStatusInstance

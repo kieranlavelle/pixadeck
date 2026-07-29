@@ -7,7 +7,7 @@ extends Resource
 
 @export_multiline var description: String = "card effect description"
 
-@export var effects: Array[EffectData] = []
+@export var effects: Array[CardEffect] = []
 
 @export_category("assets")
 @export var border_asset: Texture2D

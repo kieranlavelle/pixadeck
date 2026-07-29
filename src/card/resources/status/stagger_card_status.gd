@@ -4,7 +4,7 @@ extends CardStatusData
 
 # stagger prevents ANY host from resolving ANY effect
 func can_resolve_effect(
-	_effect: EffectData,
+	_effect: CardEffect,
 	_event: BattleEvent,
 	_context: BattleContext,
 	_instance: CardStatusInstance
