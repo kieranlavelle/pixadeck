@@ -44,8 +44,8 @@ func try_spend_mana(amount: int) -> bool:
 		return false
 
 	current_mana -= amount
-	mana_changed.emit(current_mana, current_max_mana)
 	_update_mana_display()
+	mana_changed.emit(current_mana, current_max_mana)
 	return true
 
 
@@ -58,8 +58,8 @@ func try_gain_mana(amount: int) -> int:
 		return 0
 
 	current_mana += gained
-	mana_changed.emit(current_mana, current_max_mana)
 	_update_mana_display()
+	mana_changed.emit(current_mana, current_max_mana)
 	return gained
 
 
