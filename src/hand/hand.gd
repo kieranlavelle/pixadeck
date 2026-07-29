@@ -23,6 +23,10 @@ func is_hand_full() -> bool:
 	return len(cards) >= DEFAULT_MAX_HAND_SIZE
 
 
+func has_card(card) -> bool:
+	return true if cards.find(card) != -1 else false
+
+
 func add_to_hand(card_data: CardData) -> Card:
 	if cards.size() < DEFAULT_MAX_HAND_SIZE:
 		var card_instance = CARD_SCENE.instantiate()
@@ -52,7 +56,7 @@ func play_card(card: Card, board: Board) -> void:
 	if audio.stream:
 		audio.play()
 
-	board.add_card(card, owner_combatant)
+	board.add_card(card)
 	var index = cards.find(card)
 
 	# find() can return -1

@@ -11,6 +11,12 @@ func _init(_owner: Combatant, _card: Card):
 
 
 func execute(context: BattleContext) -> PlayCardCommand:
+
+	if not owner.hand.has_card(card):
+		reason = "Does not have card in hand"
+		is_success = false
+		return self
+
 	#1. Request board room
 	if not context.board.can_add_card(owner.seat):
 		reason = "No room on board"
@@ -41,6 +47,11 @@ func execute(context: BattleContext) -> PlayCardCommand:
 		return self
 
 	#4. Spend Mana & Move
+	if not owner.hand.has_card(card):
+		reason = "Does not have card in hand"
+		is_success = false
+		return self
+
 	# second_check: Request board room
 	if not context.board.can_add_card(owner.seat):
 		reason = "No room on board"

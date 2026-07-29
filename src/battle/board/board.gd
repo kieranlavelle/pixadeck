@@ -20,17 +20,24 @@ func _init() -> void:
 
 
 func get_players_cards(owner: Combatant) -> Array[Card]:
-	return battlefiled_cards[owner.seat] as Array[Card]
+	return battlefiled_cards[owner.seat].duplicate() as Array[Card]
 
 
-func add_card(card: Card, owner: Combatant) -> void:
-	battlefiled_cards[owner.seat].append(card)
-	card_placed.emit(card, owner.seat)
+func add_card(card: Card) -> bool:
+	var owner := card.owner_combatant
+	if can_add_card(owner.seat) and not card_in_zone(card, owner.seat):
+		battlefiled_cards[owner.seat].append(card)
+		card_placed.emit(card, owner.seat)
+		return true
+	return false
 
 
-func remove_card(card: Card, owner: Combatant) -> void:
-	battlefiled_cards[owner.seat].erase(card)
-	card_removed.emit(card, owner.seat)
+func remove_card(card: Card) -> void:
+	var owner := card.owner_combatant
+	if card_in_zone(card, owner.seat):
+		battlefiled_cards[owner.seat].erase(card)
+		owner.discard_pile.add_card(card)
+		card_removed.emit(card, owner.seat)
 
 
 func get_all_cards() -> Array[Card]:
@@ -42,3 +49,7 @@ func get_all_cards() -> Array[Card]:
 
 func can_add_card(zone: Combatant.Seat) -> bool:
 	return battlefiled_cards[zone].size() < MAX_CARDS_PER_ZONE
+
+
+func card_in_zone(card: Card, zone: Combatant.Seat) -> bool:
+	return true if battlefiled_cards[zone].find(card) != -1 else false

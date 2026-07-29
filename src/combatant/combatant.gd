@@ -6,6 +6,7 @@ extends Control
 
 @onready var deck: Deck = $Layout/Deck as Deck
 @onready var hand: Hand = $Layout/Hand as Hand
+
 @onready var stats: Stats = $Layout/Stats as Stats
 @onready var layout = $Layout
 @onready var ai_controller = $AIController
@@ -18,11 +19,16 @@ enum Seat { TOP, BOTTOM }
 # used to infer if it is the players turn
 var combatant_id: int
 var battle_context: BattleContext
+var discard_pile: DiscardPile
 
 func _ready() -> void:
 	hand.emit_command.connect(emit_command.emit)
 	hand.owner_combatant = self
-	
+
+	# create their discard pile container
+	discard_pile = DiscardPile.new()
+
+
 	# disable the AI controller if this is a player
 	if is_local_player:
 		ai_controller.set_process(false)
@@ -31,18 +37,18 @@ func _ready() -> void:
 
 
 func _on_turn_start(combatant: Combatant) -> void:
-	# if it's the players turn, draw a card from their hand	
+	# if it's the players turn, draw a card from their hand
 	if combatant.combatant_id == combatant_id:
-		
+
 		# TODO: This will be replaced with animation await
 		await get_tree().create_timer(1).timeout
-		
+
 		await battle_context.start_turn(combatant)
-		
+
 		# If it's an AI hand control to the controller.
 		if not is_local_player:
 			ai_controller.play_turn()
-		
+
 	else:
 		disable_player()
 
