@@ -10,6 +10,7 @@ const DEFAULT_MAX_HAND_SIZE = 5
 const CARD_SCENE = preload("res://src/card/card.tscn")
 
 signal emit_command(command: PlayCardCommand, callback: Variant)
+signal card_discarded(card: Card)
 
 var can_drop_at: Callable
 var cards: Array[Card] = []
@@ -62,3 +63,13 @@ func play_card(card: Card, board: Board) -> void:
 	# find() can return -1
 	if index != -1:
 		cards.remove_at(index)
+
+
+func discard_card(card: Card) -> Card:
+	var index := cards.find(card)
+	if index == -1:
+		return null
+
+	cards.remove_at(index)
+	card_discarded.emit(card)
+	return card

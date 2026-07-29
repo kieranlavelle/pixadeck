@@ -19,6 +19,11 @@ const CARD_PLAY_REQUESTED := &"card_play_requested"
 const CARD_PLAYED := &"card_played"
 const CARD_DRAW_REQUESTED := &"card_draw_requested"
 const CARD_DRAWN := &"card_drawn"
+const CARD_DISCARDED := &"card_discarded"
+
+# Resource facts
+const MANA_SPENT := &"mana_spent"
+const MANA_GAINED := &"mana_gained"
 
 const DAMAGE_REQUESTED := &"damage_requested"
 const DAMAGE_DEALT := &"damage_dealt"

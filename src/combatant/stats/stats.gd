@@ -19,6 +19,8 @@ var current_max_mana: int = 0
 # the available current_max_mana.
 var current_mana: int = 0
 
+signal mana_changed(current: int, maximum: int)
+
 
 func _ready() -> void:
 	health_bar.max_value = MAX_HEALTH
@@ -37,13 +39,35 @@ func on_new_turn() -> void:
 	refresh_mana(current_max_mana)
 
 
-func use_mana(amount: int) -> void:
-	current_mana = max(current_mana - amount, 0)
+func try_spend_mana(amount: int) -> bool:
+	if amount <= 0 or amount > current_mana:
+		return false
+
+	current_mana -= amount
+	mana_changed.emit(current_mana, current_max_mana)
 	_update_mana_display()
+	return true
+
+
+func try_gain_mana(amount: int) -> int:
+	if amount <= 0:
+		return 0
+
+	var gained: int = min(amount, current_max_mana - current_mana)
+	if gained <= 0:
+		return 0
+
+	current_mana += gained
+	mana_changed.emit(current_mana, current_max_mana)
+	_update_mana_display()
+	return gained
 
 
 func refresh_mana(total_available: int) -> void:
+	var old_value := current_mana
 	current_mana = clampi(total_available, 0, current_max_mana)
+	if old_value != current_mana:
+		mana_changed.emit(current_mana, current_max_mana)
 	_update_mana_display()
 
 

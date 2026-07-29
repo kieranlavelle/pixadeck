@@ -11,6 +11,8 @@ extends TextureRect
 var draw_pile: Array[CardData] = []
 var hovered: bool = false
 
+signal card_discarded(card: Card)
+
 
 func _ready():
 	audio.stream = draw_sound
@@ -35,6 +37,26 @@ func draw_card() -> CardData:
 		empty_texture.show()
 
 	return drawn_card
+
+
+func discard_card(card_data: CardData, owner: Combatant) -> Card:
+	var index := draw_pile.find(card_data)
+	if index == -1:
+		return null
+
+	draw_pile.remove_at(index)
+	if draw_pile.is_empty():
+		empty_texture.show()
+
+	# Deck entries are data, unlike hand and board entries. Promote the data to a
+	# runtime Card while it is still parented here so presentation can handle the
+	# discard transition without ever observing an orphaned Card node.
+	var runtime_card := Hand.CARD_SCENE.instantiate() as Card
+	runtime_card.card_data = card_data
+	runtime_card.owner_combatant = owner
+	add_child(runtime_card)
+	card_discarded.emit(runtime_card)
+	return runtime_card
 
 
 func animate_card_to_hand(card_in_hand: Card) -> void:

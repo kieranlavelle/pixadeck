@@ -32,12 +32,15 @@ func add_card(card: Card) -> bool:
 	return false
 
 
-func remove_card(card: Card) -> void:
-	var owner := card.owner_combatant
+func discard_card(card: Card, owner: Combatant) -> Card:
+	if card == null or card.owner_combatant != owner:
+		return null
+
 	if card_in_zone(card, owner.seat):
 		battlefiled_cards[owner.seat].erase(card)
-		owner.discard_pile.add_card(card)
 		card_removed.emit(card, owner.seat)
+		return card
+	return null
 
 
 func get_all_cards() -> Array[Card]:

@@ -27,10 +27,38 @@ func execute(command: Command) -> Command:
 
 
 func spend_mana(combatant: Combatant, amount: int) -> bool:
-	if combatant.stats.current_mana < amount:
-		return false
-	combatant.stats.use_mana(amount)
-	return true
+	return combatant.stats.try_spend_mana(amount)
+
+
+func gain_mana(combatant: Combatant, amount: int) -> int:
+	return combatant.stats.try_gain_mana(amount)
+
+
+func discard_card(
+	combatant: Combatant,
+	card: Variant,
+	zone: int
+) -> Card:
+	var discarded_card: Card
+	match zone:
+		DiscardCardCommand.Zone.DECK:
+			if card is not CardData:
+				return null
+			discarded_card = combatant.deck.discard_card(card, combatant)
+		DiscardCardCommand.Zone.HAND:
+			if card is not Card:
+				return null
+			discarded_card = combatant.hand.discard_card(card)
+		DiscardCardCommand.Zone.BATTLEFIELD:
+			if card is not Card:
+				return null
+			discarded_card = board.discard_card(card, combatant)
+
+	if discarded_card == null:
+		return null
+
+	combatant.discard_pile.add_card(discarded_card.card_data)
+	return discarded_card
 
 
 func play_card(combatant: Combatant, card: Card) -> void:

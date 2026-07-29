@@ -34,3 +34,11 @@ func setup() -> void:
 	# let hands know about their drop-zone target so they can pass to card
 	for combatant in combatants:
 		combatant.hand.can_drop_at = board_ui.can_accept_drop_at
+		combatant.deck.card_discarded.connect(_on_card_discarded)
+		combatant.hand.card_discarded.connect(_on_card_discarded)
+
+
+func _on_card_discarded(card: Card) -> void:
+	# Discards do not have a visible destination yet. The card remains parented to
+	# its source until this presentation transition owns its lifetime.
+	card.queue_free()

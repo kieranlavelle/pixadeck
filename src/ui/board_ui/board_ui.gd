@@ -15,11 +15,9 @@ func _on_card_placed(card: Card, seat: Combatant.Seat):
 
 
 func _on_card_removed(card: Card, seat: Combatant.Seat):
-	match seat:
-		Combatant.Seat.TOP:
-			TopZone.remove_child(card)
-		Combatant.Seat.BOTTOM:
-			BottomZone.remove_child(card)
+	# A battlefield discard has no visible destination yet, so do not detach the
+	# runtime card. Queue it while it remains parented to its board zone.
+	card.queue_free()
 
 
 # detects if the global position is inside the boardUI

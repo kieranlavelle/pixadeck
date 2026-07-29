@@ -65,7 +65,10 @@ func execute(context: BattleContext) -> PlayCardCommand:
 		return self
 
 	# SPEND, SPEND, SPEND!
-	context.spend_mana(owner, card.card_data.card_cost)
+	if not context.spend_mana(owner, card.card_data.card_cost):
+		reason = "Mana amount must be positive and affordable"
+		is_success = false
+		return self
 	context.play_card(owner, card)
 
 	#5. PlayedCard BattleEvent
