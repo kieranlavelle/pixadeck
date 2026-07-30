@@ -17,15 +17,19 @@ func execute(context: BattleContext) -> EndTurnCommand:
 	)
 	await context.event_queue.enqueue(turn_ending_event)
 
+	# STATUS_EXPIRY is rules maintenance, not another reaction window. It keeps
+	# statuses active through TURN_ENDING and expires them before TURN_ENDED.
+	var status_expiry_event := BattleEvent.new(
+		BattleEventType.STATUS_EXPIRY,
+		owner,
+		owner
+	)
+	await context.event_queue.enqueue(status_expiry_event)
 
 	var turn_ended_event := BattleEvent.new(
 		BattleEventType.TURN_ENDED,
 		owner,
-		owner,
-		null,
-		null,
-		{},
-		context.expire_card_statuses_for_owner
+		owner
 	)
 	await context.event_queue.enqueue(turn_ended_event)
 

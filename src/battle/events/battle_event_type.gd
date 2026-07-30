@@ -10,6 +10,9 @@ const TURN_STARTED := &"turn_started"
 # give you the wrong info.
 const TURN_ENDING := &"turn_ending"
 
+# Deterministic maintenance after TURN_ENDING triggers and before TURN_ENDED.
+const STATUS_EXPIRY := &"status_expiry"
+
 # emited after game logic for who's turn it is has been incremented and this
 # users turn has ended.
 const TURN_ENDED := &"turn_ended"
@@ -30,3 +33,8 @@ const DAMAGE_DEALT := &"damage_dealt"
 
 const APPLY_STATUS_REQUESTED := &"apply_status_requested"
 const STATUS_APPLIED := &"status_applied"
+const STATUS_REFRESHED := &"status_refreshed"
+const STATUS_DURATION_STACKED := &"status_duration_stacked"
+const STATUS_TRIGGER_BLOCKED := &"status_trigger_blocked"
+const STATUS_DURATION_DECREMENTED := &"status_duration_decremented"
+const STATUS_EXPIRED := &"status_expired"

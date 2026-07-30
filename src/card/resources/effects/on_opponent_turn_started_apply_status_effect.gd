@@ -13,11 +13,11 @@ func resolve(event: BattleEvent, context: BattleContext, source: Card) -> void:
 		if target is not Card:
 			continue
 
-		var instance := CardStatusInstance.new()
-		instance.data = status
-		instance.applier = source
-		instance.host = target
-		instance.remaining_turns = status.duration
-
-		var command := ApplyStatusCommand.new(source.owner_combatant, target, source, instance)
+		var command := ApplyStatusCommand.new(
+			source.owner_combatant,
+			target,
+			source,
+			status,
+			status.default_duration
+		)
 		await context.execute(command)

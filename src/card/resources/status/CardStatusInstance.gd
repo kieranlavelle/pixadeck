@@ -1,11 +1,16 @@
 class_name CardStatusInstance
 extends RefCounted
 
-var data: CardStatusData
-var applier: Variant
+var definition: CardStatusData
+var source: Variant
 var host: Card
 var remaining_turns: int
 
 
-func can_resolve_effect(effect: CardEffect, event: BattleEvent, context: BattleContext) -> bool:
-	return data.can_resolve_effect(effect, event, context, self)
+func blocks_trigger(
+	trigger: CardEffect,
+	source_card: Card,
+	event: BattleEvent,
+	context: BattleContext
+) -> bool:
+	return definition.blocks_trigger(trigger, source_card, event, context, self)

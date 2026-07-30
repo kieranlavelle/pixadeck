@@ -2,7 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://dr2xuam6pmiab" path="res://assets/card_components/fire-texture-background.png" id="1_1jv8g"]
 [ext_resource type="Texture2D" uid="uid://bavkmf87xe3ju" path="res://assets/card_components/bronze-border.png" id="2_q0lw0"]
-[ext_resource type="Script" path="res://src/card/resources/effects/on_opponent_turn_started_deal_damage_effect.gd" id="3_effect"]
+[ext_resource type="Script" uid="uid://csge6fum8c0o1" path="res://src/card/resources/card_effect.gd" id="3_cyu6w"]
+[ext_resource type="Script" uid="uid://ckm1w1hno3jys" path="res://src/card/resources/effects/on_opponent_turn_started_deal_damage_effect.gd" id="3_effect"]
 [ext_resource type="Script" uid="uid://boodsla6rwx02" path="res://src/card/resources/targeting/random_enemy_selector.gd" id="6_ys0m8"]
 [ext_resource type="Script" uid="uid://dnmqqedo4u5ol" path="res://src/card/resources/keywords/keyword_data.gd" id="7_sds1f"]
 [ext_resource type="Resource" uid="uid://foqmfbuhhu3q" path="res://src/card/resources/keywords/persistent.tres" id="8_0sslk"]
@@ -21,10 +22,9 @@ metadata/_custom_type_script = "uid://boodsla6rwx02"
 
 [sub_resource type="Resource" id="Resource_gonej"]
 script = ExtResource("3_effect")
+target_selector = SubResource("Resource_7j0ai")
 id = &"damage_on_opponent_turn_started"
 display_text = "Deal 1 physical damage to a random enemy when their turn starts."
-amount = 1
-target_selector = SubResource("Resource_7j0ai")
 tooltip_keywords = Array[ExtResource("7_sds1f")]([ExtResource("8_0sslk"), ExtResource("9_20avx")])
 
 [resource]
@@ -32,7 +32,7 @@ script = ExtResource("16_82qmo")
 id = "strike"
 card_name = "Strike"
 description = "Deal 1 [b]physical[/b] damage to a single random target enemy each turn. [i]persistent.[/i]"
-effects = Array[ExtResource("3_effect")]([SubResource("Resource_gonej")])
+effects = Array[ExtResource("3_cyu6w")]([SubResource("Resource_gonej")])
 border_asset = ExtResource("2_q0lw0")
 inner_border_asset = ExtResource("14_2n0px")
 mana_asset = ExtResource("15_wx71x")

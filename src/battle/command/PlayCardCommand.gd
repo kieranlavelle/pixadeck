@@ -36,8 +36,7 @@ func execute(context: BattleContext) -> PlayCardCommand:
 		owner,
 		context.board,
 		card,
-		{},
-		null
+		{}
 	)
 	await context.event_queue.enqueue(event)
 
@@ -78,8 +77,7 @@ func execute(context: BattleContext) -> PlayCardCommand:
 		owner,
 		context.board,
 		card,
-		{},
-		null
+		{}
 	)
 	await context.event_queue.enqueue(played_card_event)
 

@@ -125,33 +125,63 @@ func get_all_targets() -> Array[Variant]:
 	return targets
 
 
-func apply_status(target_card: Card, instance: CardStatusInstance) -> void:
+func apply_card_status(
+	source: Variant,
+	target_card: Card,
+	definition: CardStatusData,
+	duration: int = CardStatusData.USE_DEFAULT_DURATION
+) -> CardStatusInstance:
+	var applied_duration := definition.default_duration if duration == CardStatusData.USE_DEFAULT_DURATION else duration
+	var current := target_card.card_status_holder.find_by_definition(definition)
 
-	var current_instance: CardStatusInstance
-	var index: int
-	for i in range(len(target_card.card_status_holder.statuses)):
-		if target_card.card_status_holder.statuses[i].data.id == instance.data.id:
-			# these are the same status type
-			current_instance = target_card.card_status_holder.statuses[i]
-			index = i
-			break
-
-	# can we just add the new status?
-	if current_instance == null:
+	if current == null or definition.stack_policy == CardStatusData.StackPolicy.SEPARATE_INSTANCES:
+		var instance := CardStatusInstance.new()
+		instance.definition = definition
+		instance.source = source
+		instance.host = target_card
+		instance.remaining_turns = applied_duration
 		target_card.add_status(instance)
-		return
+		await _emit_status_fact(BattleEventType.STATUS_APPLIED, source, target_card, instance)
+		return instance
 
-	# If there are two instances of a status, combine them
-	var new_instance := current_instance.data.combine_instance(current_instance, instance)
-	target_card.card_status_holder.statuses[index] = new_instance
+	current.source = source
+	match definition.stack_policy:
+		CardStatusData.StackPolicy.UNIQUE_REFRESH:
+			current.remaining_turns = applied_duration
+			await _emit_status_fact(BattleEventType.STATUS_REFRESHED, source, target_card, current)
+		CardStatusData.StackPolicy.STACK_DURATION:
+			if applied_duration == -1:
+				current.remaining_turns = -1
+			elif current.remaining_turns != -1:
+				current.remaining_turns += applied_duration
+			await _emit_status_fact(BattleEventType.STATUS_DURATION_STACKED, source, target_card, current)
+	return current
 
 
-func expire_card_statuses_for_owner(event: BattleEvent) -> void:
-	var cards := board.get_players_cards(event.owner)
+func expire_statuses_for_owner(owner: Combatant) -> void:
+	for card in board.get_players_cards(owner):
+		for status in card.card_status_holder.statuses.duplicate():
+			# a value of -1 indicates it lasts forever.
+			if status.remaining_turns == -1:
+				continue
+			status.remaining_turns -= 1
+			await _emit_status_fact(BattleEventType.STATUS_DURATION_DECREMENTED, owner, card, status)
+			if status.remaining_turns <= 0:
+				card.remove_status(status)
+				await _emit_status_fact(BattleEventType.STATUS_EXPIRED, owner, card, status)
 
-	# find all cards with a status and remove them or decrement
-	# their duration for cards owned by the owner. This is important
-	# if you play a card that applies a status to their cards, they
-	# will lower theirs on their turn.
-	for card in cards:
-		card.card_status_holder.decrement_statuses(event)
+
+func resolve_lifecycle_event(event: BattleEvent) -> void:
+	if event.type == BattleEventType.STATUS_EXPIRY:
+		await expire_statuses_for_owner(event.owner)
+
+
+func _emit_status_fact(type: StringName, source: Variant, target: Card, status: CardStatusInstance) -> void:
+	await event_queue.enqueue(BattleEvent.new(
+		type,
+		target.owner_combatant,
+		source,
+		target,
+		target,
+		{"status": status, "remaining_turns": status.remaining_turns}
+	))

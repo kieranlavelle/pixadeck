@@ -3,14 +3,22 @@ extends Command
 
 var owner: Combatant
 var target: Card
-var instance: CardStatusInstance
+var definition: CardStatusData
+var duration: int
 var source: Variant
 
-func _init(_owner: Combatant, _target: Card, _source: Variant, _instance: CardStatusInstance):
+func _init(
+	_owner: Combatant,
+	_target: Card,
+	_source: Variant,
+	_definition: CardStatusData,
+	_duration: int = CardStatusData.USE_DEFAULT_DURATION
+):
 	owner = _owner
 	target = _target
-	instance = _instance
 	source = _source
+	definition = _definition
+	duration = _duration
 
 
 func execute(context: BattleContext) -> ApplyStatusCommand:
@@ -20,8 +28,8 @@ func execute(context: BattleContext) -> ApplyStatusCommand:
 		is_success = false
 		return self
 	
-	if instance == null:
-		reason = "no status instance provided to apply"
+	if definition == null:
+		reason = "no status definition provided to apply"
 		is_success = false
 		return self
 	
@@ -30,11 +38,6 @@ func execute(context: BattleContext) -> ApplyStatusCommand:
 		is_success = false
 		return self
 	
-	if instance.data == null:
-		reason = "instance has no status defined in instance.data"
-		is_success = false
-		return self
-
 	var apply_status_request := BattleEvent.new(
 		BattleEventType.APPLY_STATUS_REQUESTED,
 		owner,
@@ -42,7 +45,8 @@ func execute(context: BattleContext) -> ApplyStatusCommand:
 		target,
 		source,
 		{
-			"status": instance
+			"definition": definition,
+			"duration": duration
 		}
 	)
 	await context.event_queue.enqueue(apply_status_request)
@@ -52,21 +56,7 @@ func execute(context: BattleContext) -> ApplyStatusCommand:
 		is_success = false
 		return self
 	
-	# context call to apply status to a card
-	# this context call combines stacks of the same StatusInstanceType
-	context.apply_status(target, instance)
-
-	var status_applied := BattleEvent.new(
-		BattleEventType.STATUS_APPLIED,
-		owner,
-		source,
-		target,
-		source,
-		{
-			"status": instance
-		}
-	)
-	await context.event_queue.enqueue(status_applied)
+	await context.apply_card_status(source, target, definition, duration)
 
 	is_success = true
 	return self

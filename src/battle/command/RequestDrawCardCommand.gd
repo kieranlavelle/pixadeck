@@ -32,8 +32,7 @@ func execute(context: BattleContext) -> RequestDrawCardCommand:
 		owner, # could be deck?
 		hand,
 		null,
-		{},
-		null
+		{}
 	)
 	await context.event_queue.enqueue(event)
 	

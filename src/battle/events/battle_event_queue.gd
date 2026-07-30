@@ -37,11 +37,17 @@ func _drain() -> void:
 		# determenistic.
 		_trace.event_started(event)
 		event_dispatched.emit(event)
-		var triggers: Array[CardTriggerPair] = _collect_triggers_snapshot(event)
+		# STATUS_EXPIRY is deterministic maintenance, never a reaction window.
+		var triggers: Array[CardTriggerPair] = []
+		if event.type != BattleEventType.STATUS_EXPIRY:
+			triggers = _collect_triggers_snapshot(event)
 		for trigger in triggers:
 			await _resolve_trigger(trigger, event)
 
-		# post-trigger clean up, e.g on turn-ended we decrement status'
+		await battle_context.resolve_lifecycle_event(event)
+
+		# Post-trigger clean up is reserved for event-local mechanics. Rules
+		# lifecycle transitions are explicit events, such as STATUS_EXPIRY.
 		await event.clean_up()
 		event_resolved.emit(event)
 		_trace.event_ended(event)
@@ -67,5 +73,20 @@ func _collect_triggers_snapshot(event: BattleEvent) -> Array[CardTriggerPair]:
 func _resolve_trigger(pair: CardTriggerPair, event: BattleEvent) -> void:
 	# check just before it runs, in case it depends on other resolves further up in the chain
 	# will default to true if there are no status' so won't block normal runs
-	if pair.card.card_status_holder.can_resolve_effect(pair.trigger, event, battle_context):
-		await pair.trigger.resolve(event, battle_context, pair.card)
+	var blocking_status := pair.card.card_status_holder.blocks_trigger(
+		pair.trigger,
+		pair.card,
+		event,
+		battle_context
+	)
+	if blocking_status != null:
+		await battle_context.event_queue.enqueue(BattleEvent.new(
+			BattleEventType.STATUS_TRIGGER_BLOCKED,
+			pair.card.owner_combatant,
+			blocking_status.source,
+			pair.card,
+			pair.card,
+			{"status": blocking_status, "trigger": pair.trigger}
+		))
+		return
+	await pair.trigger.resolve(event, battle_context, pair.card)
