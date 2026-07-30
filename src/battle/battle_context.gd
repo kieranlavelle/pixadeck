@@ -132,7 +132,7 @@ func apply_card_status(
 	duration: int = CardStatusData.USE_DEFAULT_DURATION
 ) -> CardStatusInstance:
 	var applied_duration := definition.default_duration if duration == CardStatusData.USE_DEFAULT_DURATION else duration
-	var current := target_card.card_status_holder.find_by_definition(definition)
+	var current: CardStatusInstance = target_card.card_status_holder.find_unique_by_definition(definition)
 
 	if current == null or definition.stack_policy == CardStatusData.StackPolicy.SEPARATE_INSTANCES:
 		var instance := CardStatusInstance.new()

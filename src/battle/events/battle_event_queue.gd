@@ -45,10 +45,6 @@ func _drain() -> void:
 			await _resolve_trigger(trigger, event)
 
 		await battle_context.resolve_lifecycle_event(event)
-
-		# Post-trigger clean up is reserved for event-local mechanics. Rules
-		# lifecycle transitions are explicit events, such as STATUS_EXPIRY.
-		await event.clean_up()
 		event_resolved.emit(event)
 		_trace.event_ended(event)
 	_is_resolving = false

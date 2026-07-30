@@ -18,13 +18,13 @@ func remove_status(status: CardStatusInstance) -> void:
 # SEPARATE_INSTANCES must not call this method because every application is
 # independently timed.
 func find_unique_by_definition(definition: CardStatusData) -> CardStatusInstance:
-	var match: CardStatusInstance
+	var found: CardStatusInstance = null
 	for status in statuses:
 		if status.definition == definition:
-			assert(match == null, "Duplicate instances found for %s" % definition.id)
-			if match == null:
-				match = status
-	return match
+			assert(found == null, "Duplicate instances found for %s" % definition.id)
+			if found == null:
+				found = status
+	return found
 
 
 func blocks_trigger(

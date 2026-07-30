@@ -3,10 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://dr2xuam6pmiab" path="res://assets/card_components/fire-texture-background.png" id="1_1jv8g"]
 [ext_resource type="Texture2D" uid="uid://bavkmf87xe3ju" path="res://assets/card_components/bronze-border.png" id="2_q0lw0"]
 [ext_resource type="Script" uid="uid://csge6fum8c0o1" path="res://src/card/resources/card_effect.gd" id="3_cyu6w"]
-[ext_resource type="Script" uid="uid://ckm1w1hno3jys" path="res://src/card/resources/effects/on_opponent_turn_started_deal_damage_effect.gd" id="3_effect"]
+[ext_resource type="Script" uid="uid://b1hg3fhma5tg0" path="res://src/card/resources/effects/turn_ending_effects/on_my_turn_ending_deal_damage_effect.gd" id="4_rftgf"]
 [ext_resource type="Script" uid="uid://boodsla6rwx02" path="res://src/card/resources/targeting/random_enemy_selector.gd" id="6_ys0m8"]
 [ext_resource type="Script" uid="uid://dnmqqedo4u5ol" path="res://src/card/resources/keywords/keyword_data.gd" id="7_sds1f"]
-[ext_resource type="Resource" uid="uid://foqmfbuhhu3q" path="res://src/card/resources/keywords/persistent.tres" id="8_0sslk"]
 [ext_resource type="Resource" uid="uid://cwdfydpfiujmo" path="res://src/card/resources/keywords/physical_damage.tres" id="9_20avx"]
 [ext_resource type="Texture2D" uid="uid://buf7epf87y72v" path="res://assets/card_components/bronze-flag.png" id="12_jeskh"]
 [ext_resource type="Texture2D" uid="uid://dtkwemx52jh7g" path="res://assets/card_components/Icon25.png" id="13_0bjne"]
@@ -16,23 +15,23 @@
 [ext_resource type="Texture2D" uid="uid://clak0olg4ou31" path="res://assets/card_components/silver-medium-title.png" id="17_yl863"]
 [ext_resource type="Texture2D" uid="uid://bdlvgujlinu8n" path="res://assets/card_components/sword-type.png" id="18_2fwrd"]
 
-[sub_resource type="Resource" id="Resource_7j0ai"]
+[sub_resource type="Resource" id="Resource_cyu6w"]
 script = ExtResource("6_ys0m8")
 metadata/_custom_type_script = "uid://boodsla6rwx02"
 
-[sub_resource type="Resource" id="Resource_gonej"]
-script = ExtResource("3_effect")
-target_selector = SubResource("Resource_7j0ai")
-id = &"damage_on_opponent_turn_started"
-display_text = "Deal 1 physical damage to a random enemy when their turn starts."
-tooltip_keywords = Array[ExtResource("7_sds1f")]([ExtResource("8_0sslk"), ExtResource("9_20avx")])
+[sub_resource type="Resource" id="Resource_rer83"]
+script = ExtResource("4_rftgf")
+target_selector = SubResource("Resource_cyu6w")
+id = &"strike_turn_ending"
+tooltip_keywords = Array[ExtResource("7_sds1f")]([ExtResource("9_20avx")])
+metadata/_custom_type_script = "uid://b1hg3fhma5tg0"
 
 [resource]
 script = ExtResource("16_82qmo")
 id = "strike"
 card_name = "Strike"
 description = "Deal 1 [b]physical[/b] damage to a single random target enemy each turn. [i]persistent.[/i]"
-effects = Array[ExtResource("3_cyu6w")]([SubResource("Resource_gonej")])
+effects = Array[ExtResource("3_cyu6w")]([SubResource("Resource_rer83")])
 border_asset = ExtResource("2_q0lw0")
 inner_border_asset = ExtResource("14_2n0px")
 mana_asset = ExtResource("15_wx71x")
