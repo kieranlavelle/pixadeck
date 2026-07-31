@@ -22,7 +22,7 @@ func execute(context: BattleContext) -> GainManaCommand:
 		reason = "Mana amount must be positive and there must be room below the mana cap"
 		return self
 
-	await context.event_queue.enqueue(BattleEvent.new(
+	await context.event_queue.resolve_child(BattleEvent.new(
 		BattleEventType.MANA_GAINED,
 		owner,
 		source,

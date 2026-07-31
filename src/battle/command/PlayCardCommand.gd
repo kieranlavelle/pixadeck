@@ -1,5 +1,6 @@
 class_name PlayCardCommand
-extends Command
+extends RootCommand
+
 
 var owner: Combatant
 var card: Card
@@ -38,7 +39,7 @@ func execute(context: BattleContext) -> PlayCardCommand:
 		card,
 		{}
 	)
-	await context.event_queue.enqueue(event)
+	await context.event_queue.resolve_child(event)
 
 	if event.cancelled:
 		reason = event.cancelled_reason
@@ -68,7 +69,7 @@ func execute(context: BattleContext) -> PlayCardCommand:
 		reason = "Mana amount must be positive and affordable"
 		is_success = false
 		return self
-	context.play_card(owner, card)
+	owner.hand.play_card(card, context.board)
 
 	#5. PlayedCard BattleEvent
 	var played_card_event: BattleEvent = BattleEvent.new(
@@ -79,7 +80,8 @@ func execute(context: BattleContext) -> PlayCardCommand:
 		card,
 		{}
 	)
-	await context.event_queue.enqueue(played_card_event)
+	# await context.event_queue.enqueue(played_card_event)
+	await context.event_queue.resolve_child(played_card_event)
 
 	is_success = true
 	return self

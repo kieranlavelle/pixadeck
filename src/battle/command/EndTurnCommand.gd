@@ -1,5 +1,5 @@
 class_name EndTurnCommand
-extends Command
+extends RootCommand
 
 
 func execute(context: BattleContext) -> EndTurnCommand:
@@ -15,7 +15,7 @@ func execute(context: BattleContext) -> EndTurnCommand:
 		owner,
 		owner
 	)
-	await context.event_queue.enqueue(turn_ending_event)
+	await context.event_queue.resolve_child(turn_ending_event)
 
 	# STATUS_EXPIRY is rules maintenance, not another reaction window. It keeps
 	# statuses active through TURN_ENDING and expires them before TURN_ENDED.
@@ -24,14 +24,14 @@ func execute(context: BattleContext) -> EndTurnCommand:
 		owner,
 		owner
 	)
-	await context.event_queue.enqueue(status_expiry_event)
+	await context.event_queue.resolve_child(status_expiry_event)
 
 	var turn_ended_event := BattleEvent.new(
 		BattleEventType.TURN_ENDED,
 		owner,
 		owner
 	)
-	await context.event_queue.enqueue(turn_ended_event)
+	await context.event_queue.resolve_child(turn_ended_event)
 
 	# The existing turn event contract has no cancellation semantics. Effects may
 	# react to the ending, but cannot prevent the turn from advancing.

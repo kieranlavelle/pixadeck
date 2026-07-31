@@ -31,7 +31,7 @@ func execute(context: BattleContext) -> DiscardCardCommand:
 		reason = "Card is not in the requested source zone"
 		return self
 
-	await context.event_queue.enqueue(BattleEvent.new(
+	await context.event_queue.resolve_child(BattleEvent.new(
 		BattleEventType.CARD_DISCARDED,
 		owner,
 		source,

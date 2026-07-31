@@ -37,7 +37,7 @@ func _ready():
 	# If A player skips their turn emit turn finished
 	BattleOverlay.request_end_turn.connect(_on_request_end_turn)
 	TurnManagerNode.turn_started.connect(_ui_on_turn_start)
-	TurnManagerNode.turn_started.connect(BattleOverlay._on_turn_start)
+	TurnManagerNode.before_turn_started.connect(BattleOverlay._on_turn_start)
 
 	# setup battle context
 	battle_context = BattleContext.new(event_queue, combatants, self, board, TurnManagerNode)
@@ -45,6 +45,7 @@ func _ready():
 		combatant.battle_context = battle_context
 	# give the battle event queue context
 	event_queue.battle_context = battle_context
+	TurnManagerNode.context = battle_context
 
 	presentation_controller = BattlePresentationController.new(
 		Battlefield,

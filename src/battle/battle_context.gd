@@ -23,6 +23,11 @@ func _init(
 
 
 func execute(command: Command) -> Command:
+	if command is RootCommand:
+		await event_queue.enqueue_root(command)
+		return command
+
+	assert(event_queue.has_active_root(), "commands must execute inside a Root")
 	return await command.execute(self)
 
 
@@ -59,31 +64,6 @@ func discard_card(
 
 	combatant.discard_pile.add_card(discarded_card.card_data)
 	return discarded_card
-
-
-func play_card(combatant: Combatant, card: Card) -> void:
-	combatant.hand.play_card(card, board)
-
-
-func start_turn(combatant: Combatant) -> void:
-
-	# In future we could make a TurnStatedCommand and make it interruptable.
-	# that is not in scope for this code
-	var turn_setup_event := BattleEvent.new(BattleEventType.TURN_SETUP_STARTED, combatant, combatant)
-	await event_queue.enqueue(turn_setup_event)
-
-	# turn setup steps
-	combatant.stats.on_new_turn()
-
-	var cmd := RequestDrawCardCommand.new(combatant, combatant.deck, combatant.hand)
-	await execute(cmd)
-
-	# makes cards interactable
-	combatant.enable_player()
-
-	await event_queue.enqueue(
-		BattleEvent.new(BattleEventType.TURN_STARTED, combatant, combatant)
-	)
 
 
 # Advancing the turn emits TurnManager.turn_started. Commands should use this
@@ -177,7 +157,7 @@ func resolve_lifecycle_event(event: BattleEvent) -> void:
 
 
 func _emit_status_fact(type: StringName, source: Variant, target: Card, status: CardStatusInstance) -> void:
-	await event_queue.enqueue(BattleEvent.new(
+	await event_queue.resolve_child(BattleEvent.new(
 		type,
 		target.owner_combatant,
 		source,

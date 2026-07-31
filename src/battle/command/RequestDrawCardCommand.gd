@@ -18,13 +18,13 @@ func execute(context: BattleContext) -> RequestDrawCardCommand:
 		reason = "No cards in deck"
 		is_success = false
 		return self
-	
+
 	#2. Check room in hand
 	if hand.is_hand_full():
 		reason = "No room in hand"
 		is_success = false
 		return self
-	
+
 	#3. RequestPlayCard BattleEvent
 	var event: BattleEvent = BattleEvent.new(
 		BattleEventType.CARD_DRAW_REQUESTED,
@@ -34,8 +34,8 @@ func execute(context: BattleContext) -> RequestDrawCardCommand:
 		null,
 		{}
 	)
-	await context.event_queue.enqueue(event)
-	
+	await context.event_queue.resolve_child(event)
+
 	if event.cancelled:
 		reason = event.cancelled_reason
 		is_success = false
@@ -47,7 +47,7 @@ func execute(context: BattleContext) -> RequestDrawCardCommand:
 		reason = "No cards in deck"
 		is_success = false
 		return self
-	
+
 	# second_check: Check room in hand.
 	if hand.is_hand_full():
 		reason = "No room in hand"
@@ -57,7 +57,7 @@ func execute(context: BattleContext) -> RequestDrawCardCommand:
 	#5. CARD_DRAWN BattleEvent
 	var card := await context.draw_and_move_card(owner)
 	var draw_event := BattleEvent.new(BattleEventType.CARD_DRAWN, owner, deck, hand, card)
-	await context.event_queue.enqueue(draw_event)
+	await context.event_queue.resolve_child(draw_event)
 
 	is_success = true
 	return self

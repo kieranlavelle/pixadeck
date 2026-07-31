@@ -21,7 +21,7 @@ func execute(context: BattleContext) -> SpendManaCommand:
 		reason = "Mana amount must be positive and affordable"
 		return self
 
-	await context.event_queue.enqueue(BattleEvent.new(
+	await context.event_queue.resolve_child(BattleEvent.new(
 		BattleEventType.MANA_SPENT,
 		owner,
 		source,

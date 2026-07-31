@@ -39,12 +39,6 @@ func _ready() -> void:
 func _on_turn_start(combatant: Combatant) -> void:
 	# if it's the players turn, draw a card from their hand
 	if combatant.combatant_id == combatant_id:
-
-		# TODO: This will be replaced with animation await
-		await get_tree().create_timer(1).timeout
-
-		await battle_context.start_turn(combatant)
-
 		# If it's an AI hand control to the controller.
 		if not is_local_player:
 			ai_controller.play_turn()

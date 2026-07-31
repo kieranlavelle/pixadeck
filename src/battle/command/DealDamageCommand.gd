@@ -19,7 +19,7 @@ func execute(context: BattleContext) -> DealDamageCommand:
 		reason = "No target"
 		is_success = false
 		return self
-	
+
 	if amount <= 0:
 		reason = "non-positive value for damage amount"
 		is_success = false
@@ -35,13 +35,13 @@ func execute(context: BattleContext) -> DealDamageCommand:
 			"amount": amount,
 		}
 	)
-	await context.event_queue.enqueue(deal_damage_request)
+	await context.event_queue.resolve_child(deal_damage_request)
 
 	if deal_damage_request.cancelled:
 		reason = deal_damage_request.cancelled_reason
 		is_success = false
 		return self
-	
+
 	context.deal_damage(target, amount)
 
 	var damage_dealt := BattleEvent.new(
@@ -54,7 +54,7 @@ func execute(context: BattleContext) -> DealDamageCommand:
 			"amount": amount,
 		}
 	)
-	await context.event_queue.enqueue(damage_dealt)
+	await context.event_queue.resolve_child(damage_dealt)
 
 	is_success = true
 	return self
