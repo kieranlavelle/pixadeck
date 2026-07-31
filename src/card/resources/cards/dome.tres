@@ -38,6 +38,7 @@ script = ExtResource("13_t6w2b")
 id = "dome"
 card_name = "Dome"
 card_cost = 2
+lifetime = 1
 description = "[i]Stagger[/i] all enemies for 1 turn"
 effects = Array[ExtResource("3_j5cku")]([SubResource("Resource_iwh6q")])
 border_asset = ExtResource("2_15ssh")

@@ -1,5 +1,5 @@
-class_name OnOpponentTurnStartedApplyStatusEffect
-extends OnOpponentTurnStartedEffect
+class_name OnPlayApplyStatusEffect
+extends OnPlayEffect
 
 @export var status: CardStatusData
 @export var target_selector: TargetSelector

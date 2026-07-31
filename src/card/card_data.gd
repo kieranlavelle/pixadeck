@@ -1,9 +1,15 @@
 class_name CardData
 extends Resource
 
+enum Lifetime {
+	PERSISTENT,
+	ONE_SHOT
+}
+
 @export var id: String = "card_id"
 @export var card_name: String = "card_name"
 @export var card_cost: int = 1
+@export var lifetime: Lifetime = Lifetime.PERSISTENT
 
 @export_multiline var description: String = "card effect description"
 

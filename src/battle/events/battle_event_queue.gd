@@ -71,7 +71,7 @@ func _collect_triggers_snapshot(event: BattleEvent) -> Array[CardTriggerPair]:
 	for card in battle_context.get_active_cards():
 		for effect in card.card_data.effects:
 
-			# Effect classes own their event and source-relation rules.
+			# Effect classes own their event and effect-card relation rules.
 			if not effect.can_trigger(event, battle_context, card):
 				continue
 

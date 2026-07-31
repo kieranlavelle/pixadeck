@@ -9,11 +9,11 @@ extends Resource
 @export var tooltip_keywords: Array[KeywordData] = []
 
 
-func can_trigger(_event: BattleEvent, _context: BattleContext, _source: Card) -> bool:
+func can_trigger(_event: BattleEvent, _context: BattleContext, _effect_card: Card) -> bool:
 	return false
 
 
-func resolve(_event: BattleEvent, _context: BattleContext, _source: Card) -> void:
+func resolve(_event: BattleEvent, _context: BattleContext, _effect_card: Card) -> void:
 	pass
 
 

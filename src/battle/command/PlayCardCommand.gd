@@ -80,8 +80,21 @@ func execute(context: BattleContext) -> PlayCardCommand:
 		card,
 		{}
 	)
-	# await context.event_queue.enqueue(played_card_event)
 	await context.event_queue.resolve_child(played_card_event)
+
+	# if this card is a one shot, discard it.
+	# this works, but it looks bad as things aren't animated, i.e we dont
+	# see this card apply it's affect to other cards, and we dont then animate to discard pile
+	if card.card_data.lifetime == CardData.Lifetime.ONE_SHOT:
+		var discard_cmd := DiscardCardCommand.new(
+			owner, card, DiscardCardCommand.Zone.BATTLEFIELD
+		)
+		await context.execute(discard_cmd)
+
+		if not discard_cmd.is_success:
+			is_success = false
+			reason = discard_cmd.reason
+			return self
 
 	is_success = true
 	return self
