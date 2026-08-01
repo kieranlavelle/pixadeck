@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bnvcwdtj1qnd2"]
 
-[ext_resource type="Script" uid="uid://irsp731ikps6" path="res://src/ui/tooltip/tooltip.gd" id="1_jowuh"]
+[ext_resource type="Script" path="res://src/ui/tooltip/Tooltip.cs" id="1_jowuh"]
 
 [sub_resource type="Theme" id="Theme_jowuh"]
 resource_local_to_scene = true

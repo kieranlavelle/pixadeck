@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://dvvyp02wvklra"]
 
-[ext_resource type="Script" uid="uid://dtgwn70lplb04" path="res://src/combatant/combatant.gd" id="1_o822w"]
+[ext_resource type="Script" path="res://src/combatant/Combatant.cs" id="1_o822w"]
 [ext_resource type="PackedScene" uid="uid://cryj3mghpm68i" path="res://src/deck/deck.tscn" id="2_x42xx"]
 [ext_resource type="AudioStream" uid="uid://dp7kbtrj1byjo" path="res://assets/sounds/card_draw.mp3" id="4_681m7"]
 [ext_resource type="PackedScene" uid="uid://cm7rcu252yg0r" path="res://src/hand/hand.tscn" id="6_cwolq"]
 [ext_resource type="PackedScene" uid="uid://cmhi8vns8xt7s" path="res://src/combatant/stats/stats.tscn" id="8_x42xx"]
-[ext_resource type="Script" uid="uid://b8gfm8g1lt6ug" path="res://src/combatant/controllers/ai_controller.gd" id="9_l271a"]
+[ext_resource type="Script" path="res://src/combatant/controllers/AIController.cs" id="9_l271a"]
 
 [node name="Combatant" type="Control" unique_id=756094817]
 custom_minimum_size = Vector2(920, 140)
@@ -32,7 +32,7 @@ custom_minimum_size = Vector2(76, 103)
 layout_mode = 2
 size_flags_horizontal = 5
 size_flags_vertical = 8
-draw_sound = ExtResource("4_681m7")
+DrawSound = ExtResource("4_681m7")
 
 [node name="Hand" parent="Layout" unique_id=475158690 instance=ExtResource("6_cwolq")]
 unique_name_in_owner = true

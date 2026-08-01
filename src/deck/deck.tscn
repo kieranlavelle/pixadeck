@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://cryj3mghpm68i"]
 
-[ext_resource type="Script" uid="uid://b2j4vp2h5rws6" path="res://src/deck/deck.gd" id="1_8j11x"]
+[ext_resource type="Script" path="res://src/deck/Deck.cs" id="1_8j11x"]
 [ext_resource type="Texture2D" uid="uid://rtu88bsus4ly" path="res://assets/placeholder-card-back.png" id="1_od22o"]
-[ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="2_vfoc7"]
+[ext_resource type="Script" path="res://src/card/CardData.cs" id="2_vfoc7"]
 [ext_resource type="Resource" uid="uid://c7ib0x1vjkvrj" path="res://src/card/resources/cards/strike.tres" id="3_od22o"]
 
 [node name="Deck" type="TextureRect" unique_id=465602771]
 texture = ExtResource("1_od22o")
 script = ExtResource("1_8j11x")
-starting_deck = Array[ExtResource("2_vfoc7")]([ExtResource("3_od22o"), ExtResource("3_od22o")])
+StartingDeck = Array[ExtResource("2_vfoc7")]([ExtResource("3_od22o"), ExtResource("3_od22o")])
 
 [node name="EmptyTexture" type="ColorRect" parent="." unique_id=1467042316]
 visible = false
@@ -21,6 +21,3 @@ grow_vertical = 2
 color = Color(0.37413925, 0.37413928, 0.37413922, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=756521156]
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

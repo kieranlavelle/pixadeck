@@ -1,10 +1,9 @@
 [gd_resource type="Resource" script_class="KeywordData" format=3 uid="uid://foqmfbuhhu3q"]
 
-[ext_resource type="Script" uid="uid://dnmqqedo4u5ol" path="res://src/card/resources/keywords/keyword_data.gd" id="1_k2mdq"]
+[ext_resource type="Script" path="res://src/card/resources/keywords/KeywordData.cs" id="1_k2mdq"]
 
 [resource]
 script = ExtResource("1_k2mdq")
-id = &"persistent"
-display_name = "Persistent"
-description = "This card remains on the battlefield and applies it's effect each turn until destroyed."
-metadata/_custom_type_script = "uid://dnmqqedo4u5ol"
+Id = &"persistent"
+DisplayName = "Persistent"
+Description = "This card remains on the battlefield and applies it's effect each turn until destroyed."

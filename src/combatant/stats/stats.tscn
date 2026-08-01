@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cmhi8vns8xt7s"]
 
-[ext_resource type="Script" uid="uid://cu627kau8vfcl" path="res://src/combatant/stats/stats.gd" id="1_n50ek"]
+[ext_resource type="Script" path="res://src/combatant/stats/Stats.cs" id="1_n50ek"]
 [ext_resource type="FontFile" uid="uid://00clkfd0cxp2" path="res://assets/fonts/gomarice_no_continue.ttf" id="2_62vfg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_background"]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dqsspfenvktrp"]
 
-[ext_resource type="Script" uid="uid://cq1nsr8tucdyq" path="res://src/ui/board_ui/board_ui.gd" id="1_giaq4"]
+[ext_resource type="Script" path="res://src/ui/board_ui/BoardUI.cs" id="1_giaq4"]
 
 [node name="CardDropZone" type="Control" unique_id=1935065409]
 layout_mode = 3

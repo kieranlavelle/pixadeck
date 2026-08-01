@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://c7v1d3h1uu2ae"]
 
-[ext_resource type="Script" uid="uid://dnli00vjsfb5o" path="res://src/card/card.gd" id="2_of7fp"]
-[ext_resource type="Script" uid="uid://con0brufyypro" path="res://src/card/states/card_state_machine.gd" id="3_mxmy7"]
-[ext_resource type="Script" uid="uid://c3elebiwodt1y" path="res://src/card/states/idle.gd" id="4_js1fh"]
-[ext_resource type="Script" uid="uid://ck8qs2fdhffu6" path="res://src/card/states/hover.gd" id="5_feltw"]
-[ext_resource type="Script" uid="uid://ddoyle1baxtn2" path="res://src/card/states/clicked.gd" id="6_cxcvc"]
+[ext_resource type="Script" path="res://src/card/Card.cs" id="2_of7fp"]
+[ext_resource type="Script" path="res://src/card/states/CardStateMachine.cs" id="3_mxmy7"]
+[ext_resource type="Script" path="res://src/card/states/IdleCardState.cs" id="4_js1fh"]
+[ext_resource type="Script" path="res://src/card/states/HoverCardState.cs" id="5_feltw"]
+[ext_resource type="Script" path="res://src/card/states/ClickedCardState.cs" id="6_cxcvc"]
 [ext_resource type="Texture2D" uid="uid://dtkwemx52jh7g" path="res://assets/card_components/Icon25.png" id="7_4lqy4"]
 [ext_resource type="Texture2D" uid="uid://dr2xuam6pmiab" path="res://assets/card_components/fire-texture-background.png" id="7_akld1"]
-[ext_resource type="Script" uid="uid://b6k1mgosq7ifl" path="res://src/card/states/played.gd" id="7_aklfy"]
-[ext_resource type="Script" uid="uid://jqmisgewg815" path="res://src/card/states/dragging.gd" id="7_yys3o"]
+[ext_resource type="Script" path="res://src/card/states/PlayedCardState.cs" id="7_aklfy"]
+[ext_resource type="Script" path="res://src/card/states/DraggingCardState.cs" id="7_yys3o"]
 [ext_resource type="Texture2D" uid="uid://ckthpa3k8pv5u" path="res://assets/card_components/gold-inner-border.png" id="8_4lqy4"]
 [ext_resource type="Texture2D" uid="uid://bdlvgujlinu8n" path="res://assets/card_components/sword-type.png" id="9_aklfy"]
 [ext_resource type="Texture2D" uid="uid://bj458tuuoy3op" path="res://assets/card_components/gold-border.png" id="10_bbrup"]
@@ -230,6 +230,3 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_behavior_recursive = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_aklfy")
-
-[connection signal="mouse_entered" from="." to="CardStateMachine" method="on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="CardStateMachine" method="on_mouse_exited"]

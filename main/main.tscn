@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://6ets8s8yauur"]
 
-[ext_resource type="Script" uid="uid://cgtpe2hl42evt" path="res://src/battle/battle_manager.gd" id="1_eb6dy"]
+[ext_resource type="Script" path="res://src/battle/BattleManager.cs" id="1_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://dvvyp02wvklra" path="res://src/combatant/combatant.tscn" id="2_o6xl0"]
-[ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="4_bsumw"]
+[ext_resource type="Script" path="res://src/card/CardData.cs" id="4_bsumw"]
 [ext_resource type="Resource" uid="uid://c7ib0x1vjkvrj" path="res://src/card/resources/cards/strike.tres" id="5_fwcvl"]
-[ext_resource type="Script" uid="uid://bw6ifcuinuiw5" path="res://src/ui/battle_overlay/text_display.gd" id="6_85g3d"]
+[ext_resource type="Script" path="res://src/ui/battle_overlay/TextDisplay.cs" id="6_85g3d"]
 [ext_resource type="Resource" uid="uid://bmk4te5ggnitg" path="res://src/card/resources/cards/dome.tres" id="6_na0o7"]
-[ext_resource type="Script" uid="uid://bvwxb4osm86ok" path="res://src/ui/battle_overlay/skip_turn_button.gd" id="6_tipki"]
+[ext_resource type="Script" path="res://src/ui/battle_overlay/SkipTurnButton.cs" id="6_tipki"]
 [ext_resource type="FontFile" uid="uid://00clkfd0cxp2" path="res://assets/fonts/gomarice_no_continue.ttf" id="7_85g3d"]
-[ext_resource type="Script" uid="uid://dkkq2wtrajg0i" path="res://src/ui/battle_overlay/battle_overlay.gd" id="7_choun"]
+[ext_resource type="Script" path="res://src/ui/battle_overlay/Overlay.cs" id="7_choun"]
 [ext_resource type="PackedScene" uid="uid://dqsspfenvktrp" path="res://src/ui/board_ui/board_ui.tscn" id="7_o6xl0"]
-[ext_resource type="Script" uid="uid://c7vod8twahxdi" path="res://src/battle/turn_manager/turn_manager.gd" id="8_tipki"]
+[ext_resource type="Script" path="res://src/battle/turn_manager/TurnManager.cs" id="8_tipki"]
 
 [node name="BattleManager" type="Control" unique_id=982758747]
 layout_mode = 3
@@ -62,11 +62,11 @@ theme_override_constants/margin_bottom = 8
 
 [node name="Player" parent="BattleLayout/BottomSeat" unique_id=1676522694 groups=["Combatants"] instance=ExtResource("2_o6xl0")]
 layout_mode = 2
-is_local_player = true
-seat = 1
+IsLocalPlayer = true
+Seat = 1
 
 [node name="Deck" parent="BattleLayout/BottomSeat/Player/Layout" parent_id_path=PackedInt32Array(1676522694, 1848351654) index="0" unique_id=465602771]
-starting_deck = Array[ExtResource("4_bsumw")]([ExtResource("5_fwcvl"), ExtResource("5_fwcvl"), ExtResource("6_na0o7")])
+StartingDeck = Array[ExtResource("4_bsumw")]([ExtResource("5_fwcvl"), ExtResource("5_fwcvl"), ExtResource("6_na0o7")])
 
 [node name="BattleOverlay" type="CanvasLayer" parent="." unique_id=1143265905]
 layer = 100
@@ -103,8 +103,5 @@ script = ExtResource("6_tipki")
 
 [node name="TurnManager" type="Node" parent="." unique_id=1402197015]
 script = ExtResource("8_tipki")
-
-[connection signal="pressed" from="BattleOverlay/EndTurnButton" to="BattleOverlay/EndTurnButton" method="_on_pressed"]
-[connection signal="turn_finished" from="TurnManager" to="TurnManager" method="_on_turn_ended"]
 
 [editable path="BattleLayout/BottomSeat/Player"]
