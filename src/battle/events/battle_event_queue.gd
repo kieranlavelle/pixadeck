@@ -60,8 +60,10 @@ func _drain_roots() -> void:
 	_is_resolving = true
 	while not _queue.is_empty():
 		var root: RootCommand = _queue.pop_front()
+		_trace.start_root(root)
 		await root.execute(battle_context)
 		root.finish()
+		_trace.end_root(root)
 	_is_resolving = false
 
 

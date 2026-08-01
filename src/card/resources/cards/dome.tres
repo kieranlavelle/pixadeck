@@ -2,13 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://b2bnc63uiqfje" path="res://assets/card_components/stone-flat-background.png" id="1_j5cku"]
 [ext_resource type="Texture2D" uid="uid://bavkmf87xe3ju" path="res://assets/card_components/bronze-border.png" id="2_15ssh"]
-[ext_resource type="Script" uid="uid://dk5q84xq6fyh5" path="res://src/card/resources/effects/on_opponent_turn_started_apply_status_effect.gd" id="3_effect"]
 [ext_resource type="Script" uid="uid://csge6fum8c0o1" path="res://src/card/resources/card_effect.gd" id="3_j5cku"]
 [ext_resource type="Script" uid="uid://dnmqqedo4u5ol" path="res://src/card/resources/keywords/keyword_data.gd" id="5_xey0f"]
 [ext_resource type="Resource" uid="uid://d2u8l6xfmjghi" path="res://src/card/resources/keywords/stagger.tres" id="6_2kxv2"]
 [ext_resource type="Script" uid="uid://byf1l8hddag4e" path="res://src/card/resources/status/stagger_card_status.gd" id="6_xey0f"]
 [ext_resource type="Script" uid="uid://bjav0vfisvfaq" path="res://src/card/resources/targeting/AllEnemyCardsSelector.gd" id="7_2kxv2"]
 [ext_resource type="Texture2D" uid="uid://cltbtcbyb8wbp" path="res://assets/card_components/blue-flag.png" id="9_2eexy"]
+[ext_resource type="Script" uid="uid://cvv4wub3201re" path="res://src/card/resources/effects/on_play_effects/on_play_apply_status_effect.gd" id="9_15ssh"]
 [ext_resource type="Texture2D" uid="uid://cd846f0otmkxm" path="res://assets/card_components/Icon34.png" id="10_84df8"]
 [ext_resource type="Texture2D" uid="uid://bq8g60i21s8uq" path="res://assets/card_components/silver-inner-border.png" id="11_7uk37"]
 [ext_resource type="Texture2D" uid="uid://bwywd485wc3s2" path="res://assets/card_components/2-mana.png" id="12_ohrgd"]
@@ -16,22 +16,23 @@
 [ext_resource type="Texture2D" uid="uid://clak0olg4ou31" path="res://assets/card_components/silver-medium-title.png" id="14_aqmjq"]
 [ext_resource type="Texture2D" uid="uid://bp5q53wt4k3vm" path="res://assets/card_components/spell-type.png" id="15_e04x0"]
 
-[sub_resource type="Resource" id="Resource_nssry"]
+[sub_resource type="Resource" id="Resource_jo6yt"]
 script = ExtResource("6_xey0f")
 id = &"stagger"
 display_name = "Stagger"
 metadata/_custom_type_script = "uid://byf1l8hddag4e"
 
-[sub_resource type="Resource" id="Resource_2eexy"]
+[sub_resource type="Resource" id="Resource_qs0op"]
 script = ExtResource("7_2kxv2")
+metadata/_custom_type_script = "uid://bjav0vfisvfaq"
 
-[sub_resource type="Resource" id="Resource_iwh6q"]
-script = ExtResource("3_effect")
-status = SubResource("Resource_nssry")
-target_selector = SubResource("Resource_2eexy")
-id = &"stagger_on_opponent_turn_started"
-display_text = "Stagger all enemy cards when their turn starts."
+[sub_resource type="Resource" id="Resource_xey0f"]
+script = ExtResource("9_15ssh")
+status = SubResource("Resource_jo6yt")
+target_selector = SubResource("Resource_qs0op")
+id = &"stagger_enemy_cards_on_play"
 tooltip_keywords = Array[ExtResource("5_xey0f")]([ExtResource("6_2kxv2")])
+metadata/_custom_type_script = "uid://cvv4wub3201re"
 
 [resource]
 script = ExtResource("13_t6w2b")
@@ -40,7 +41,7 @@ card_name = "Dome"
 card_cost = 2
 lifetime = 1
 description = "[i]Stagger[/i] all enemies for 1 turn"
-effects = Array[ExtResource("3_j5cku")]([SubResource("Resource_iwh6q")])
+effects = Array[ExtResource("3_j5cku")]([SubResource("Resource_xey0f")])
 border_asset = ExtResource("2_15ssh")
 inner_border_asset = ExtResource("11_7uk37")
 mana_asset = ExtResource("12_ohrgd")
