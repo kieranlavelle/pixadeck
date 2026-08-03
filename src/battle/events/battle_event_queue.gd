@@ -7,7 +7,7 @@ signal event_resolved(event: BattleEvent)
 var battle_context: BattleContext
 var _queue: Array[RootCommand] = []
 var _is_resolving: bool = false
-var _trace: EventTrace = EventTrace.new()
+var _trace: DebugTrace = DebugTrace.new()
 
 class CardTriggerPair:
 	var card: Card
@@ -41,7 +41,7 @@ func resolve_child(event: BattleEvent) -> void:
 
 
 func _resolve_event(event: BattleEvent) -> void:
-	_trace.event_started(event)
+	_trace.begin_event(event)
 	event_dispatched.emit(event)
 
 	# STATUS_EXPIRY is deterministic maintenance, never a reaction window.
@@ -54,16 +54,17 @@ func _resolve_event(event: BattleEvent) -> void:
 
 	await battle_context.resolve_lifecycle_event(event)
 	event_resolved.emit(event)
-	_trace.event_ended(event)
+	_trace.end_event(event)
 
 func _drain_roots() -> void:
 	_is_resolving = true
 	while not _queue.is_empty():
 		var root: RootCommand = _queue.pop_front()
-		_trace.start_root(root)
+		_trace.begin_root(root)
 		await root.execute(battle_context)
 		root.finish()
 		_trace.end_root(root)
+		print(_trace.root_to_string(root))
 	_is_resolving = false
 
 
