@@ -28,12 +28,14 @@ class TraceEvent:
 	func _root_to_string() -> String:
 		return "Root: %s %s" % [command.get_script().get_global_name(), TraceState.keys()[trace_state]]
 
+
+	func _combatant_label(c: Combatant) -> String:
+		if c.is_local_player:
+			return "local"
+		else:
+			return "AI"
+
 	func _event_to_string() -> String:
-			var card_name: String = "null"
-			# GDScript doesn't have the `?.` null-conditional operator yet,
-			# so we chain truthy checks safely.
-			if event and event.get("card") and event.card.get("card_data"):
-				card_name = event.card.card_data.card_name
 
 			var event_type: String = ""
 			if event and event.get("type"):
@@ -44,7 +46,24 @@ class TraceEvent:
 			# TraceState.keys()[state] neatly returns "STARTED" or "ENDED"
 			var state_str: String = TraceState.keys()[trace_state]
 
-			return "%s event> %s %s (card: %s)" % [indent, event_type, state_str, card_name]
+			#   event (owner: AI)> DAMAGE_REQUESTED started
+			const common_prefix: String = "%s event (owner: %s)> %s %s"
+			var current := common_prefix % [indent, _combatant_label(event.owner), event_type, state_str]
+
+			match event.type:
+				BattleEventType.DAMAGE_DEALT:
+					const damage_dealt_format: String = "%s dealt %d damage to %s"
+					var amount: int = event.payload.get("amount", 0)
+					var damage_str := damage_dealt_format % [
+						event.card.card_data.card_name,
+						amount,
+						_combatant_label(event.target)
+					]
+					return " | ".join([current, damage_str])
+				_:
+					return current
+
+			# return "%s event> %s %s (owner: %s, card: %s)" % [indent, event_type, state_str, owner, card_name]
 
 func begin_root(command: RootCommand) -> void:
 	if len(_stack) > 0:
