@@ -29,7 +29,9 @@ public sealed class BattlePresentationController
         // Hands pass this drop-zone predicate to every runtime card they create.
         foreach (var combatant in _combatants)
         {
+            // This is a function passed to the hand
             combatant.Hand.CanDropAt = _boardUi.CanAcceptDropAt;
+
             combatant.Deck.CardDiscarded += OnCardDiscarded;
             combatant.Hand.CardDiscarded += OnCardDiscarded;
         }

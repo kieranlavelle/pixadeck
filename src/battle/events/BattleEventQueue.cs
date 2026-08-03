@@ -8,7 +8,7 @@ namespace Pixadeck;
 public partial class BattleEventQueue : Node
 {
     private readonly Queue<RootCommand> _queue = new();
-    private readonly BattleEventTrace _trace = new();
+    private readonly DebugTrace _trace = new();
     private bool _isResolving;
 
     public event Action<BattleEvent>? EventDispatched;
@@ -43,7 +43,7 @@ public partial class BattleEventQueue : Node
 
     private async Task ResolveEventAsync(BattleEvent battleEvent)
     {
-        _trace.EventStarted(battleEvent);
+        _trace.BeginEvent(battleEvent);
         EventDispatched?.Invoke(battleEvent);
 
         // Status expiry is deterministic maintenance, never a reaction window.
@@ -57,7 +57,7 @@ public partial class BattleEventQueue : Node
 
         await Context.ResolveLifecycleEventAsync(battleEvent);
         EventResolved?.Invoke(battleEvent);
-        _trace.EventEnded(battleEvent);
+        _trace.EndEvent(battleEvent);
     }
 
     private async Task DrainRootsAsync()
@@ -67,10 +67,12 @@ public partial class BattleEventQueue : Node
         {
             while (_queue.TryDequeue(out var root))
             {
-                _trace.StartRoot(root);
+                _trace.BeginRoot(root);
                 await root.ExecuteAsync(Context);
                 root.Finish();
                 _trace.EndRoot(root);
+                var PrintableString = _trace.GetRootTree(root);
+                GD.Print(PrintableString);
             }
         }
         finally
