@@ -37,5 +37,8 @@ func execute(context: BattleContext) -> RootCommand:
 		BattleEvent.new(BattleEventType.TURN_STARTED, combatant, combatant)
 	)
 
+	# wait for a better turn flow
+	await Utils.wait_seconds(Const.TURN_START_WAIT_TIME)
+
 	is_success = true
 	return self

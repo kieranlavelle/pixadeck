@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://6ets8s8yauur"]
 
 [ext_resource type="Script" uid="uid://cgtpe2hl42evt" path="res://src/battle/battle_manager.gd" id="1_eb6dy"]
+[ext_resource type="PackedScene" uid="uid://djwha22r2jmun" path="res://src/ui/effects_ui/effects_layer.tscn" id="2_fwcvl"]
 [ext_resource type="PackedScene" uid="uid://dvvyp02wvklra" path="res://src/combatant/combatant.tscn" id="2_o6xl0"]
 [ext_resource type="Script" uid="uid://by78ddj4qp3w6" path="res://src/card/card_data.gd" id="4_bsumw"]
 [ext_resource type="Resource" uid="uid://c7ib0x1vjkvrj" path="res://src/card/resources/cards/strike.tres" id="5_fwcvl"]
@@ -20,6 +21,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_eb6dy")
+
+[node name="EffectsLayer" parent="." unique_id=223599804 instance=ExtResource("2_fwcvl")]
+layout_mode = 1
 
 [node name="BattleLayout" type="VBoxContainer" parent="." unique_id=1298152651]
 layout_mode = 1

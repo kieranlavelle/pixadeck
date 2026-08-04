@@ -13,6 +13,7 @@ signal emit_command(command: PlayCardCommand, callback: Variant)
 @onready var tooltip_stack: VBoxContainer = $TooltipStack
 
 @onready var assets: Control = $Assets
+@onready var outer_glow: Panel = $Assets/OuterGlow
 @onready var description: RichTextLabel = $Assets/Description
 @onready var image_asset: TextureRect = $Assets/ImageAsset
 @onready var inner_border: TextureRect = $Assets/InnerBorder
@@ -22,8 +23,10 @@ signal emit_command(command: PlayCardCommand, callback: Variant)
 @onready var card_mana_cost: TextureRect = $Assets/Mana
 @onready var background: TextureRect = $Assets/Background
 
+# data used for UI
 var TOOLTIP_SCENE = preload("res://src/ui/tooltip/tooltip.tscn")
 var tooltip_offset_y: float = 0.0
+
 
 # used to block certain state transitions during the other players turn
 var opponents_turn: bool = true
@@ -161,3 +164,30 @@ func remove_status(status: CardStatusInstance) -> void:
 
 func is_over_drop_target() -> bool:
 	return can_drop_at.call(get_global_mouse_position())
+
+
+func play_effect_anticipation() -> void:
+	outer_glow.visible = true
+
+	# this actually needs to be seat aware for the direction
+	# the card moves in.
+	var raised_position = assets.position + Vector2(0, -10)
+	var tween := create_tween().set_parallel(true)
+
+	tween.tween_property(assets, "scale", Vector2(1.1, 1.1), 0.2)
+	tween.parallel().tween_property(assets, "position:y", raised_position.y, 0.2)
+	tween.parallel().tween_property(outer_glow, "self_modulate:a", 1.0, 0.14)
+	await tween.finished
+
+
+func release_effect_anticipation() -> void:
+
+	# this brings it back to normal, probably need a "release_effect_anticipation"
+	var tween := create_tween().set_parallel(true)
+	var original_position = assets.position + Vector2(0, 10)
+
+	tween.tween_property(assets, "scale", Vector2(1,1), 0.2)
+	tween.parallel().tween_property(assets, "position:y", original_position.y, 0.2)
+	tween.parallel().tween_property(outer_glow, "self_modulate:a", 0, 0.2)
+	await tween.finished
+	outer_glow.visible = false

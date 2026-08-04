@@ -25,6 +25,8 @@ func execute(context: BattleContext) -> DealDamageCommand:
 		is_success = false
 		return self
 
+	var casting_cue := CardCastingCue.new(source)
+	await casting_cue.play()
 	var deal_damage_request := BattleEvent.new(
 		BattleEventType.DAMAGE_REQUESTED,
 		owner,
@@ -38,11 +40,14 @@ func execute(context: BattleContext) -> DealDamageCommand:
 	await context.event_queue.resolve_child(deal_damage_request)
 
 	if deal_damage_request.cancelled:
+		casting_cue.finish() # casting was refused
 		reason = deal_damage_request.cancelled_reason
 		is_success = false
 		return self
 
 	context.deal_damage(target, amount)
+	var damage_visuals := DealDamageCue.new(target, amount, context)
+	await damage_visuals.play()
 
 	var damage_dealt := BattleEvent.new(
 		BattleEventType.DAMAGE_DEALT,
@@ -54,6 +59,7 @@ func execute(context: BattleContext) -> DealDamageCommand:
 			"amount": amount,
 		}
 	)
+	await casting_cue.finish()
 	await context.event_queue.resolve_child(damage_dealt)
 
 	is_success = true

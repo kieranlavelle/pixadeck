@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://djwha22r2jmun"]
+
+[ext_resource type="Script" uid="uid://oc0tgk47a7k4" path="res://src/ui/effects_ui/effects_layer.gd" id="1_p86s5"]
+
+[node name="EffectsLayer" type="Control" unique_id=223599804]
+z_index = 1000
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p86s5")

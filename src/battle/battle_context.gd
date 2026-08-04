@@ -7,19 +7,22 @@ var combatants: Array[Combatant] = []
 var battle_manager: BattleManager
 var board: Board
 var turn_manager: TurnManager
+var effects_layer: EffectsLayer
 
 func _init(
 	_event_queue: BattleEventQueue,
 	_combatants: Array[Combatant],
 	_battle_manager: BattleManager,
 	_board: Board,
-	_turn_manager: TurnManager
+	_turn_manager: TurnManager,
+	_effects_layer: EffectsLayer
 ) -> void:
 	event_queue = _event_queue
 	combatants = _combatants
 	battle_manager = _battle_manager
 	board = _board
 	turn_manager = _turn_manager
+	effects_layer = _effects_layer
 
 
 func execute(command: Command) -> Command:

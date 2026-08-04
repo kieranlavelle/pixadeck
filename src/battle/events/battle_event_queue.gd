@@ -56,6 +56,7 @@ func _resolve_event(event: BattleEvent) -> void:
 	event_resolved.emit(event)
 	_trace.end_event(event)
 
+
 func _drain_roots() -> void:
 	_is_resolving = true
 	while not _queue.is_empty():

@@ -15,6 +15,15 @@
 [ext_resource type="Texture2D" uid="uid://buf7epf87y72v" path="res://assets/card_components/bronze-flag.png" id="11_tylge"]
 [ext_resource type="Texture2D" uid="uid://cw5ql15j0rfag" path="res://assets/card_components/1-mana.png" id="12_hh8mp"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bbrup"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(18.892157, 18.892157, 0, 0.34117648)
+shadow_size = 12
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7tox"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 3
@@ -88,6 +97,17 @@ offset_right = 76.0
 offset_bottom = 103.0
 pivot_offset = Vector2(38, 103)
 mouse_filter = 2
+
+[node name="OuterGlow" type="Panel" parent="Assets" unique_id=1305176786]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bbrup")
 
 [node name="ImageAsset" type="TextureRect" parent="Assets" unique_id=64453858]
 layout_mode = 1

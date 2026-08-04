@@ -4,6 +4,7 @@ extends Control
 @onready var TurnManagerNode: TurnManager = $TurnManager as TurnManager
 @onready var BattleOverlay: Overlay = $BattleOverlay as Overlay
 @onready var Battlefield: BoardUI = $BattleLayout/Battlefield/CardDropZone as BoardUI
+@onready var effects_layer: EffectsLayer = $EffectsLayer as EffectsLayer
 
 var combatants: Array[Combatant] = []
 var event_queue: BattleEventQueue
@@ -40,7 +41,14 @@ func _ready():
 	TurnManagerNode.before_turn_started.connect(BattleOverlay._on_turn_start)
 
 	# setup battle context
-	battle_context = BattleContext.new(event_queue, combatants, self, board, TurnManagerNode)
+	battle_context = BattleContext.new(
+		event_queue,
+		combatants,
+		self,
+		board,
+		TurnManagerNode,
+		effects_layer
+	)
 	for combatant in combatants:
 		combatant.battle_context = battle_context
 	# give the battle event queue context
