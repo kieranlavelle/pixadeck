@@ -17,7 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Enum="*uid://c7o1j4ad664gv"
+SfxPlayer="*uid://bcgyh5y57y7go"
+Sounds="*uid://crc1x2wx3oje2"
 
 [display]
 

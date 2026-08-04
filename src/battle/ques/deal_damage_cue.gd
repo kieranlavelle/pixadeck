@@ -14,6 +14,7 @@ func _init(_target: Combatant, _amount: int, _context: BattleContext):
 
 
 func play() -> void:
+	SfxPlayer.play_sound(Sounds.HIT_SOUND, -10)
 	await context.effects_layer.take_damage_visuals(
 		amount,
 		target.stats.get_global_rect().get_center(),

@@ -9,12 +9,12 @@ func enter() -> void:
 	mouse_pos_on_enter = card.get_global_mouse_position()
 	is_mouse_button_down = true
 	
-	card.clicked_panel.visible = true
+	card.assets.clicked_panel.visible = true
 	card.show_tooltip()
 
 
 func exit() -> void:
-	card.clicked_panel.visible = false
+	card.assets.clicked_panel.visible = false
 	card.hide_tooltip()
 
 

@@ -6,26 +6,8 @@ signal emit_command(command: PlayCardCommand, callback: Variant)
 @export var card_data: CardData
 
 @onready var card_state: CardStateMachine = $CardStateMachine
-@onready var hover_panel: Panel = $Assets/HoverPanel
-@onready var clicked_panel: Panel = $Assets/ClickedPanel
-@onready var dragging_panel: Panel = $Assets/DraggingPanel
-@onready var playable_panel: Panel = $Assets/PlayablePanel
-@onready var tooltip_stack: VBoxContainer = $TooltipStack
-
-@onready var assets: Control = $Assets
-@onready var outer_glow: Panel = $Assets/OuterGlow
-@onready var description: RichTextLabel = $Assets/Description
-@onready var image_asset: TextureRect = $Assets/ImageAsset
-@onready var inner_border: TextureRect = $Assets/InnerBorder
-@onready var card_type: TextureRect = $Assets/Type
-@onready var outer_border: TextureRect = $Assets/OuterBorder
-@onready var card_flag: TextureRect = $Assets/Flag
-@onready var card_mana_cost: TextureRect = $Assets/Mana
-@onready var background: TextureRect = $Assets/Background
-
-# data used for UI
-var TOOLTIP_SCENE = preload("res://src/ui/tooltip/tooltip.tscn")
-var tooltip_offset_y: float = 0.0
+@onready var tooltip_stack: TooltipStack = $TooltipStack
+@onready var assets: CardAssets = $Assets
 
 
 # used to block certain state transitions during the other players turn
@@ -41,6 +23,8 @@ var can_drop_at: Callable
 func _ready():
 	if card_data == null:
 		print("Error: card data was null")
+	assets.setup(card_data)
+	tooltip_stack.setup(self)
 
 	# hookup the signal from the state machine so requests can flow up
 	# to card
@@ -48,21 +32,6 @@ func _ready():
 
 	# for this holder, this card is the "host"
 	card_status_holder.host = self
-
-	description.text = card_data.description
-	inner_border.texture = card_data.inner_border_asset
-	outer_border.texture = card_data.border_asset
-	card_type.texture = card_data.type_asset
-	card_flag.texture = card_data.flag_asset
-	card_mana_cost.texture = card_data.mana_asset
-	background.texture = card_data.background_asset
-	image_asset.texture = card_data.image_asset
-
-
-func _process(_delta: float) -> void:
-	# if tooltip is visible recalc it's position each frame.
-	if tooltip_stack.visible:
-		_update_tooltip_position()
 
 
 func _input(event: InputEvent) -> void:
@@ -82,76 +51,12 @@ func _gui_input(event: InputEvent) -> void:
 		card_state.handle_input(event)
 
 
-func show_tooltip() -> void:
-	# 1. Clear old tooltips
-	for child in tooltip_stack.get_children():
-		child.queue_free()
-
-	# 2. Instantiate new tooltips
-	var main_tooltip = TOOLTIP_SCENE.instantiate()
-	tooltip_stack.add_child(main_tooltip)
-	main_tooltip.setup(card_data.card_name, card_data.description, card_data.card_cost)
-
-	# gather all the keywords
-	var keywords: Array[KeywordData] = []
-
-	for effect in card_data.effects:
-		for keyword in effect.get_tooltip_keywords():
-			if not keywords.has(keyword):
-				keywords.append(keyword)
-
-	for keyword in keywords:
-		var effect_tooltip = TOOLTIP_SCENE.instantiate()
-		tooltip_stack.add_child(effect_tooltip)
-		effect_tooltip.setup(keyword.display_name, keyword.description)
-
-	# 3. Start invisible (opacity = 0)
-	tooltip_stack.modulate.a = 0.0
-	tooltip_stack.visible = true
-	tooltip_stack.reset_size()
-
-	# 4. Wait 1 frame for Godot to measure text label dimensions
-	await get_tree().process_frame
-
-	if not tooltip_stack.visible:
-		return
-
-	tooltip_stack.reset_size()
-
-	# 5. Start offset lower for animation
-	tooltip_offset_y = 6.0
-	_update_tooltip_position()
-
-	# 6. Smoothly tween opacity to 1.0 and offset to 0.0
-	var tween = create_tween().set_parallel(true)
-	tween.tween_property(tooltip_stack, "modulate:a", 1.0, 0.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tween.tween_property(self, "tooltip_offset_y", 0.0, 0.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-
-
 func hide_tooltip() -> void:
 	tooltip_stack.visible = false
 
 
-func _update_tooltip_position() -> void:
-	var gap = 8
-	var viewport = get_viewport_rect()
-	var margin = 8
-
-	# To the right of the card
-	var x = global_position.x + size.x + gap
-
-	# If the tooltip goes off the right edge of the screen, place it on the left instead
-	if x + tooltip_stack.size.x > viewport.size.x - margin:
-		x = global_position.x - tooltip_stack.size.x - gap
-
-	# Above the card's visual asset so it doesn't overlap adjacent cards in the hand
-	var y = assets.global_position.y - tooltip_stack.size.y - gap
-
-	# Keep within vertical bounds so it doesn't go off the top of the screen
-	y = clamp(y, margin, viewport.size.y - tooltip_stack.size.y - margin)
-
-	# Apply the position + the offset animated by the tween
-	tooltip_stack.global_position = Vector2(x, y + tooltip_offset_y)
+func show_tooltip() -> void:
+	tooltip_stack.show_tooltip()
 
 
 func add_status(status: CardStatusInstance) -> void:
@@ -167,16 +72,16 @@ func is_over_drop_target() -> bool:
 
 
 func play_effect_anticipation() -> void:
-	outer_glow.visible = true
+	assets.outer_glow.visible = true
 
 	# this actually needs to be seat aware for the direction
 	# the card moves in.
 	var raised_position = assets.position + Vector2(0, -10)
 	var tween := create_tween().set_parallel(true)
 
-	tween.tween_property(assets, "scale", Vector2(1.1, 1.1), 0.2)
+	tween.tween_property(assets, "scale", Vector2(1.05, 1.05), 0.2)
 	tween.parallel().tween_property(assets, "position:y", raised_position.y, 0.2)
-	tween.parallel().tween_property(outer_glow, "self_modulate:a", 1.0, 0.14)
+	tween.parallel().tween_property(assets.outer_glow, "self_modulate:a", 1.0, 0.14)
 	await tween.finished
 
 
@@ -188,6 +93,6 @@ func release_effect_anticipation() -> void:
 
 	tween.tween_property(assets, "scale", Vector2(1,1), 0.2)
 	tween.parallel().tween_property(assets, "position:y", original_position.y, 0.2)
-	tween.parallel().tween_property(outer_glow, "self_modulate:a", 0, 0.2)
+	tween.parallel().tween_property(assets.outer_glow, "self_modulate:a", 0, 0.2)
 	await tween.finished
-	outer_glow.visible = false
+	assets.outer_glow.visible = false

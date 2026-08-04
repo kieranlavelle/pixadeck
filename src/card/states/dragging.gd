@@ -4,14 +4,14 @@ var drag_offset: Vector2
 var original_position: Vector2
 
 func enter() -> void:
-	card.dragging_panel.visible = true
+	card.assets.dragging_panel.visible = true
 	original_position = card.global_position
 	drag_offset = card.get_global_mouse_position() - card.global_position
 
 
 func exit() -> void:
-	card.dragging_panel.visible = false
-	card.playable_panel.visible = false
+	card.assets.dragging_panel.visible = false
+	card.assets.playable_panel.visible = false
 
 
 func handle_input(event: InputEvent) -> void:
@@ -26,9 +26,9 @@ func handle_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		card.global_position = card.get_global_mouse_position() - drag_offset
 		if card.is_over_drop_target():
-			card.playable_panel.visible = true
+			card.assets.playable_panel.visible = true
 		else:
-			card.playable_panel.visible = false
+			card.assets.playable_panel.visible = false
 
 
 func _on_command_processed(command: PlayCardCommand):
