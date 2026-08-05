@@ -14,12 +14,17 @@ func _on_card_placed(card: Card, seat: Combatant.Seat):
 			card.reparent(BottomZone)
 
 
-func _on_card_removed(card: Card, seat: Combatant.Seat):
-	# A battlefield discard has no visible destination yet, so do not detach the
-	# runtime card. Queue it while it remains parented to its board zone.
-	card.queue_free()
-
-
 # detects if the global position is inside the boardUI
 func can_accept_drop_at(pos: Vector2) -> bool:
 	return get_global_rect().has_point(pos)
+
+
+func get_discard_animation_target(seat: Combatant.Seat) -> Vector2:
+	if seat == Combatant.Seat.BOTTOM:
+			return get_viewport_rect().size + Vector2(100, 100)
+
+	return Vector2(-100, -100)
+
+
+func get_battlefield_centre() -> Vector2:
+	return get_global_rect().get_center()

@@ -29,7 +29,7 @@ func _init(
 func setup() -> void:
 	# connect to static nodes
 	board.card_placed.connect(board_ui._on_card_placed)
-	board.card_removed.connect(board_ui._on_card_removed)
+	board.card_removed.connect(_on_card_discarded.unbind(1))
 
 	# let hands know about their drop-zone target so they can pass to card
 	for combatant in combatants:
@@ -39,6 +39,10 @@ func setup() -> void:
 
 
 func _on_card_discarded(card: Card) -> void:
+	var battlefield_centre := board_ui.get_battlefield_centre()
+	var discard_target := board_ui.get_discard_animation_target(card.owner_combatant.seat)
+	var discard_card_cue := DiscardCardCue.new(card, battlefield_centre, discard_target)
+	await discard_card_cue.play()
 	# Discards do not have a visible destination yet. The card remains parented to
 	# its source until this presentation transition owns its lifetime.
 	card.queue_free()

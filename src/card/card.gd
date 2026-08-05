@@ -96,3 +96,20 @@ func release_effect_anticipation() -> void:
 	tween.parallel().tween_property(assets.outer_glow, "self_modulate:a", 0, 0.2)
 	await tween.finished
 	assets.outer_glow.visible = false
+
+
+func play_discard_animation(
+	battlefield_centre: Vector2,
+	discard_destination: Vector2
+) -> void:
+	# give us free movement
+	top_level = true
+	var tween := create_tween()
+
+	# move the center
+	tween.tween_property(self, "global_position", battlefield_centre - size * 0.5, 1)
+
+	# move to discard zone
+	tween.tween_property(self, "global_position", discard_destination, 0.9)
+
+	await tween.finished
